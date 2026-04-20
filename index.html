@@ -855,7 +855,7 @@ async function doLogin() {
 
   // 1. Try Google Sheet first
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const members = await res.json();
     if (Array.isArray(members)) {
       const match = members.find(m => (m.email || '').toLowerCase() === email);
@@ -1092,7 +1092,7 @@ const SEED_MEMBERS = [];
 async function checkSheetSync() {
   if (!currentUser || currentUser.role !== 'founder') return;
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const members = await res.json();
     const banner = document.getElementById('sync-members-banner');
     if (!Array.isArray(members) || members.length === 0 || !members.find(m => m.id === 'tm')) {
@@ -1478,7 +1478,7 @@ async function loadAllData() {
 
 async function loadMembers() {
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     const cards = document.getElementById('member-cards');
@@ -1925,7 +1925,7 @@ async function pushToSheets(sheet, data) {
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const data = await res.json();
     if (Array.isArray(data)) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
     else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
