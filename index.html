@@ -512,7 +512,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
                 </div>
               </div>
               <div class="sec">
-                <div class="sec-label">Agenda <span id="ag-add-btn"><button class="btn-ghost" style="font-size:11px" onclick="addAgItem()">+ Add item</button></span></div>
+                <div class="sec-label">Agenda <span id="ag-add-btn" style="display:inline-flex;gap:6px;align-items:center"><button class="btn-ghost" style="font-size:11px" onclick="addAgItem()">+ Add item</button><button class="btn-ghost" style="font-size:11px" id="btn-save-agenda" onclick="saveAgenda()">Save agenda</button></span></div>
                 <div id="agenda-list">
                   <div class="empty-state-msg" style="text-align:center;padding:16px;color:var(--muted);font-size:13px">No agenda items yet. Click + Add item above.</div>
                 </div>
@@ -1125,6 +1125,11 @@ function openMeetingDetail(title, meta) {
   document.querySelectorAll('#page-meetings .view').forEach(v => v.classList.remove('active'));
   document.getElementById('minutes-txt').value = '';
   loadStandardAgenda();
+  // Load saved agenda and minutes after standard template loads
+  setTimeout(() => {
+    loadAgendaForMeeting(title);
+    loadMinutesForMeeting(title);
+  }, 300);
 }
 
 function loadStandardAgenda() {
@@ -1293,10 +1298,106 @@ function saveMeeting() {
 function saveMinutes() {
   const txt = document.getElementById('minutes-txt').value;
   const title = document.getElementById('det-title').textContent;
-  pushToSheets('Minutes', { id: Date.now().toString(), meetingTitle: title, minutes: txt, savedBy: currentUser.name, savedAt: new Date().toISOString() });
+  if (!txt.trim()) return;
+  const id = 'min_' + Date.now();
+  pushToSheets('Minutes', { id, meetingTitle: title, minutes: txt, savedBy: currentUser.name, savedAt: new Date().toISOString() });
   const btn = document.getElementById('btn-save-minutes');
   btn.textContent = 'Saved!';
-  setTimeout(() => btn.textContent = 'Save minutes', 2000);
+  btn.style.color = '#166534';
+  setTimeout(() => { btn.textContent = 'Save minutes'; btn.style.color = ''; }, 2000);
+}
+
+async function loadMinutesForMeeting(title) {
+  try {
+    const data = await readSheet('Minutes');
+    if (!Array.isArray(data)) return;
+    // Find most recent minutes for this meeting
+    const match = data.filter(r => r.meetingTitle === title).pop();
+    if (match && match.minutes) {
+      document.getElementById('minutes-txt').value = match.minutes;
+    }
+  } catch(e) { console.log('Load minutes error:', e); }
+}
+
+function saveAgenda() {
+  const title = document.getElementById('det-title').textContent;
+  if (!title) return;
+  const meetingId = 'mtg_' + title.replace(/\s+/g,'_').toLowerCase();
+
+  // Collect all sub-items from all sections
+  const containers = document.querySelectorAll('.ag-sub-container');
+  const items = [];
+  containers.forEach(container => {
+    const sectionNum = container.dataset.section;
+    const sectionTitle = container.previousElementSibling ? container.previousElementSibling.querySelector('.ag-text').textContent : '';
+    container.querySelectorAll('.ag-sub-item').forEach(item => {
+      const ce = item.querySelector('[contenteditable]');
+      const text = ce ? ce.textContent.trim() : '';
+      if (text) {
+        items.push({ sectionNum, sectionTitle, itemText: text });
+      }
+    });
+  });
+
+  if (items.length === 0) {
+    alert('No agenda items to save yet. Add some items first.');
+    return;
+  }
+
+  // Save each item to Agenda tab
+  items.forEach(item => {
+    pushToSheets('Agenda', {
+      id: 'ag_' + Date.now() + '_' + Math.random().toString(36).slice(2,6),
+      meetingId,
+      meetingTitle: title,
+      sectionNum: item.sectionNum,
+      sectionTitle: item.sectionTitle,
+      itemText: item.itemText,
+      addedBy: currentUser.name,
+      savedAt: new Date().toISOString()
+    });
+  });
+
+  const btn = document.getElementById('btn-save-agenda');
+  if (btn) {
+    btn.textContent = 'Saved!';
+    btn.style.color = '#166534';
+    setTimeout(() => { btn.textContent = 'Save agenda'; btn.style.color = ''; }, 2000);
+  }
+}
+
+async function loadAgendaForMeeting(title) {
+  try {
+    const data = await readSheet('Agenda');
+    if (!Array.isArray(data) || data.length === 0) return;
+    const meetingId = 'mtg_' + title.replace(/\s+/g,'_').toLowerCase();
+    const items = data.filter(r => r.meetingTitle === title || r.meetingId === meetingId);
+    if (items.length === 0) return;
+
+    // Group by section
+    const bySection = {};
+    items.forEach(item => {
+      const sec = item.sectionNum || '3';
+      if (!bySection[sec]) bySection[sec] = [];
+      bySection[sec].push(item.itemText);
+    });
+
+    // Populate sub-containers
+    Object.entries(bySection).forEach(([sectionNum, texts]) => {
+      const container = document.querySelector(`.ag-sub-container[data-section="${sectionNum}"]`);
+      if (!container) return;
+      // Clear existing empty items
+      container.querySelectorAll('.ag-sub-item').forEach(i => i.remove());
+      // Add saved items
+      const addBtn = container.querySelector('div:last-child');
+      texts.forEach(text => {
+        if (text.trim()) {
+          const subItem = createSubItem(text);
+          container.insertBefore(subItem, addBtn);
+        }
+      });
+    });
+  } catch(e) { console.log('Load agenda error:', e); }
 }
 
 // ── MEMBERS ──
