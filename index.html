@@ -525,25 +525,21 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div style="font-size:13px;color:#7a4e00;line-height:1.5"><strong style="display:block;color:#5a3800;margin-bottom:2px">Sheet not synced</strong>Your existing board members are not yet in the Google Sheet. Click to sync them now — only needed once.</div>
           <button class="btn btn-primary btn-sm" onclick="syncMembersToSheet()" id="sync-btn" style="white-space:nowrap;flex-shrink:0">Sync to Sheet</button>
         </div>
-        <div class="seats-bar">
-          <div class="seat founder"><div class="seat-lbl">Seat 1</div><div class="seat-av" style="background:var(--hibiscus)">TM</div><div class="seat-name">Tamara M.</div><div class="seat-role-txt">Co-Founder</div></div>
-          <div class="seat filled"><div class="seat-lbl">Seat 2</div><div class="seat-av" style="background:var(--violet)">TK</div><div class="seat-name">Tarik M.</div><div class="seat-role-txt">Co-Founder</div></div>
-          <div class="seat filled"><div class="seat-lbl">Seat 3</div><div class="seat-av" style="background:var(--terra)">LZ</div><div class="seat-name">Liz</div><div class="seat-role-txt">Member</div></div>
-          <div class="seat"><div class="seat-lbl">Seat 4</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
-          <div class="seat"><div class="seat-lbl">Seat 5</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
+        <div class="seats-bar" id="seats-bar">
+          <div class="seat"><div class="seat-lbl">Seat 1</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 2</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 3</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 4</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 5</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div></div>
         </div>
-        <div style="background:white;border-radius:12px;border:1px solid var(--border);padding:16px 20px;margin-bottom:18px">
+        <div style="background:white;border-radius:12px;border:1px solid var(--border);padding:16px 20px;margin-bottom:18px" id="composition-panel">
         <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;font-weight:500">Board composition</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="composition-badges">
-          <span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:5px 12px">Tamara — Founder</span>
-          <span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:5px 12px">Tarik — Founder</span>
-          <span class="rel-badge rel-unknown" style="margin-left:0;font-size:12px;padding:5px 12px">Liz — Unclassified</span>
-          <span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">Seat 4 — Open</span>
-          <span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">Seat 5 — Open</span>
+          <span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">No members added yet</span>
         </div>
         <div id="independence-alert" style="background:#fee2e2;border-radius:8px;padding:10px 14px;font-size:12px;color:#b91c1c;display:flex;align-items:flex-start;gap:8px">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <div><strong style="display:block;margin-bottom:2px">No independent members seated</strong>Required before VOCA submission, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility. Priority: recruit and seat at least one independent member.</div>
+          <div><strong style="display:block;margin-bottom:2px">No independent members seated</strong>Required before VOCA submission, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility.</div>
         </div>
       </div>
         <div class="form-panel" id="member-form">
@@ -567,14 +563,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="member-card" onclick="selectMember(this,'tk')"><div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span><span class="rel-badge rel-founder">Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
           <div class="member-card" onclick="selectMember(this,'lz')"><div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span><span class="rel-badge rel-unknown">Unclassified</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
         </div>
-        <div class="profile-panel" id="profile-panel">
-          <div class="profile-hd"><div class="profile-av" id="prof-av" style="background:var(--hibiscus)">TM</div><div><div class="profile-name" id="prof-name">Tamara McMillan</div><div class="profile-sub" id="prof-sub">Co-Founder · Clinical Director</div></div></div>
+        <div class="profile-panel" id="profile-panel" style="display:none">
+          <div class="profile-hd"><div class="profile-av" id="prof-av" style="background:var(--hibiscus)">?</div><div><div class="profile-name" id="prof-name">—</div><div class="profile-sub" id="prof-sub">—</div></div></div>
           <div class="profile-body">
-            <div class="profile-sec"><div class="profile-sec-title">Contact</div><div class="fields-grid" id="prof-contact"><div class="field-box"><div class="field-lbl">Email</div><div class="field-val link">mail@greaterchangesllc.com</div></div><div class="field-box"><div class="field-lbl">Phone</div><div class="field-val">+1 (340) —</div></div><div class="field-box"><div class="field-lbl">Location</div><div class="field-val">St. Croix, USVI</div></div><div class="field-box"><div class="field-lbl">Credentials</div><div class="field-val">LMHC, LPC, NCC, CCTS</div></div></div></div>
-            <div class="profile-sec"><div class="profile-sec-title">Term</div><div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:75%"></div></div><div class="term-lbl" id="prof-term-lbl">2022–2025 · 3-year term · Renewal due</div></div>
-            <div class="profile-sec"><div class="profile-sec-title">Committees</div><div class="comm-tags" id="prof-committees"><span class="comm-tag">Finance</span><span class="comm-tag">Governance</span></div></div>
-            <div class="profile-sec"><div class="profile-sec-title">Independence status</div><div id="prof-relationship"><span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:4px 12px">Founder</span></div></div>
-            <div class="profile-sec"><div class="profile-sec-title">Notes</div><div class="notes-box" id="prof-notes">Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.</div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Contact</div><div class="fields-grid" id="prof-contact"></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Term</div><div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:0%"></div></div><div class="term-lbl" id="prof-term-lbl">—</div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Committees</div><div class="comm-tags" id="prof-committees"></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Independence status</div><div id="prof-relationship"></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Notes</div><div class="notes-box" id="prof-notes">—</div></div>
             <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-edit-member" onclick="openEditMember()">Edit profile</button></div>
           </div>
         </div>
@@ -832,11 +828,7 @@ let currentUser = null;
 
 // Simulated user store — in production this comes from Google Sheets
 // Password check uses simple hash comparison via API
-const LOCAL_USERS = [
-  { email:'mail@bushteafoundation.org', name:'Tamara McMillan', initials:'TM', role:'founder', color:'#E8456A' },
-  { email:'tarik@greaterchangesllc.com', name:'Tarik McMillan', initials:'TK', role:'founder', color:'#3D1F5C' },
-  { email:'liz@bushteafoundation.org', name:'Liz', initials:'LZ', role:'member', color:'#C45E1A' }
-];
+const LOCAL_USERS = [];
 
 // ── INIT ──
 window.addEventListener('load', () => {
@@ -873,7 +865,7 @@ async function doLogin() {
 
   // 1. Try Google Sheet first
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`, { method: 'GET' });
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
     const members = await res.json();
     if (Array.isArray(members)) {
       const match = members.find(m => (m.email || '').toLowerCase() === email);
@@ -960,8 +952,8 @@ function showPortal() {
   document.getElementById('dash-greeting').textContent = greet + ', ' + currentUser.name.split(' ')[0];
 
   applyPermissions();
-  // Check connection first, then load data
-  checkConnection().then(() => loadAllData());
+  checkConnection();
+  loadAllData();
 }
 
 // ── PERMISSIONS ──
@@ -1105,16 +1097,12 @@ function saveMinutes() {
 
 // ── MEMBERS ──
 // ── SYNC HARDCODED MEMBERS TO SHEET ──
-const SEED_MEMBERS = [
-  { id:'tm', name:'Tamara McMillan', role:'Co-Founder', portalRole:'founder', relationship:'founder', email:'mail@bushteafoundation.org', phone:'', termStart:'2022', termEnd:'2025', initials:'TM', color:'#E8456A', active:'true' },
-  { id:'tk', name:'Tarik McMillan', role:'Co-Founder', portalRole:'founder', relationship:'founder', email:'tarik@greaterchangesllc.com', phone:'', termStart:'2022', termEnd:'2025', initials:'TK', color:'#3D1F5C', active:'true' },
-  { id:'lz', name:'Liz', role:'Member', portalRole:'member', relationship:'unknown', email:'liz@bushteafoundation.org', phone:'', termStart:'2023', termEnd:'2026', initials:'LZ', color:'#C45E1A', active:'true' }
-];
+const SEED_MEMBERS = [];
 
 async function checkSheetSync() {
   if (!currentUser || currentUser.role !== 'founder') return;
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`, { method: 'GET' });
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
     const members = await res.json();
     const banner = document.getElementById('sync-members-banner');
     if (!Array.isArray(members) || members.length === 0 || !members.find(m => m.id === 'tm')) {
@@ -1154,13 +1142,10 @@ async function syncMembersToSheet() {
   }, 2000);
 }
 
-const memberData = {
-  tm:{ av:'TM', color:'#E8456A', relationship:'founder', name:'Tamara McMillan', sub:'Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS', contact:[{l:'Email',v:'mail@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Credentials',v:'LMHC, LPC, NCC, CCTS'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Finance','Governance'], notes:'Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.' },
-  tk:{ av:'TK', color:'#3D1F5C', relationship:'founder', name:'Tarik McMillan', sub:'Co-Founder · Operations', contact:[{l:'Email',v:'tarik@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Role',v:'Co-Founder'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Programs'], notes:'Co-Founder and Operations lead. Co-hosts Crucian Counselors podcast.' },
-  lz:{ av:'LZ', color:'#C45E1A', relationship:'unknown', name:'Liz', sub:'Board Member', contact:[{l:'Email',v:'—'},{l:'Phone',v:'—'},{l:'Location',v:'—'},{l:'Status',v:'Active member'}], termPct:45, termLbl:'2023–2026 · 3-year term · Active', committees:['Finance'], notes:'Current non-founder board member. Does not satisfy independence requirement for VOCA/grant purposes.' }
-};
+const memberData = {};
 
 function selectMember(card, id) {
+  document.getElementById('profile-panel').style.display = 'block';
   document.querySelectorAll('.member-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
   const m = memberData[id];
@@ -1495,21 +1480,112 @@ function renderIE(data) {
 // ── SHARED ──
 // ── LOAD FROM SHEET ON STARTUP ──
 async function loadAllData() {
-  try {
-    await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance()]);
-  } catch(e) {
-    console.log('loadAllData error:', e);
-  }
-  // Always update stats after load attempts complete
+  await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance(), loadMembers()]);
   updateDashboardStats();
   syncDashboardMeetings();
   syncDashboardTasks();
 }
 
+async function loadMembers() {
+  try {
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    const cards = document.getElementById('member-cards');
+    if (!cards) return;
+    // Clear empty state
+    cards.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+    data.forEach(m => {
+      if (!m.name) return;
+      const id = m.id || ('m_' + Date.now() + Math.random());
+      const color = m.color || '#3D1F5C';
+      const initials = m.initials || m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const role = m.role || 'Member';
+      const relationship = m.relationship || 'unknown';
+      const termStart = m.termStart || '';
+      const termEnd = m.termEnd || '';
+      const committee = m.committees || '';
+      const portalRole = m.portalRole || 'member';
+      const relBadgeClass = {independent:'rel-independent',founder:'rel-founder',family:'rel-family',affiliated:'rel-affiliated',unknown:'rel-unknown'}[relationship] || 'rel-unknown';
+      const relBadgeLabel = {independent:'Independent',founder:'Founder',family:'Family',affiliated:'Affiliated',unknown:'Unknown'}[relationship] || 'Unknown';
+
+      // Store in memberData
+      memberData[id] = {
+        av: initials, color, relationship,
+        name: m.name, sub: role,
+        contact: [
+          {l:'Email', v:m.email||'—', link:!!m.email},
+          {l:'Phone', v:m.phone||'—'},
+          {l:'Role', v:role}
+        ],
+        termPct: termStart && termEnd ? Math.min(95, Math.round(((new Date().getFullYear()-parseInt(termStart))/(parseInt(termEnd)-parseInt(termStart)))*100)) : 10,
+        termLbl: (termStart||'—') + (termEnd?' – '+termEnd:'') + ' · ' + (portalRole === 'founder' ? '3-year term' : 'Board term'),
+        committees: committee ? committee.split(',').map(s=>s.trim()).filter(Boolean) : [],
+        notes: m.notes || ''
+      };
+
+      const div = document.createElement('div');
+      div.className = 'member-card';
+      div.onclick = function() { selectMember(this, id); };
+      div.innerHTML = '<div class="mc-top"><div class="av-lg" style="background:'+color+'">'+initials+'</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">'+m.name+'</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">'+role+'</div><span class="pill pill-violet" style="margin-right:4px">'+role+'</span><span class="rel-badge '+relBadgeClass+'" style="margin-left:0;font-size:10px;padding:3px 8px">'+relBadgeLabel+'</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>'+termStart+(termEnd?' – '+termEnd:'')+'</span></div><div class="mc-meta-item">Committee<span>'+(committee||'—')+'</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>';
+      cards.appendChild(div);
+    });
+
+    // Update seat bar
+    updateSeatBar(data);
+    // Update composition panel
+    updateCompositionPanel(data);
+    // Update stat
+    const statSeats = document.getElementById('stat-seats');
+    if (statSeats) statSeats.textContent = data.length;
+  } catch(e) { console.log('Load members error:', e); }
+}
+
+function updateSeatBar(members) {
+  const bar = document.getElementById('seats-bar');
+  if (!bar) return;
+  const seats = bar.querySelectorAll('.seat');
+  const emptyHTML = '<div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>';
+  seats.forEach((seat, i) => {
+    const m = members[i];
+    if (m) {
+      const color = m.color || '#3D1F5C';
+      const initials = m.initials || m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+      const isFounder = (m.relationship||'') === 'founder';
+      seat.className = 'seat ' + (isFounder ? 'founder' : 'filled');
+      seat.innerHTML = '<div class="seat-lbl">Seat '+(i+1)+'</div><div class="seat-av" style="background:'+color+'">'+initials+'</div><div class="seat-name">'+m.name.split(' ')[0]+'</div><div class="seat-role-txt">'+(m.role||'Member')+'</div>';
+    } else {
+      seat.className = 'seat';
+      seat.innerHTML = '<div class="seat-lbl">Seat '+(i+1)+'</div>'+emptyHTML+'<div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Add member</div>';
+    }
+  });
+}
+
+function updateCompositionPanel(members) {
+  const badges = document.getElementById('composition-badges');
+  const alert = document.getElementById('independence-alert');
+  if (!badges) return;
+  const relLabels = {independent:'Independent',founder:'Founder',family:'Family of Founder',affiliated:'Affiliated — GC/BTTF',unknown:'Status unknown'};
+  const relClass = {independent:'rel-independent',founder:'rel-founder',family:'rel-family',affiliated:'rel-affiliated',unknown:'rel-unknown'};
+  if (members.length === 0) {
+    badges.innerHTML = '<span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">No members added yet</span>';
+  } else {
+    badges.innerHTML = members.map(m => {
+      const rel = m.relationship || 'unknown';
+      return '<span class="rel-badge '+relClass[rel]+'" style="margin-left:0;font-size:12px;padding:5px 12px">'+m.name.split(' ')[0]+' — '+(relLabels[rel]||rel)+'</span>';
+    }).join('') +
+    Array(Math.max(0,5-members.length)).fill(0).map((_,i) =>
+      '<span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">Seat '+(members.length+i+1)+' — Open</span>'
+    ).join('');
+  }
+  // Show/hide independence alert
+  const hasIndependent = members.some(m => m.relationship === 'independent');
+  if (alert) alert.style.display = hasIndependent ? 'none' : 'flex';
+}
+
 async function loadMeetings() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Meetings&key=${API_KEY}`, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(`${API_URL}?sheet=Meetings&key=${API_KEY}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     const upcomingList = document.getElementById('upcoming-list');
@@ -1541,8 +1617,7 @@ async function loadMeetings() {
 
 async function loadTasks() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Actions&key=${API_KEY}`, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(`${API_URL}?sheet=Actions&key=${API_KEY}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     const list = document.getElementById('task-list');
@@ -1564,22 +1639,9 @@ async function loadTasks() {
 
 async function loadDocuments() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Documents&key=${API_KEY}`, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(`${API_URL}?sheet=Documents&key=${API_KEY}`);
     const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) {
-      // Sheet is empty — make sure empty state messages are visible
-      document.querySelectorAll('#page-documents .card-body').forEach(body => {
-        if (!body.querySelector('.doc-row') && !body.querySelector('.empty-state-msg')) {
-          const msg = document.createElement('div');
-          msg.className = 'empty-state-msg';
-          msg.style.cssText = 'text-align:center;padding:24px;color:var(--muted);font-size:13px';
-          msg.textContent = 'No documents yet. Click + Add document.';
-          body.appendChild(msg);
-        }
-      });
-      return;
-    }
+    if (!Array.isArray(data) || data.length === 0) return;
     data.forEach(doc => {
       if (!doc.name) return;
       const cat = doc.category || 'Governance';
@@ -1635,8 +1697,7 @@ async function loadDocuments() {
 
 async function loadFinance() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Finance&key=${API_KEY}`, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(`${API_URL}?sheet=Finance&key=${API_KEY}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     ieData = data.map(r => ({
@@ -1681,10 +1742,10 @@ function updateDashboardStats() {
     if (statMeetingSub) statMeetingSub.textContent = 'none scheduled';
   }
 
-  // Documents — count only actual doc-row elements
+  // Documents — count only actual doc-row elements, not empty state divs
   const docRows = Array.from(document.querySelectorAll('#page-documents .doc-row'));
   const statDocs = document.getElementById('stat-docs');
-  if (statDocs) statDocs.textContent = docRows.length > 0 ? docRows.length : '0';
+  if (statDocs) statDocs.textContent = docRows.length;
 
   // Board seats — count filled seats
   const filledSeats = document.querySelectorAll('.seat.filled, .seat.founder').length;
@@ -1867,37 +1928,18 @@ function saveEditMember() {
 // Finance tab headers: id · date · desc · cat · amount · importedFrom · quarter · importedBy · addedBy
 async function pushToSheets(sheet, data) {
   try {
-    await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ key: API_KEY, sheet, action: data.action || 'add', data })
-    });
-  } catch(e) { console.log('Sheets sync error:', e); }
+    await fetch(API_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ key: API_KEY, sheet, action:'add', data }) });
+  } catch(e) { console.log('Sheets sync:', e); }
 }
 
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
-  badge.textContent = '● Connecting...';
-  badge.className = 'sync-status sync-warn';
   try {
-    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`, { method: 'GET' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
     const data = await res.json();
-    if (Array.isArray(data)) {
-      badge.textContent = '● Synced';
-      badge.className = 'sync-status sync-ok';
-    } else if (data && data.error === 'unauthorized') {
-      badge.textContent = '● Auth error';
-      badge.className = 'sync-status sync-err';
-    } else {
-      badge.textContent = '● Connected';
-      badge.className = 'sync-status sync-ok';
-    }
-  } catch(e) {
-    badge.textContent = '● Not connected';
-    badge.className = 'sync-status sync-warn';
-    console.log('Connection error:', e.message);
-  }
+    if (Array.isArray(data)) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
+    else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
+  } catch(e) { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
 }
 
 // ── TASK EDIT + DELETE ──
