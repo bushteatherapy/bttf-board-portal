@@ -289,11 +289,54 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .task-actions{display:none;gap:2px;align-items:center}
 .task-row:hover .task-actions{display:flex}
 .task-edit-input{flex:1;padding:4px 8px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none}
-@media(max-width:700px){
-  .two-col{grid-template-columns:1fr}
-  .form-grid{grid-template-columns:1fr}
-  .fields-grid{grid-template-columns:1fr}
-  .seats-bar{grid-template-columns:repeat(3,1fr)}
+@media(max-width:768px){
+  /* Layout */
+  :root { --sidebar-w: 0px; }
+  .sidebar { transform: translateX(-100%); transition: transform 0.25s ease; z-index: 200; width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .topbar { padding: 0 16px; }
+
+  /* Mobile menu button */
+  .mobile-menu-btn { display: flex !important; }
+
+  /* Overlay when sidebar open */
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 199; }
+  .sidebar-overlay.show { display: block; }
+
+  /* Content */
+  .content { padding: 16px; }
+  .two-col { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .fields-grid { grid-template-columns: 1fr; }
+  .seats-bar { grid-template-columns: repeat(3,1fr); }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+
+  /* Page headers */
+  .page-hd { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .page-hd-left h1 { font-size: 22px; }
+
+  /* Topbar */
+  .topbar-title { font-size: 16px; }
+  .year-badge { display: none; }
+
+  /* Tables */
+  .ie-table { font-size: 12px; }
+  .ie-table th, .ie-table td { padding: 7px 6px; }
+
+  /* Login */
+  .login-box { padding: 24px 20px; margin: 16px; }
+
+  /* Meetings detail */
+  .detail-hd { flex-direction: column; gap: 10px; }
+
+  /* Members seats */
+  .seat { padding: 8px 6px; }
+  .seat-name { font-size: 10px; }
+}
+
+@media(min-width:769px){
+  .mobile-menu-btn { display: none !important; }
 }
 </style>
 </head>
@@ -326,6 +369,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
 <!-- PORTAL -->
 <div id="portal">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -387,7 +431,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
   <!-- MAIN -->
   <main class="main">
     <header class="topbar">
-      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()" style="display:none;background:transparent;border:none;cursor:pointer;padding:4px;border-radius:6px;color:var(--violet)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+      </div>
       <div class="topbar-right">
         <span class="year-badge">FY 2026</span>
         <span class="role-badge" id="topbar-role-badge">—</span>
@@ -945,6 +994,13 @@ function showReset() {
   if (email) pushToSheets('PasswordResets', { email, requestedAt: new Date().toISOString() });
 }
 
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+}
+
 function doLogout() {
   sessionStorage.removeItem('bttf_user');
   currentUser = null;
@@ -1029,6 +1085,11 @@ function setEl(id, show) {
 const pageTitles = { dashboard:'Dashboard', meetings:'Meetings', members:'Members', tasks:'Tasks', documents:'Documents', finance:'Finance' };
 
 function navigate(el) {
+  // Close sidebar on mobile after navigation
+  if (window.innerWidth <= 768) {
+    document.querySelector('.sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').classList.remove('show');
+  }
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
@@ -1153,22 +1214,47 @@ function closeMeetingDetail() {
 
 function addAgItem() {
   if (!PERMS[currentUser.role].addAgenda) return;
-  agCount++;
-  const list = document.getElementById('agenda-list');
-  list.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
-  // Insert before "Meeting Adjourned" (last item) if it exists
-  const items = list.querySelectorAll('.ag-item');
-  const lastItem = items[items.length - 1];
-  const div = document.createElement('div'); div.className = 'ag-item';
-  div.innerHTML = `<div class="ag-num">${agCount}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px">New item</div>`;
-  if (lastItem && lastItem.querySelector('.ag-text') && lastItem.querySelector('.ag-text').textContent === 'Meeting Adjourned') {
-    list.insertBefore(div, lastItem);
-  } else {
-    list.appendChild(div);
-  }
-  const ce = div.querySelector('[contenteditable]'); ce.focus();
-  const r = document.createRange(); r.selectNodeContents(ce);
-  window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
+  // Show section picker modal
+  const existing = document.getElementById('ag-section-picker');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'ag-section-picker';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:white;border-radius:12px;padding:20px 22px;width:100%;max-width:380px">
+      <div style="font-size:14px;font-weight:500;color:var(--violet);margin-bottom:14px">Add agenda item</div>
+      <div class="ff" style="margin-bottom:12px">
+        <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px;font-weight:500">Section</label>
+        <select id="ag-section-select" style="width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none">
+          <option value="3">Old Business</option>
+          <option value="4">New Business</option>
+          <option value="5">Action Items & Next Meeting</option>
+        </select>
+      </div>
+      <div class="ff" style="margin-bottom:16px">
+        <label style="display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px;font-weight:500">Item</label>
+        <input type="text" id="ag-item-text" placeholder="Describe the item..." style="width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none">
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary btn-sm" onclick="confirmAddAgItem()">Add item</button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('ag-section-picker').remove()">Cancel</button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  setTimeout(() => document.getElementById('ag-item-text').focus(), 50);
+  document.getElementById('ag-item-text').onkeydown = (e) => { if (e.key === 'Enter') confirmAddAgItem(); if (e.key === 'Escape') modal.remove(); };
+}
+
+function confirmAddAgItem() {
+  const sectionNum = document.getElementById('ag-section-select').value;
+  const text = document.getElementById('ag-item-text').value.trim();
+  document.getElementById('ag-section-picker').remove();
+  if (!text) return;
+  const container = document.querySelector(`.ag-sub-container[data-section="${sectionNum}"]`);
+  if (!container) return;
+  const newSub = createSubItem(text);
+  const addBtn = container.querySelector('div:last-child');
+  container.insertBefore(newSub, addBtn);
 }
 
 function addDetAction() {
