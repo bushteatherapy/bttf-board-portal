@@ -504,11 +504,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div style="display:flex;gap:8px"><button class="btn-white">Export PDF</button></div>
             </div>
             <div class="detail-body">
-              <div class="sec"><div class="sec-label">Attendance</div>
-                <div class="att-grid">
-                  <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--hibiscus)">TM</div>Tamara</div>
-                  <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--violet)">TK</div>Tarik</div>
-                  <div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--terra)">LZ</div>Liz</div>
+              <div class="sec"><div class="sec-label">Attendance <span style="font-size:11px;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(click to mark present)</span></div>
+                <div class="att-grid" id="attendance-grid">
+                  <div style="color:var(--muted);font-size:13px;padding:8px 0">Loading members...</div>
                 </div>
               </div>
               <div class="sec">
@@ -1125,11 +1123,45 @@ function openMeetingDetail(title, meta) {
   document.querySelectorAll('#page-meetings .view').forEach(v => v.classList.remove('active'));
   document.getElementById('minutes-txt').value = '';
   loadStandardAgenda();
-  // Load saved agenda and minutes after standard template loads
+  loadAttendanceGrid();
   setTimeout(() => {
     loadAgendaForMeeting(title);
     loadMinutesForMeeting(title);
   }, 300);
+}
+
+async function loadAttendanceGrid() {
+  const grid = document.getElementById('attendance-grid');
+  if (!grid) return;
+  grid.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px 0">Loading...</div>';
+  try {
+    const members = await readSheet('Members');
+    if (!Array.isArray(members) || members.length === 0) {
+      // Fall back to memberData if sheet read fails
+      const fallback = Object.values(memberData);
+      if (fallback.length === 0) { grid.innerHTML = '<div style="color:var(--muted);font-size:13px">No members found.</div>'; return; }
+      grid.innerHTML = fallback.map(m =>
+        `<div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:${m.color}">${m.av}</div>${m.name.split(' ')[0]}</div>`
+      ).join('');
+      return;
+    }
+    grid.innerHTML = members.map(m => {
+      const color = m.color || '#3D1F5C';
+      const initials = m.initials || (m.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+      const firstName = (m.name||'Member').split(' ')[0];
+      return `<div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:${color}">${initials}</div>${firstName}</div>`;
+    }).join('');
+  } catch(e) {
+    // Fall back to memberData
+    const fallback = Object.values(memberData);
+    if (fallback.length > 0) {
+      grid.innerHTML = fallback.map(m =>
+        `<div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:${m.color}">${m.av}</div>${m.name.split(' ')[0]}</div>`
+      ).join('');
+    } else {
+      grid.innerHTML = '<div style="color:var(--muted);font-size:13px">Could not load members.</div>';
+    }
+  }
 }
 
 function loadStandardAgenda() {
