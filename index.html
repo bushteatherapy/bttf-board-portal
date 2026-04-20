@@ -1314,8 +1314,7 @@ function previewQBImport() {
 }
 
 function parseQBCSV(text) {
-  const lines = text.split('
-').map(l => l.trim()).filter(l => l.length > 0);
+  const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
   const entries = [];
   // QB P&L CSV format: rows have account name, then amount columns
   // Income lines are positive, expense lines are negative
@@ -1845,25 +1844,30 @@ function editDocRow(btn) {
   // Replace row content with inline edit fields
   const originalHTML = row.innerHTML;
   // Store original HTML as data attribute to restore on cancel
+  const editId = row.dataset ? (row.dataset.id || '') : '';
   row.setAttribute('data-original', encodeURIComponent(originalHTML));
-  row.innerHTML =
-    '<div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">' +
-    '<input type="text" value="' + currentName.replace(/"/g,"&quot;") + '" id="doc-edit-name" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">' +
-    '<input type="url" value="' + currentUrl.replace(/"/g,"&quot;") + '" placeholder="https://drive.google.com/..." id="doc-edit-url" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">' +
-    '</div>' +
-    '<div style="display:flex;gap:6px;align-items:center;margin-left:8px">' +
-    '<button class="btn btn-primary btn-sm" onclick="saveDocEdit(this, '' + (row.dataset?.id || '') + '')">Save</button>' +
-    '<button class="btn btn-outline btn-sm" onclick="cancelDocEdit(this)">Cancel</button>' +
-    '</div>';
+  const safeName = currentName.replace(/"/g, '&quot;');
+  const safeEditUrl = currentUrl.replace(/"/g, '&quot;');
+  row.innerHTML = [
+    '<div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">',
+    '<input type="text" value="' + safeName + '" id="doc-edit-name" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">',
+    '<input type="url" value="' + safeEditUrl + '" placeholder="https://drive.google.com/..." id="doc-edit-url" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">',
+    '</div>',
+    '<div style="display:flex;gap:6px;align-items:center;margin-left:8px">',
+    '<button class="btn btn-primary btn-sm" onclick="saveDocEditById(this,\''+editId+'\')">Save</button>',
+    '<button class="btn btn-outline btn-sm" onclick="cancelDocEdit(this)">Cancel</button>',
+    '</div>'
+  ].join('');
 }
 
-function saveDocEdit(btn, id) {
+function saveDocEditById(btn, id) {
   const row = btn.closest('.doc-row');
   const newName = row.querySelector('#doc-edit-name').value.trim();
   const newUrl = row.querySelector('#doc-edit-url').value.trim();
   if (!newName) return;
   const date = row.querySelector('.doc-meta')?.textContent || new Date().toLocaleDateString();
-  row.innerHTML = `<div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${newUrl.replace(/'/g,"\'")}'" data-url="${newUrl}">${newName}</div><div class="doc-meta">${date}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
+  const safeUrl = newUrl.replace(/'/g, '%27');
+  row.innerHTML = '<div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc(\'' + safeUrl + '\')" data-url="' + newUrl + '">' + newName + '</div><div class="doc-meta">' + date + '</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>';
   if (id) pushToSheets('Documents', { id, name: newName, driveUrl: newUrl, action: 'update' });
 }
 
