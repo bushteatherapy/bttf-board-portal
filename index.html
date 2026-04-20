@@ -1063,6 +1063,35 @@ function openMeetingDetail(title, meta) {
   document.getElementById('meeting-detail').style.display = 'block';
   document.querySelectorAll('#page-meetings .view').forEach(v => v.classList.remove('active'));
   document.getElementById('minutes-txt').value = '';
+  loadStandardAgenda();
+}
+
+function loadStandardAgenda() {
+  const list = document.getElementById('agenda-list');
+  list.innerHTML = '';
+  agCount = 0;
+  const items = [
+    { text: 'Call to order', editable: false },
+    { text: 'Review & Approval of Minutes', editable: false },
+    { text: 'Old Business', editable: true, placeholder: 'Add old business items here...' },
+    { text: 'New Business', editable: true, placeholder: 'Add new business items here...' },
+    { text: 'Action Items & Next Meeting', editable: false },
+    { text: 'Meeting Adjourned', editable: false },
+  ];
+  items.forEach((item, i) => {
+    agCount++;
+    const div = document.createElement('div');
+    div.className = 'ag-item';
+    if (item.editable) {
+      div.innerHTML = `<div class="ag-num">${i+1}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px;border-bottom:1px dashed var(--border);padding-bottom:2px" data-placeholder="${item.placeholder}">${item.text}</div>`;
+      const ce = div.querySelector('[contenteditable]');
+      ce.addEventListener('focus', function() { if (this.textContent === item.text) { this.textContent = ''; } });
+      ce.addEventListener('blur', function() { if (this.textContent.trim() === '') { this.textContent = item.text; } });
+    } else {
+      div.innerHTML = `<div class="ag-num">${i+1}</div><div class="ag-text">${item.text}</div>`;
+    }
+    list.appendChild(div);
+  });
 }
 
 function closeMeetingDetail() {
@@ -1074,11 +1103,17 @@ function addAgItem() {
   if (!PERMS[currentUser.role].addAgenda) return;
   agCount++;
   const list = document.getElementById('agenda-list');
-  // Clear empty state
   list.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+  // Insert before "Meeting Adjourned" (last item) if it exists
+  const items = list.querySelectorAll('.ag-item');
+  const lastItem = items[items.length - 1];
   const div = document.createElement('div'); div.className = 'ag-item';
-  div.innerHTML = `<div class="ag-num">${agCount}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px">New item</div><div class="ag-time">10 min</div>`;
-  list.appendChild(div);
+  div.innerHTML = `<div class="ag-num">${agCount}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px">New item</div>`;
+  if (lastItem && lastItem.querySelector('.ag-text') && lastItem.querySelector('.ag-text').textContent === 'Meeting Adjourned') {
+    list.insertBefore(div, lastItem);
+  } else {
+    list.appendChild(div);
+  }
   const ce = div.querySelector('[contenteditable]'); ce.focus();
   const r = document.createRange(); r.selectNodeContents(ce);
   window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
@@ -1108,7 +1143,9 @@ function saveMeeting() {
   const list = document.getElementById('upcoming-list');
   const div = document.createElement('div'); div.className = 'meeting-row';
   div.onclick = () => openMeetingDetail(title, `${date} · ${time} · ${loc} · ${type}`);
-  div.innerHTML = `<div class="date-chip"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${title}</div><div class="meeting-meta">${time} · ${loc} · ${type}</div></div><span class="pill pill-blue">Upcoming</span>`;
+  div.innerHTML = `<div class="date-chip"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${title}</div><div class="meeting-meta">${time} · ${loc} · ${type}</div></div><span class="pill pill-blue">Upcoming</span><div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
+  div.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
+  div.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
   list.appendChild(div);
   toggleForm('meeting-form');
   pushToSheets('Meetings', { id: Date.now().toString(), title, date, time, location: loc, status: 'upcoming' });
@@ -1635,7 +1672,9 @@ async function loadMeetings() {
       const div = document.createElement('div');
       div.className = 'meeting-row';
       div.onclick = () => openMeetingDetail(m.title, `${m.date || ''} · ${m.time || ''} · ${m.location || ''}`);
-      div.innerHTML = `<div class="${chipClass}"><div class="${moClass}">${mo}</div><div class="${dayClass}">${day}</div></div><div class="meeting-info"><div class="meeting-title">${m.title}</div><div class="meeting-meta">${m.time || ''} · ${m.location || ''}</div></div>${statusPill}`;
+      div.innerHTML = `<div class="${chipClass}"><div class="${moClass}">${mo}</div><div class="${dayClass}">${day}</div></div><div class="meeting-info"><div class="meeting-title">${m.title}</div><div class="meeting-meta">${m.time || ''} · ${m.location || ''}</div></div>${statusPill}<div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
+      div.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
+      div.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
       if (isPast && pastList) pastList.appendChild(div);
       else upcomingList.appendChild(div);
     });
@@ -1946,6 +1985,66 @@ function saveEditMember() {
   }
   closeEditMember();
   pushToSheets('Members', { id: editingMemberId, name, portalRole, relationship, email, phone, termStart, termEnd, committees: committees.join(', '), notes, action: 'update' });
+}
+
+// ── MEETING EDIT / DELETE ──
+function editMeetingRow(btn) {
+  const row = btn.closest('.meeting-row');
+  const titleEl = row.querySelector('.meeting-title');
+  const metaEl = row.querySelector('.meeting-meta');
+  const currentTitle = titleEl ? titleEl.textContent : '';
+  const currentMeta = metaEl ? metaEl.textContent : '';
+  const originalHTML = row.innerHTML;
+  row.setAttribute('data-original', encodeURIComponent(originalHTML));
+  row.innerHTML = `
+    <div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">
+      <input type="text" value="${currentTitle.replace(/"/g,'&quot;')}" id="meet-edit-title" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none">
+      <input type="text" value="${currentMeta.replace(/"/g,'&quot;')}" id="meet-edit-meta" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--muted)">
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;margin-left:8px">
+      <button class="btn btn-primary btn-sm" onclick="saveMeetingEdit(this)">Save</button>
+      <button class="btn btn-outline btn-sm" onclick="cancelMeetingEdit(this)">Cancel</button>
+    </div>`;
+  row.onclick = null;
+}
+
+function saveMeetingEdit(btn) {
+  const row = btn.closest('.meeting-row');
+  const newTitle = row.querySelector('#meet-edit-title').value.trim();
+  const newMeta = row.querySelector('#meet-edit-meta').value.trim();
+  if (!newTitle) return;
+  const parts = newMeta.split('·').map(s => s.trim());
+  const date = parts[0] || '';
+  const time = parts[1] || '';
+  const loc = parts[2] || '';
+  const d = date ? new Date(date + 'T00:00:00') : null;
+  const mo = d ? d.toLocaleString('default',{month:'short'}) : '—';
+  const day = d ? d.getDate() : '—';
+  const chipClass = 'date-chip';
+  row.className = 'meeting-row';
+  row.innerHTML = `<div class="${chipClass}"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${newTitle}</div><div class="meeting-meta">${newMeta}</div></div><span class="pill pill-blue">Upcoming</span><div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
+  row.onclick = () => openMeetingDetail(newTitle, newMeta);
+  row.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
+  row.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
+  updateDashboardStats();
+}
+
+function cancelMeetingEdit(btn) {
+  const row = btn.closest('.meeting-row');
+  const original = row.getAttribute('data-original');
+  if (original) {
+    row.innerHTML = decodeURIComponent(original);
+    row.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
+    row.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
+  }
+}
+
+function deleteMeetingRow(btn) {
+  const row = btn.closest('.meeting-row');
+  if (confirm('Delete this meeting?')) {
+    row.remove();
+    updateDashboardStats();
+  }
 }
 
 // ── GOOGLE SHEETS ──
