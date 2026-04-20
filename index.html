@@ -409,17 +409,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
         <div class="two-col">
           <div class="card">
             <div class="card-hd"><span class="card-title">Upcoming meetings</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=meetings]'))">View all</button></div>
-            <div class="card-body" style="padding:6px 18px">
-              <div class="meeting-row"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div><div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board</div></div><span class="pill pill-blue">Upcoming</span></div>
-              <div class="meeting-row"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div><div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div><span class="pill pill-amber">Agenda draft</span></div>
+            <div class="card-body" style="padding:6px 18px" id="dash-meetings-list">
+              <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No upcoming meetings yet.</div>
             </div>
           </div>
           <div class="card">
             <div class="card-hd"><span class="card-title">Priority tasks</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=tasks]'))">View all</button></div>
-            <div class="card-body" style="padding:6px 18px">
-              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Respond to USPTO Office Action</div><span class="pill pill-red">High</span></div>
-              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Recruit independent board member</div><span class="pill pill-red">High</span></div>
-              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Complete SAM.gov registration</div><span class="pill pill-red">High</span></div>
+            <div class="card-body" style="padding:6px 18px" id="dash-tasks-list">
+              <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No tasks yet.</div>
             </div>
           </div>
         </div>
@@ -488,8 +485,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="sec">
                 <div class="sec-label">Action items <span id="act-add-btn"><button class="btn-ghost" style="font-size:11px" onclick="addDetAction()">+ Add item</button></span></div>
                 <div id="det-actions">
-                  <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review board candidate shortlist<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
-                  <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm Q2 financials with bookkeeper<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span></div></div><span class="pill pill-amber">Med</span></div>
+                  <div class="empty-state-msg" style="text-align:center;padding:16px;color:var(--muted);font-size:13px">No action items yet. Click + Add item above.</div>
                 </div>
               </div>
             </div>
@@ -498,27 +494,21 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
         <div class="view active" id="t-upcoming">
           <div class="card"><div class="card-hd"><span class="card-title">Scheduled</span></div>
             <div class="card-body" style="padding:6px 18px" id="upcoming-list">
-              <div class="meeting-row" onclick="openMeetingDetail('Board Q2 review','May 6, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div><div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Quorum required</div></div><span class="pill pill-blue">Upcoming</span></div>
-              <div class="meeting-row" onclick="openMeetingDetail('Finance committee','May 20, 2026 · 2:00 PM · Zoom · Tamara, Liz')"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div><div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div><span class="pill pill-amber">Agenda draft</span></div>
-              <div class="meeting-row" onclick="openMeetingDetail('Annual strategy session','June 3, 2026 · 9:00 AM · TBD · Full board')"><div class="date-chip"><div class="dc-mo">Jun</div><div class="dc-day">3</div></div><div class="meeting-info"><div class="meeting-title">Annual strategy session</div><div class="meeting-meta">9:00 AM · TBD · Full board</div></div><span class="pill pill-amber">Planning</span></div>
+              <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No upcoming meetings. Click + New meeting to add one.</div>
             </div>
           </div>
         </div>
         <div class="view" id="t-past">
           <div class="card"><div class="card-hd"><span class="card-title">Past meetings</span></div>
-            <div class="card-body" style="padding:6px 18px">
-              <div class="meeting-row" onclick="openMeetingDetail('April board meeting','April 15, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip past"><div class="dc-mo past">Apr</div><div class="dc-day past">15</div></div><div class="meeting-info"><div class="meeting-title">April board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div><span class="pill pill-green">Complete</span></div>
-              <div class="meeting-row" onclick="openMeetingDetail('March board meeting','March 11, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip past"><div class="dc-mo past">Mar</div><div class="dc-day past">11</div></div><div class="meeting-info"><div class="meeting-title">March board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div><span class="pill pill-green">Complete</span></div>
+            <div class="card-body" style="padding:6px 18px" id="past-list">
+              <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No past meetings recorded yet.</div>
             </div>
           </div>
         </div>
         <div class="view" id="t-actions">
           <div class="card"><div class="card-hd"><span class="card-title">All open action items</span></div>
-            <div class="card-body" style="padding:6px 18px">
-              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Draft 990-PF narrative for FY2025<div class="act-meta">Due May 10 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
-              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review and sign updated bylaws<div class="act-meta">Due May 15 · <span class="owner-chip"><span class="owner-dot" style="background:var(--terra)">LZ</span>Liz</span></div></div><span class="pill pill-amber">Med</span></div>
-              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm RTPark venue — Summer Yoga Series<div class="act-meta">Due Apr 30 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span></div></div><span class="pill pill-red">Overdue</span></div>
-              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Submit VOCA subrecipient pre-application<div class="act-meta">Due May 31 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
+            <div class="card-body" style="padding:6px 18px" id="all-actions-list">
+              <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No open action items. Add them from within a meeting.</div>
             </div>
           </div>
         </div>
@@ -674,8 +664,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="form-actions"><button class="btn btn-primary" onclick="saveDoc()">Save</button><button class="btn btn-outline" onclick="toggleForm('doc-form')">Cancel</button></div>
         </div>
         <div class="two-col">
-          <div class="card"><div class="card-hd"><span class="card-title">Governance</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">BTTF Bylaws (2024)</div><div class="doc-meta">Updated Apr 2024 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">Board Meeting Minutes Template</div><div class="doc-meta">Updated Jan 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">BTTF–GC Clinical Services Agreement</div><div class="doc-meta">Updated Mar 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div></div></div>
-          <div class="card"><div class="card-hd"><span class="card-title">Compliance & legal</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025 · PDF</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">IRS Determination Letter</div><div class="doc-meta">501(c)(3) · EIN 88-3435722</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">5% Distribution Tracker (FY2026)</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div></div></div>
+          <div class="card"><div class="card-hd"><span class="card-title">Governance</span></div><div class="card-body" style="padding:6px 18px" id="gov-docs-list">
+              <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No documents yet. Click + Add document.</div>
+            </div></div>
+          <div class="card"><div class="card-hd"><span class="card-title">Compliance & legal</span></div><div class="card-body" style="padding:6px 18px" id="compliance-docs-list">
+              <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No documents yet. Click + Add document.</div>
+            </div></div>
         </div>
       </div>
 
@@ -738,10 +732,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
         <div class="dist-tracker" id="dist-tracker">
           <div class="dist-title">FY2026 — 5% mandatory distribution tracker</div>
-          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Net assets (est.)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right">$42,000</span></div>
-          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Required (5%)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right">$2,100</span></div>
-          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Distributed YTD</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" id="dist-bar" style="width:38%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right" id="dist-amount">$800</span></div>
-          <div style="font-size:12px;color:var(--muted);margin-top:8px">$1,300 remaining to meet FY2026 requirement by December 31, 2026.</div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Net assets (est.)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right" id="dist-net-assets">—</span></div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Required (5%)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right" id="dist-required">—</span></div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Distributed YTD</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" id="dist-bar" style="width:0%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right" id="dist-amount">—</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px" id="dist-note">Import a P&L or add entries to calculate distribution status.</div>
         </div>
 
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -751,9 +745,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div style="font-size:12px;color:var(--muted)" id="period-label">Showing all entries</div>
         </div>
         <div class="balance-bar">
-          <div><div class="balance-label">Current balance</div><div class="balance-amount positive" id="balance-display">$41,200</div></div>
-          <div style="text-align:right"><div class="balance-label">Total income YTD</div><div style="font-size:15px;font-weight:500;color:#166534" id="income-display">$12,400</div></div>
-          <div style="text-align:right"><div class="balance-label">Total expenses YTD</div><div style="font-size:15px;font-weight:500;color:#b91c1c" id="expense-display">$3,200</div></div>
+          <div><div class="balance-label">Net (income − expenses)</div><div class="balance-amount" id="balance-display">$0</div></div>
+          <div style="text-align:right"><div class="balance-label">Total income</div><div style="font-size:15px;font-weight:500;color:#166534" id="income-display">$0</div></div>
+          <div style="text-align:right"><div class="balance-label">Total expenses</div><div style="font-size:15px;font-weight:500;color:#b91c1c" id="expense-display">$0</div></div>
         </div>
 
         <div class="form-panel" id="entry-form">
@@ -786,10 +780,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
         </div>
 
         <div class="card" id="finance-docs-card"><div class="card-hd"><span class="card-title">Financial documents</span><button class="btn-ghost" style="font-size:11px" onclick="toggleForm('doc-form')">+ Add</button></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
-            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">FY2026 Operating Budget</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
-            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">5% Distribution Tracker</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
+          <div class="card-body" style="padding:6px 18px" id="fin-docs-list">
+            <div class="empty-state-msg" style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No financial documents yet. Use + Add document above.</div>
           </div>
         </div>
       </div>
@@ -969,6 +961,7 @@ function showPortal() {
 
   applyPermissions();
   checkConnection();
+  loadAllData();
 }
 
 // ── PERMISSIONS ──
@@ -1098,6 +1091,7 @@ function saveMeeting() {
   list.appendChild(div);
   toggleForm('meeting-form');
   pushToSheets('Meetings', { id: Date.now().toString(), title, date, time, location: loc, status: 'upcoming' });
+  updateDashboardStats();
 }
 
 function saveMinutes() {
@@ -1234,6 +1228,7 @@ function saveTask() {
   list.insertBefore(div, list.firstChild);
   toggleForm('task-form');
   pushToSheets('Actions', { id: Date.now().toString(), meetingId:'', text, owner, dueDate:due, status:'open', addedBy: currentUser.name });
+  updateDashboardStats();
 }
 
 // ── DOCUMENTS ──
@@ -1273,6 +1268,7 @@ function saveDoc() {
 
   toggleForm('doc-form');
   pushToSheets('Documents', { id, name, category: cat, driveUrl: url, addedDate: date, addedBy: currentUser ? currentUser.name : '' });
+  updateDashboardStats();
 }
 
 // ── QUICKBOOKS P&L IMPORT ──
@@ -1427,15 +1423,7 @@ function switchPeriod(btn, period) {
 }
 
 // ── FINANCE ──
-let ieData = [
-  { date:'Apr 15', desc:'Individual donor — spring campaign', cat:'Donation', amount:500 },
-  { date:'Apr 10', desc:'CFVI Community Impact Fund', cat:'Grant', amount:5000 },
-  { date:'Apr 5', desc:'Bright Path yoga class supplies', cat:'Program expense', amount:-180 },
-  { date:'Mar 28', desc:'Individual donor', cat:'Donation', amount:250 },
-  { date:'Mar 20', desc:'Counseling services distribution — Greater Changes', cat:'Distribution', amount:-800 },
-  { date:'Mar 15', desc:'Website hosting', cat:'Administrative', amount:-120 },
-  { date:'Mar 1', desc:'Annual donation — McMillan family', cat:'Donation', amount:2500 }
-];
+let ieData = [];
 
 function saveEntry() {
   const type = document.getElementById('ef-type').value;
@@ -1469,9 +1457,213 @@ function renderIE(data) {
   const balEl = document.getElementById('balance-display');
   balEl.textContent = (balance >= 0 ? '+$' : '-$') + Math.abs(Math.round(balance)).toLocaleString();
   balEl.className = 'balance-amount ' + (balance >= 0 ? 'positive' : 'negative');
+
+  // Hide empty row if data exists
+  const emptyRow = document.getElementById('finance-empty-row');
+  if (emptyRow) emptyRow.style.display = displayData.length > 0 ? 'none' : '';
+
+  // Update distribution tracker from distribution entries
+  const distributions = displayData.filter(r => r.cat === 'Distribution' || (r.desc || '').toLowerCase().includes('distribution'));
+  const totalDist = distributions.reduce((sum, r) => sum + Math.abs(r.amount), 0);
+  const netAssets = income; // simplified — net assets from income
+  const required = netAssets * 0.05;
+  const pct = required > 0 ? Math.min(100, Math.round((totalDist / required) * 100)) : 0;
+  const distBar = document.getElementById('dist-bar');
+  if (distBar) distBar.style.width = pct + '%';
+  const distAmt = document.getElementById('dist-amount');
+  if (distAmt) distAmt.textContent = totalDist > 0 ? '$' + Math.round(totalDist).toLocaleString() : '—';
+  const distNetEl = document.getElementById('dist-net-assets');
+  if (distNetEl) distNetEl.textContent = netAssets > 0 ? '$' + Math.round(netAssets).toLocaleString() : '—';
+  const distReqEl = document.getElementById('dist-required');
+  if (distReqEl) distReqEl.textContent = required > 0 ? '$' + Math.round(required).toLocaleString() : '—';
+  const distNote = document.getElementById('dist-note');
+  if (distNote && required > 0) {
+    const remaining = Math.max(0, required - totalDist);
+    distNote.textContent = remaining > 0
+      ? '$' + Math.round(remaining).toLocaleString() + ' remaining to meet FY2026 requirement by December 31, 2026.'
+      : '5% distribution requirement met for this period.';
+  }
+
+  // Update dashboard task count
+  const taskRows = document.querySelectorAll('#task-list .task-row');
+  const openTasks = Array.from(taskRows).filter(r => !r.querySelector('.chk.done')).length;
+  const statTasks = document.getElementById('stat-tasks');
+  if (statTasks) statTasks.textContent = openTasks;
+  const statTasksSub = document.getElementById('stat-tasks-sub');
+  if (statTasksSub) statTasksSub.textContent = openTasks === 0 ? 'all clear' : openTasks === 1 ? '1 open' : openTasks + ' open';
 }
 
 // ── SHARED ──
+// ── LOAD FROM SHEET ON STARTUP ──
+async function loadAllData() {
+  await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance()]);
+  updateDashboardStats();
+}
+
+async function loadMeetings() {
+  try {
+    const res = await fetch(`${API_URL}?sheet=Meetings&key=${API_KEY}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    const upcomingList = document.getElementById('upcoming-list');
+    const pastList = document.getElementById('past-list');
+    if (!upcomingList) return;
+    // Clear empty state messages
+    upcomingList.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+    if (pastList) pastList.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+    const today = new Date(); today.setHours(0,0,0,0);
+    data.forEach(m => {
+      if (!m.title) return;
+      const mDate = m.date ? new Date(m.date + 'T00:00:00') : null;
+      const isPast = mDate && mDate < today;
+      const mo = mDate ? mDate.toLocaleString('default',{month:'short'}) : '—';
+      const day = mDate ? mDate.getDate() : '—';
+      const chipClass = isPast ? 'date-chip past' : 'date-chip';
+      const moClass = isPast ? 'dc-mo past' : 'dc-mo';
+      const dayClass = isPast ? 'dc-day past' : 'dc-day';
+      const statusPill = isPast ? '<span class="pill pill-green">Complete</span>' : '<span class="pill pill-blue">Upcoming</span>';
+      const div = document.createElement('div');
+      div.className = 'meeting-row';
+      div.onclick = () => openMeetingDetail(m.title, `${m.date || ''} · ${m.time || ''} · ${m.location || ''}`);
+      div.innerHTML = `<div class="${chipClass}"><div class="${moClass}">${mo}</div><div class="${dayClass}">${day}</div></div><div class="meeting-info"><div class="meeting-title">${m.title}</div><div class="meeting-meta">${m.time || ''} · ${m.location || ''}</div></div>${statusPill}`;
+      if (isPast && pastList) pastList.appendChild(div);
+      else upcomingList.appendChild(div);
+    });
+  } catch(e) { console.log('Load meetings error:', e); }
+}
+
+async function loadTasks() {
+  try {
+    const res = await fetch(`${API_URL}?sheet=Actions&key=${API_KEY}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    const list = document.getElementById('task-list');
+    if (!list) return;
+    list.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+    data.forEach(t => {
+      if (!t.text) return;
+      const pri = t.priority || t.status || 'Med';
+      const priClass = pri === 'High' || pri === 'Overdue' ? 'pill-red' : pri === 'Med' ? 'pill-amber' : pri === 'Done' ? 'pill-green' : 'pill-gray';
+      const isDone = pri === 'Done' || t.status === 'done';
+      const div = document.createElement('div');
+      div.className = 'task-row';
+      div.dataset.id = t.id || '';
+      div.innerHTML = `<div class="chk${isDone?' done':''}" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1${isDone?';text-decoration:line-through;color:var(--muted)':''}">${t.text}${t.dueDate?' · Due '+t.dueDate:''}</div><span class="pill ${priClass}">${pri}</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div>`;
+      list.appendChild(div);
+    });
+  } catch(e) { console.log('Load tasks error:', e); }
+}
+
+async function loadDocuments() {
+  try {
+    const res = await fetch(`${API_URL}?sheet=Documents&key=${API_KEY}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    data.forEach(doc => {
+      if (!doc.name) return;
+      const cat = doc.category || 'Governance';
+      const url = doc.driveUrl || '';
+      const iconMap = {'Governance':'doc','Compliance & Legal':'pdf','Finance':'sheet','Programs':'doc','Grants':'doc'};
+      const emojiMap = {'doc':'📄','pdf':'📋','sheet':'📊'};
+      const iconType = iconMap[cat] || 'doc';
+      const emoji = emojiMap[iconType];
+      const date = doc.addedDate || '';
+
+      // Find the right card
+      const allCards = document.querySelectorAll('#page-documents .card');
+      let targetCard = null;
+      allCards.forEach(card => {
+        const titleEl = card.querySelector('.card-title');
+        if (titleEl && titleEl.textContent.toLowerCase().includes(cat.toLowerCase())) targetCard = card;
+      });
+      if (!targetCard && allCards.length > 0) targetCard = allCards[0];
+      if (!targetCard) return;
+
+      // Remove empty state message if present
+      targetCard.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+
+      const body = targetCard.querySelector('.card-body');
+      if (!body) return;
+
+      const div = document.createElement('div');
+      div.className = 'doc-row';
+      div.dataset.id = doc.id || '';
+      div.dataset.url = url;
+      div.innerHTML = `<div class="doc-icon ${iconType}">${emoji}</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'" data-url="${url}">${doc.name}</div><div class="doc-meta">${date}${cat?' · '+cat:''}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
+      body.appendChild(div);
+    });
+
+    // Also update finance docs card if Finance category docs exist
+    const finDocs = data.filter(d => d.category === 'Finance');
+    if (finDocs.length > 0) {
+      const finList = document.getElementById('fin-docs-list');
+      if (finList) {
+        finList.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
+        finDocs.forEach(doc => {
+          const url = doc.driveUrl || '';
+          const div = document.createElement('div');
+          div.className = 'doc-row';
+          div.innerHTML = `<div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'">${doc.name}</div><div class="doc-meta">${doc.addedDate || ''}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div>`;
+          finList.appendChild(div);
+        });
+      }
+    }
+    updateDashboardStats();
+  } catch(e) { console.log('Load documents error:', e); }
+}
+
+async function loadFinance() {
+  try {
+    const res = await fetch(`${API_URL}?sheet=Finance&key=${API_KEY}`);
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return;
+    ieData = data.map(r => ({
+      id: r.id || '',
+      date: r.date || '',
+      desc: r.desc || r.description || '',
+      cat: r.cat || r.category || '',
+      amount: parseFloat(r.amount) || 0
+    })).filter(r => r.desc && r.amount !== 0);
+
+    // Rebuild period tabs
+    const quarters = [...new Set(ieData.map(r => r.quarter || r.date).filter(Boolean))];
+    quarters.forEach(q => { if (q && q.match(/Q[1-4]/)) addPeriodTab(q); });
+
+    renderIE();
+  } catch(e) { console.log('Load finance error:', e); }
+}
+
+function updateDashboardStats() {
+  // Tasks
+  const taskRows = document.querySelectorAll('#task-list .task-row');
+  const openTasks = Array.from(taskRows).filter(r => !r.querySelector('.chk.done')).length;
+  const statTasks = document.getElementById('stat-tasks');
+  if (statTasks) statTasks.textContent = openTasks;
+  const statTasksSub = document.getElementById('stat-tasks-sub');
+  if (statTasksSub) statTasksSub.textContent = openTasks === 0 ? 'all clear' : openTasks + ' open';
+
+  // Next meeting
+  const meetingRows = document.querySelectorAll('#upcoming-list .meeting-row');
+  const statMeeting = document.getElementById('stat-next-meeting');
+  const statMeetingSub = document.getElementById('stat-next-meeting-sub');
+  if (meetingRows.length > 0 && statMeeting) {
+    const first = meetingRows[0];
+    const mo = first.querySelector('.dc-mo');
+    const day = first.querySelector('.dc-day');
+    const title = first.querySelector('.meeting-title');
+    if (mo && day) statMeeting.textContent = mo.textContent + ' ' + day.textContent;
+    if (title && statMeetingSub) statMeetingSub.textContent = title.textContent;
+  } else {
+    if (statMeeting) statMeeting.textContent = '—';
+    if (statMeetingSub) statMeetingSub.textContent = 'none scheduled';
+  }
+
+  // Docs
+  const docRows = document.querySelectorAll('#page-documents .doc-row');
+  const statDocs = document.getElementById('stat-docs');
+  if (statDocs) statDocs.textContent = docRows.length;
+}
+
 function toggleForm(id) { document.getElementById(id).classList.toggle('open'); }
 
 function toggleChk(el) {
