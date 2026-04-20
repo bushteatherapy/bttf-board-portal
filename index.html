@@ -212,6 +212,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .comm-tags{display:flex;flex-wrap:wrap;gap:6px}
 .comm-tag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--saffron-light);color:#7a4e00;font-weight:500}
 .notes-box{background:#faf9fd;border-radius:8px;padding:11px;font-size:13px;color:var(--muted);line-height:1.6;border-left:3px solid var(--violet-mist)}
+.rel-badge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:500;display:inline-block;margin-left:6px}
+.rel-independent{background:#dcfce7;color:#166534}
+.rel-founder{background:var(--hibiscus-light);color:#8b1a35}
+.rel-family{background:#dbeafe;color:#1e40af}
+.rel-affiliated{background:var(--saffron-light);color:#7a4e00}
+.rel-unknown{background:#f1f5f9;color:#475569}
 .recruit-banner{background:var(--papaya);border-radius:10px;border:1px solid #f5ddd0;padding:12px 14px;display:flex;gap:11px;margin-bottom:18px}
 .rbn-icon{width:26px;height:26px;border-radius:50%;background:var(--saffron-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .rbn-text{font-size:13px;color:#7a3a0a;line-height:1.5}
@@ -529,7 +535,20 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="seat"><div class="seat-lbl">Seat 4</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
           <div class="seat"><div class="seat-lbl">Seat 5</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
         </div>
-        <div class="recruit-banner"><div class="rbn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="rbn-text"><strong>Board independence required</strong>Must seat at least one independent member before VOCA, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility.</div></div>
+        <div style="background:white;border-radius:12px;border:1px solid var(--border);padding:16px 20px;margin-bottom:18px">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;font-weight:500">Board composition</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px" id="composition-badges">
+          <span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:5px 12px">Tamara — Founder</span>
+          <span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:5px 12px">Tarik — Founder</span>
+          <span class="rel-badge rel-unknown" style="margin-left:0;font-size:12px;padding:5px 12px">Liz — Unclassified</span>
+          <span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">Seat 4 — Open</span>
+          <span style="background:#f1f5f9;color:#475569;font-size:12px;padding:5px 12px;border-radius:20px;font-weight:500">Seat 5 — Open</span>
+        </div>
+        <div id="independence-alert" style="background:#fee2e2;border-radius:8px;padding:10px 14px;font-size:12px;color:#b91c1c;display:flex;align-items:flex-start;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div><strong style="display:block;margin-bottom:2px">No independent members seated</strong>Required before VOCA submission, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility. Priority: recruit and seat at least one independent member.</div>
+        </div>
+      </div>
         <div class="form-panel" id="member-form">
           <div class="form-title">New board member</div>
           <div class="form-grid">
@@ -547,9 +566,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="form-actions"><button class="btn btn-primary" onclick="saveMember()">Save member</button><button class="btn btn-outline" onclick="toggleForm('member-form')">Cancel</button></div>
         </div>
         <div class="two-col" id="member-cards">
-          <div class="member-card selected" onclick="selectMember(this,'tm')"><div class="mc-top"><div class="av-lg" style="background:var(--hibiscus)">TM</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tamara McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Founder · Clinical Director</div><span class="pill pill-hibiscus">Co-Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Finance, Governance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
-          <div class="member-card" onclick="selectMember(this,'tk')"><div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
-          <div class="member-card" onclick="selectMember(this,'lz')"><div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="member-card selected" onclick="selectMember(this,'tm')"><div class="mc-top"><div class="av-lg" style="background:var(--hibiscus)">TM</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tamara McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Founder · Clinical Director</div><span class="pill pill-hibiscus">Co-Founder</span><span class="rel-badge rel-founder">Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Finance, Governance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="member-card" onclick="selectMember(this,'tk')"><div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span><span class="rel-badge rel-founder">Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="member-card" onclick="selectMember(this,'lz')"><div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span><span class="rel-badge rel-unknown">Unclassified</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
         </div>
         <div class="profile-panel" id="profile-panel">
           <div class="profile-hd"><div class="profile-av" id="prof-av" style="background:var(--hibiscus)">TM</div><div><div class="profile-name" id="prof-name">Tamara McMillan</div><div class="profile-sub" id="prof-sub">Co-Founder · Clinical Director</div></div></div>
@@ -557,6 +576,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <div class="profile-sec"><div class="profile-sec-title">Contact</div><div class="fields-grid" id="prof-contact"><div class="field-box"><div class="field-lbl">Email</div><div class="field-val link">mail@greaterchangesllc.com</div></div><div class="field-box"><div class="field-lbl">Phone</div><div class="field-val">+1 (340) —</div></div><div class="field-box"><div class="field-lbl">Location</div><div class="field-val">St. Croix, USVI</div></div><div class="field-box"><div class="field-lbl">Credentials</div><div class="field-val">LMHC, LPC, NCC, CCTS</div></div></div></div>
             <div class="profile-sec"><div class="profile-sec-title">Term</div><div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:75%"></div></div><div class="term-lbl" id="prof-term-lbl">2022–2025 · 3-year term · Renewal due</div></div>
             <div class="profile-sec"><div class="profile-sec-title">Committees</div><div class="comm-tags" id="prof-committees"><span class="comm-tag">Finance</span><span class="comm-tag">Governance</span></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Relationship to org</div><div id="prof-relationship"><span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:4px 12px">Founder</span></div></div>
             <div class="profile-sec"><div class="profile-sec-title">Notes</div><div class="notes-box" id="prof-notes">Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.</div></div>
             <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-edit-member" onclick="openEditMember()">Edit profile</button></div>
           </div>
@@ -583,6 +603,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
                   <option value="secretary">Secretary</option>
                   <option value="treasurer">Treasurer</option>
                   <option value="founder">Co-Founder / Founder</option>
+                </select>
+              </div>
+              <div class="ff"><label>Relationship to org</label>
+                <select id="ef-relationship">
+                  <option value="independent">Independent</option>
+                  <option value="founder">Founder</option>
+                  <option value="family">Family</option>
+                  <option value="affiliated">Affiliated (GC/BTTF)</option>
                 </select>
               </div>
               <div class="ff"><label>Term start</label><input type="text" id="ef-term-start" placeholder="e.g. 2022"></div>
@@ -1019,9 +1047,9 @@ function saveMinutes() {
 // ── MEMBERS ──
 // ── SYNC HARDCODED MEMBERS TO SHEET ──
 const SEED_MEMBERS = [
-  { id:'tm', name:'Tamara McMillan', role:'Co-Founder', portalRole:'founder', email:'mail@bushteafoundation.org', phone:'', termStart:'2022', termEnd:'2025', initials:'TM', color:'#E8456A', active:'true' },
-  { id:'tk', name:'Tarik McMillan', role:'Co-Founder', portalRole:'founder', email:'tarik@greaterchangesllc.com', phone:'', termStart:'2022', termEnd:'2025', initials:'TK', color:'#3D1F5C', active:'true' },
-  { id:'lz', name:'Liz', role:'Member', portalRole:'member', email:'liz@bushteafoundation.org', phone:'', termStart:'2023', termEnd:'2026', initials:'LZ', color:'#C45E1A', active:'true' }
+  { id:'tm', name:'Tamara McMillan', role:'Co-Founder', portalRole:'founder', relationship:'founder', email:'mail@bushteafoundation.org', phone:'', termStart:'2022', termEnd:'2025', initials:'TM', color:'#E8456A', active:'true' },
+  { id:'tk', name:'Tarik McMillan', role:'Co-Founder', portalRole:'founder', relationship:'founder', email:'tarik@greaterchangesllc.com', phone:'', termStart:'2022', termEnd:'2025', initials:'TK', color:'#3D1F5C', active:'true' },
+  { id:'lz', name:'Liz', role:'Member', portalRole:'member', relationship:'unknown', email:'liz@bushteafoundation.org', phone:'', termStart:'2023', termEnd:'2026', initials:'LZ', color:'#C45E1A', active:'true' }
 ];
 
 async function checkSheetSync() {
@@ -1068,9 +1096,9 @@ async function syncMembersToSheet() {
 }
 
 const memberData = {
-  tm:{ av:'TM', color:'#E8456A', name:'Tamara McMillan', sub:'Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS', contact:[{l:'Email',v:'mail@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Credentials',v:'LMHC, LPC, NCC, CCTS'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Finance','Governance'], notes:'Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.' },
-  tk:{ av:'TK', color:'#3D1F5C', name:'Tarik McMillan', sub:'Co-Founder · Operations', contact:[{l:'Email',v:'tarik@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Role',v:'Co-Founder'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Programs'], notes:'Co-Founder and Operations lead. Co-hosts Crucian Counselors podcast.' },
-  lz:{ av:'LZ', color:'#C45E1A', name:'Liz', sub:'Board Member', contact:[{l:'Email',v:'—'},{l:'Phone',v:'—'},{l:'Location',v:'—'},{l:'Status',v:'Active member'}], termPct:45, termLbl:'2023–2026 · 3-year term · Active', committees:['Finance'], notes:'Current non-founder board member. Does not satisfy independence requirement for VOCA/grant purposes.' }
+  tm:{ av:'TM', color:'#E8456A', relationship:'founder', name:'Tamara McMillan', sub:'Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS', contact:[{l:'Email',v:'mail@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Credentials',v:'LMHC, LPC, NCC, CCTS'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Finance','Governance'], notes:'Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.' },
+  tk:{ av:'TK', color:'#3D1F5C', relationship:'founder', name:'Tarik McMillan', sub:'Co-Founder · Operations', contact:[{l:'Email',v:'tarik@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Role',v:'Co-Founder'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Programs'], notes:'Co-Founder and Operations lead. Co-hosts Crucian Counselors podcast.' },
+  lz:{ av:'LZ', color:'#C45E1A', relationship:'unknown', name:'Liz', sub:'Board Member', contact:[{l:'Email',v:'—'},{l:'Phone',v:'—'},{l:'Location',v:'—'},{l:'Status',v:'Active member'}], termPct:45, termLbl:'2023–2026 · 3-year term · Active', committees:['Finance'], notes:'Current non-founder board member. Does not satisfy independence requirement for VOCA/grant purposes.' }
 };
 
 function selectMember(card, id) {
@@ -1086,6 +1114,14 @@ function selectMember(card, id) {
   document.getElementById('prof-term-lbl').textContent = m.termLbl;
   document.getElementById('prof-committees').innerHTML = m.committees.map(c => `<span class="comm-tag">${c}</span>`).join('');
   document.getElementById('prof-notes').textContent = m.notes;
+  // Relationship badge
+  const relEl = document.getElementById('prof-relationship');
+  if (relEl) {
+    const relLabels = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated (GC/BTTF)', unknown:'Unclassified' };
+    const relClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
+    const rel = m.relationship || 'unknown';
+    relEl.innerHTML = `<span class="rel-badge ${relClass[rel]}" style="margin-left:0;font-size:12px;padding:4px 12px">${relLabels[rel] || rel}</span>`;
+  }
 }
 
 function saveMember() {
@@ -1104,8 +1140,9 @@ function saveMember() {
   const initials = (first[0] + last[0]).toUpperCase();
   const colors = ['#3D1F5C','#C45E1A','#F0A500','#22c55e','#0369a1'];
   const color = colors[Math.floor(Math.random() * colors.length)];
+  const relationship = document.getElementById('mem-relationship').value;
   const id = 'member_' + Date.now();
-  memberData[id] = { av:initials, color, name, sub:role, contact:[{l:'Email',v:email,link:true},{l:'Phone',v:phone},{l:'Role',v:role},{l:'Committee',v:committee}], termPct:5, termLbl:termStart + ' · ' + termLen, committees:committee !== 'None' ? [committee] : [], notes:'Added by ' + currentUser.name + ' on ' + new Date().toLocaleDateString() };
+  memberData[id] = { av:initials, color, relationship, name, sub:role, contact:[{l:'Email',v:email,link:true},{l:'Phone',v:phone},{l:'Role',v:role},{l:'Committee',v:committee}], termPct:5, termLbl:termStart + ' · ' + termLen, committees:committee !== 'None' ? [committee] : [], notes:'Added by ' + currentUser.name + ' on ' + new Date().toLocaleDateString() };
   const cards = document.getElementById('member-cards');
   const div = document.createElement('div'); div.className = 'member-card';
   div.onclick = function() { selectMember(this, id); };
@@ -1114,7 +1151,7 @@ function saveMember() {
   toggleForm('member-form');
   // Hash the temp password before storing
   simpleHash(tempPw || 'bttf2026').then(hash => {
-    pushToSheets('Members', { id, name, role, portalRole, email, phone, termStart, initials, color, passwordHash: hash, active: 'true' });
+    pushToSheets('Members', { id, name, role, portalRole, email, phone, termStart, initials, color, relationship, passwordHash: hash, active: 'true' });
   });
 }
 
@@ -1236,6 +1273,9 @@ function openEditMember() {
   else if (sub.includes('treasurer')) inferredRole = 'treasurer';
   else if (sub.includes('secretary')) inferredRole = 'secretary';
   document.getElementById('ef-portal-role').value = inferredRole;
+  if (document.getElementById('ef-relationship')) {
+    document.getElementById('ef-relationship').value = m.relationship || 'unknown';
+  }
 
   const overlay = document.getElementById('edit-member-overlay');
   overlay.style.display = 'flex';
@@ -1285,8 +1325,17 @@ function saveEditMember() {
   const nameEl = card.querySelector('[style*="font-size:14px"]');
   if (nameEl) nameEl.textContent = name;
 
+  const relationship = document.getElementById('ef-relationship') ? document.getElementById('ef-relationship').value : m.relationship || 'unknown';
+  m.relationship = relationship;
+  // Re-render relationship badge
+  const relEl = document.getElementById('prof-relationship');
+  if (relEl) {
+    const relLabels = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated (GC/BTTF)', unknown:'Unclassified' };
+    const relClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
+    relEl.innerHTML = `<span class="rel-badge ${relClass[relationship]}" style="margin-left:0;font-size:12px;padding:4px 12px">${relLabels[relationship] || relationship}</span>`;
+  }
   closeEditMember();
-  pushToSheets('Members', { id: editingMemberId, name, portalRole, email, phone, termStart, termEnd, committees: committees.join(', '), notes, action: 'update' });
+  pushToSheets('Members', { id: editingMemberId, name, portalRole, relationship, email, phone, termStart, termEnd, committees: committees.join(', '), notes, action: 'update' });
 }
 
 // ── GOOGLE SHEETS ──
