@@ -1004,7 +1004,10 @@ function navigate(el) {
   const det = document.getElementById('meeting-detail');
   if (det) det.style.display = 'none';
   document.querySelectorAll('.form-panel').forEach(f => f.classList.remove('open'));
-  if (page === 'members') checkSheetSync();
+  if (page === 'members') {
+    checkSheetSync();
+    if (Object.keys(memberData).length === 0) loadMembers();
+  }
 }
 
 // ── TABS ──
@@ -1095,15 +1098,15 @@ async function checkSheetSync() {
     const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const members = await res.json();
     const banner = document.getElementById('sync-members-banner');
-    if (!Array.isArray(members) || members.length === 0 || !members.find(m => m.id === 'tm')) {
+    if (!Array.isArray(members) || members.length === 0) {
       if (banner) banner.style.display = 'flex';
     } else {
       if (banner) banner.style.display = 'none';
     }
   } catch(e) {
-    // Can't check — show banner anyway for founders
+    // Fetch failed — don't show banner, just hide it
     const banner = document.getElementById('sync-members-banner');
-    if (banner) banner.style.display = 'flex';
+    if (banner) banner.style.display = 'none';
   }
 }
 
@@ -1480,7 +1483,8 @@ async function loadMembers() {
   try {
     const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
     const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) return;
+    console.log('loadMembers data:', data);
+    if (!Array.isArray(data) || data.length === 0) { console.log('No member data returned'); return; }
     const cards = document.getElementById('member-cards');
     if (!cards) return;
     // Clear empty state
