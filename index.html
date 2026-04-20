@@ -1070,28 +1070,80 @@ function loadStandardAgenda() {
   const list = document.getElementById('agenda-list');
   list.innerHTML = '';
   agCount = 0;
-  const items = [
-    { text: 'Call to order', editable: false },
-    { text: 'Review & Approval of Minutes', editable: false },
-    { text: 'Old Business', editable: true, placeholder: 'Add old business items here...' },
-    { text: 'New Business', editable: true, placeholder: 'Add new business items here...' },
-    { text: 'Action Items & Next Meeting', editable: false },
-    { text: 'Meeting Adjourned', editable: false },
+
+  const sections = [
+    { num: 1, title: 'Call to order', hasSubItems: false },
+    { num: 2, title: 'Review & Approval of Minutes', hasSubItems: false },
+    { num: 3, title: 'Old Business', hasSubItems: true },
+    { num: 4, title: 'New Business', hasSubItems: true },
+    { num: 5, title: 'Action Items & Next Meeting', hasSubItems: true },
+    { num: 6, title: 'Meeting Adjourned', hasSubItems: false },
   ];
-  items.forEach((item, i) => {
-    agCount++;
-    const div = document.createElement('div');
-    div.className = 'ag-item';
-    if (item.editable) {
-      div.innerHTML = `<div class="ag-num">${i+1}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px;border-bottom:1px dashed var(--border);padding-bottom:2px" data-placeholder="${item.placeholder}">${item.text}</div>`;
-      const ce = div.querySelector('[contenteditable]');
-      ce.addEventListener('focus', function() { if (this.textContent === item.text) { this.textContent = ''; } });
-      ce.addEventListener('blur', function() { if (this.textContent.trim() === '') { this.textContent = item.text; } });
-    } else {
-      div.innerHTML = `<div class="ag-num">${i+1}</div><div class="ag-text">${item.text}</div>`;
+
+  sections.forEach(section => {
+    // Section heading row
+    const headDiv = document.createElement('div');
+    headDiv.className = 'ag-item';
+    headDiv.style.cssText = 'background:var(--violet-mist);border-radius:8px;margin-bottom:2px';
+    headDiv.innerHTML = `<div class="ag-num" style="background:var(--violet);color:white">${section.num}</div><div class="ag-text" style="font-weight:500;color:var(--violet)">${section.title}</div>`;
+    list.appendChild(headDiv);
+
+    if (section.hasSubItems) {
+      // Sub-items container
+      const subContainer = document.createElement('div');
+      subContainer.className = 'ag-sub-container';
+      subContainer.style.cssText = 'margin-left:28px;margin-bottom:8px';
+      subContainer.dataset.section = section.num;
+
+      // One default empty sub-item
+      const subItem = createSubItem('');
+      subContainer.appendChild(subItem);
+
+      // Add sub-item button
+      const addBtn = document.createElement('div');
+      addBtn.style.cssText = 'display:flex;align-items:center;gap:5px;padding:4px 8px;font-size:11px;color:var(--muted);cursor:pointer;border-radius:6px;margin-top:2px';
+      addBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add item';
+      addBtn.onmouseenter = function() { this.style.background = 'var(--violet-mist)'; this.style.color = 'var(--violet)'; };
+      addBtn.onmouseleave = function() { this.style.background = ''; this.style.color = 'var(--muted)'; };
+      addBtn.onclick = function() {
+        const newSub = createSubItem('');
+        subContainer.insertBefore(newSub, this);
+        newSub.querySelector('[contenteditable]').focus();
+      };
+      subContainer.appendChild(addBtn);
+      list.appendChild(subContainer);
     }
-    list.appendChild(div);
   });
+}
+
+function createSubItem(text) {
+  const div = document.createElement('div');
+  div.className = 'ag-sub-item';
+  div.style.cssText = 'display:flex;align-items:flex-start;gap:7px;padding:5px 4px;border-bottom:1px solid var(--border)';
+  div.innerHTML = `<span style="color:var(--muted);font-size:11px;margin-top:3px;flex-shrink:0">•</span><div contenteditable="true" style="flex:1;font-size:13px;outline:none;min-height:18px;color:var(--text);line-height:1.5" data-placeholder="Add item...">${text}</div><button onclick="this.closest('.ag-sub-item').remove()" style="background:transparent;border:none;color:#ccc;cursor:pointer;font-size:14px;padding:0 2px;line-height:1;flex-shrink:0" title="Remove">×</button>`;
+  const ce = div.querySelector('[contenteditable]');
+  ce.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const newSub = createSubItem('');
+      const container = this.closest('.ag-sub-container');
+      const addBtn = container.querySelector('div:last-child');
+      container.insertBefore(newSub, addBtn);
+      newSub.querySelector('[contenteditable]').focus();
+    }
+    if (e.key === 'Backspace' && this.textContent === '') {
+      e.preventDefault();
+      const item = this.closest('.ag-sub-item');
+      const prev = item.previousElementSibling;
+      item.remove();
+      if (prev && prev.querySelector('[contenteditable]')) prev.querySelector('[contenteditable]').focus();
+    }
+  });
+  // Show placeholder styling
+  ce.addEventListener('focus', function() { this.style.color = 'var(--text)'; });
+  ce.addEventListener('blur', function() { this.style.color = this.textContent.trim() ? 'var(--text)' : 'var(--muted)'; });
+  if (!text) ce.style.color = 'var(--muted)';
+  return div;
 }
 
 function closeMeetingDetail() {
