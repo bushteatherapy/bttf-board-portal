@@ -671,7 +671,7 @@ body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); col
 
 <script>
 // ── CONFIG — replace with your Apps Script URL after deployment ──
-const API_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+const API_URL = 'https://bushteatherapy.github.io/bttf-board-portal/';
 const API_KEY = 'bttf-board-2026';
 
 // ── STATE ──
@@ -849,7 +849,7 @@ function toggleChk(el) { el.classList.toggle('done'); const t = el.nextElementSi
 
 // ── GOOGLE SHEETS API ──
 async function pushToSheets(sheet, data) {
-  if (!API_URL || API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  if (!API_URL || API_URL === 'https://bushteatherapy.github.io/bttf-board-portal/') return;
   try {
     await fetch(API_URL, {
       method: 'POST',
@@ -861,7 +861,7 @@ async function pushToSheets(sheet, data) {
 }
 
 async function loadFromSheets(sheet) {
-  if (!API_URL || API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return null;
+  if (!API_URL || API_URL === 'https://bushteatherapy.github.io/bttf-board-portal/') return null;
   try {
     const res = await fetch(`${API_URL}?sheet=${sheet}&key=${API_KEY}`);
     return await res.json();
@@ -870,7 +870,7 @@ async function loadFromSheets(sheet) {
 
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
-  if (!API_URL || API_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+  if (!API_URL || API_URL === 'https://bushteatherapy.github.io/bttf-board-portal/') {
     badge.textContent = '● Not connected';
     badge.className = 'sync-status sync-warn';
     return;
