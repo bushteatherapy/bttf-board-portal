@@ -873,7 +873,7 @@ async function doLogin() {
 
   // 1. Try Google Sheet first
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`, { method: 'GET' });
     const members = await res.json();
     if (Array.isArray(members)) {
       const match = members.find(m => (m.email || '').toLowerCase() === email);
@@ -960,8 +960,8 @@ function showPortal() {
   document.getElementById('dash-greeting').textContent = greet + ', ' + currentUser.name.split(' ')[0];
 
   applyPermissions();
-  checkConnection();
-  loadAllData();
+  // Check connection first, then load data
+  checkConnection().then(() => loadAllData());
 }
 
 // ── PERMISSIONS ──
@@ -1114,7 +1114,7 @@ const SEED_MEMBERS = [
 async function checkSheetSync() {
   if (!currentUser || currentUser.role !== 'founder') return;
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`, { method: 'GET' });
     const members = await res.json();
     const banner = document.getElementById('sync-members-banner');
     if (!Array.isArray(members) || members.length === 0 || !members.find(m => m.id === 'tm')) {
@@ -1495,7 +1495,12 @@ function renderIE(data) {
 // ── SHARED ──
 // ── LOAD FROM SHEET ON STARTUP ──
 async function loadAllData() {
-  await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance()]);
+  try {
+    await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance()]);
+  } catch(e) {
+    console.log('loadAllData error:', e);
+  }
+  // Always update stats after load attempts complete
   updateDashboardStats();
   syncDashboardMeetings();
   syncDashboardTasks();
@@ -1503,7 +1508,8 @@ async function loadAllData() {
 
 async function loadMeetings() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Meetings&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Meetings&key=${API_KEY}`, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     const upcomingList = document.getElementById('upcoming-list');
@@ -1535,7 +1541,8 @@ async function loadMeetings() {
 
 async function loadTasks() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Actions&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Actions&key=${API_KEY}`, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     const list = document.getElementById('task-list');
@@ -1557,9 +1564,22 @@ async function loadTasks() {
 
 async function loadDocuments() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Documents&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Documents&key=${API_KEY}`, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) return;
+    if (!Array.isArray(data) || data.length === 0) {
+      // Sheet is empty — make sure empty state messages are visible
+      document.querySelectorAll('#page-documents .card-body').forEach(body => {
+        if (!body.querySelector('.doc-row') && !body.querySelector('.empty-state-msg')) {
+          const msg = document.createElement('div');
+          msg.className = 'empty-state-msg';
+          msg.style.cssText = 'text-align:center;padding:24px;color:var(--muted);font-size:13px';
+          msg.textContent = 'No documents yet. Click + Add document.';
+          body.appendChild(msg);
+        }
+      });
+      return;
+    }
     data.forEach(doc => {
       if (!doc.name) return;
       const cat = doc.category || 'Governance';
@@ -1615,7 +1635,8 @@ async function loadDocuments() {
 
 async function loadFinance() {
   try {
-    const res = await fetch(`${API_URL}?sheet=Finance&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Finance&key=${API_KEY}`, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
     ieData = data.map(r => ({
@@ -1660,10 +1681,10 @@ function updateDashboardStats() {
     if (statMeetingSub) statMeetingSub.textContent = 'none scheduled';
   }
 
-  // Documents — count only actual doc-row elements, not empty state divs
+  // Documents — count only actual doc-row elements
   const docRows = Array.from(document.querySelectorAll('#page-documents .doc-row'));
   const statDocs = document.getElementById('stat-docs');
-  if (statDocs) statDocs.textContent = docRows.length;
+  if (statDocs) statDocs.textContent = docRows.length > 0 ? docRows.length : '0';
 
   // Board seats — count filled seats
   const filledSeats = document.querySelectorAll('.seat.filled, .seat.founder').length;
@@ -1846,18 +1867,37 @@ function saveEditMember() {
 // Finance tab headers: id · date · desc · cat · amount · importedFrom · quarter · importedBy · addedBy
 async function pushToSheets(sheet, data) {
   try {
-    await fetch(API_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ key: API_KEY, sheet, action:'add', data }) });
-  } catch(e) { console.log('Sheets sync:', e); }
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ key: API_KEY, sheet, action: data.action || 'add', data })
+    });
+  } catch(e) { console.log('Sheets sync error:', e); }
 }
 
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
+  badge.textContent = '● Connecting...';
+  badge.className = 'sync-status sync-warn';
   try {
-    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`, { method: 'GET' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (Array.isArray(data)) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
-    else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
-  } catch(e) { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
+    if (Array.isArray(data)) {
+      badge.textContent = '● Synced';
+      badge.className = 'sync-status sync-ok';
+    } else if (data && data.error === 'unauthorized') {
+      badge.textContent = '● Auth error';
+      badge.className = 'sync-status sync-err';
+    } else {
+      badge.textContent = '● Connected';
+      badge.className = 'sync-status sync-ok';
+    }
+  } catch(e) {
+    badge.textContent = '● Not connected';
+    badge.className = 'sync-status sync-warn';
+    console.log('Connection error:', e.message);
+  }
 }
 
 // ── TASK EDIT + DELETE ──
