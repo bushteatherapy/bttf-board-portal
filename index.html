@@ -1497,6 +1497,8 @@ function renderIE(data) {
 async function loadAllData() {
   await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance()]);
   updateDashboardStats();
+  syncDashboardMeetings();
+  syncDashboardTasks();
 }
 
 async function loadMeetings() {
@@ -1633,16 +1635,17 @@ async function loadFinance() {
 }
 
 function updateDashboardStats() {
-  // Tasks
-  const taskRows = document.querySelectorAll('#task-list .task-row');
-  const openTasks = Array.from(taskRows).filter(r => !r.querySelector('.chk.done')).length;
+  // Tasks — count only real task rows, not empty state messages
+  const taskRows = Array.from(document.querySelectorAll('#task-list .task-row'));
+  const openTasks = taskRows.filter(r => !r.querySelector('.chk.done')).length;
+  const totalTasks = taskRows.length;
   const statTasks = document.getElementById('stat-tasks');
   if (statTasks) statTasks.textContent = openTasks;
   const statTasksSub = document.getElementById('stat-tasks-sub');
-  if (statTasksSub) statTasksSub.textContent = openTasks === 0 ? 'all clear' : openTasks + ' open';
+  if (statTasksSub) statTasksSub.textContent = totalTasks === 0 ? 'none yet' : openTasks === 0 ? 'all done' : openTasks + ' open';
 
-  // Next meeting
-  const meetingRows = document.querySelectorAll('#upcoming-list .meeting-row');
+  // Next meeting — first upcoming meeting row only
+  const meetingRows = Array.from(document.querySelectorAll('#upcoming-list .meeting-row'));
   const statMeeting = document.getElementById('stat-next-meeting');
   const statMeetingSub = document.getElementById('stat-next-meeting-sub');
   if (meetingRows.length > 0 && statMeeting) {
@@ -1653,14 +1656,68 @@ function updateDashboardStats() {
     if (mo && day) statMeeting.textContent = mo.textContent + ' ' + day.textContent;
     if (title && statMeetingSub) statMeetingSub.textContent = title.textContent;
   } else {
-    if (statMeeting) statMeeting.textContent = '—';
+    if (statMeeting) { statMeeting.textContent = '—'; statMeeting.style.fontSize = '26px'; }
     if (statMeetingSub) statMeetingSub.textContent = 'none scheduled';
   }
 
-  // Docs
-  const docRows = document.querySelectorAll('#page-documents .doc-row');
+  // Documents — count only actual doc-row elements, not empty state divs
+  const docRows = Array.from(document.querySelectorAll('#page-documents .doc-row'));
   const statDocs = document.getElementById('stat-docs');
   if (statDocs) statDocs.textContent = docRows.length;
+
+  // Board seats — count filled seats
+  const filledSeats = document.querySelectorAll('.seat.filled, .seat.founder').length;
+  const statSeats = document.getElementById('stat-seats');
+  if (statSeats) statSeats.textContent = filledSeats;
+
+  // Sync dashboard meeting list with upcoming-list
+  syncDashboardMeetings();
+
+  // Sync dashboard task list with task-list
+  syncDashboardTasks();
+}
+
+function syncDashboardMeetings() {
+  const dashList = document.getElementById('dash-meetings-list');
+  if (!dashList) return;
+  const upcomingRows = document.querySelectorAll('#upcoming-list .meeting-row');
+  dashList.innerHTML = '';
+  if (upcomingRows.length === 0) {
+    dashList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No upcoming meetings yet.</div>';
+    return;
+  }
+  // Show first 3
+  Array.from(upcomingRows).slice(0, 3).forEach(row => {
+    const clone = row.cloneNode(true);
+    // Remove onclick from clone to avoid double-navigation
+    clone.onclick = () => {
+      navigate(document.querySelector('[data-page=meetings]'));
+    };
+    dashList.appendChild(clone);
+  });
+}
+
+function syncDashboardTasks() {
+  const dashList = document.getElementById('dash-tasks-list');
+  if (!dashList) return;
+  const taskRows = document.querySelectorAll('#task-list .task-row');
+  dashList.innerHTML = '';
+  // Show up to 4 open high-priority tasks
+  const open = Array.from(taskRows).filter(r => !r.querySelector('.chk.done'));
+  if (open.length === 0) {
+    dashList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">No open tasks.</div>';
+    return;
+  }
+  open.slice(0, 4).forEach(row => {
+    const label = row.querySelector('.task-label');
+    const pill = row.querySelector('.pill');
+    if (!label || !pill) return;
+    const div = document.createElement('div');
+    div.className = 'task-row';
+    div.style.cssText = 'pointer-events:none';
+    div.innerHTML = '<div class="chk"></div><div style="flex:1;font-size:13px">' + label.textContent + '</div>' + pill.outerHTML;
+    dashList.appendChild(div);
+  });
 }
 
 function toggleForm(id) { document.getElementById(id).classList.toggle('open'); }
