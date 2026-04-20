@@ -553,7 +553,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <div class="ff"><label>Last name</label><input type="text" id="mem-last"></div>
             <div class="ff"><label>Email</label><input type="email" id="mem-email"></div>
             <div class="ff"><label>Phone</label><input type="tel" id="mem-phone"></div>
-            <div class="ff"><label>Role</label><select id="mem-role"><option>Independent Member</option><option>Treasurer</option><option>Secretary</option><option>Co-Founder</option><option>Member</option></select></div>
+            <div class="ff"><label>Role</label><select id="mem-role"><option>Member</option><option>Treasurer</option><option>Secretary</option><option>Chair</option><option>Co-Founder</option><option>Founder</option></select></div>
             <div class="ff"><label>Portal role</label><select id="mem-portal-role"><option value="member">General Member</option><option value="secretary">Secretary</option><option value="treasurer">Treasurer</option><option value="founder">Co-Founder / Founder</option></select></div>
             <div class="ff"><label>Term start</label><input type="date" id="mem-term-start"></div>
             <div class="ff"><label>Term length</label><select id="mem-term-len"><option>1 year</option><option>2 years</option><option selected>3 years</option></select></div>
@@ -593,30 +593,21 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="ff"><label>Last name</label><input type="text" id="ef-last"></div>
               <div class="ff"><label>Email</label><input type="email" id="ef-email"></div>
               <div class="ff"><label>Phone</label><input type="tel" id="ef-phone"></div>
-              <div class="ff"><label>Board role / title</label>
-                <select id="ef-title">
-                  <option>Member</option>
-                  <option>Treasurer</option>
-                  <option>Secretary</option>
-                  <option>Chair</option>
-                  <option>Co-Founder</option>
-                  <option>Founder</option>
-                </select>
-              </div>
+              <div class="ff"><label>Board role / title</label><select id="ef-title"><option>Member</option><option>Treasurer</option><option>Secretary</option><option>Chair</option><option>Co-Founder</option><option>Founder</option></select></div>
               <div class="ff"><label>Portal permissions</label>
                 <select id="ef-portal-role">
                   <option value="member">General Member</option>
                   <option value="secretary">Secretary</option>
                   <option value="treasurer">Treasurer</option>
-                  <option value="founder">Founder / Co-Founder</option>
+                  <option value="founder">Co-Founder / Founder</option>
                 </select>
               </div>
               <div class="ff"><label>Independence status</label>
                 <select id="ef-relationship">
-                  <option value="independent">Independent — no material relationship</option>
+                  <option value="independent">Independent</option>
                   <option value="founder">Founder / Co-Founder</option>
                   <option value="family">Family of founder</option>
-                  <option value="affiliated">Affiliated — employed by or connected to GC/BTTF</option>
+                  <option value="affiliated">Affiliated — GC/BTTF</option>
                 </select>
               </div>
               <div class="ff"><label>Term start</label><input type="text" id="ef-term-start" placeholder="e.g. 2022"></div>
@@ -1214,11 +1205,7 @@ function saveMember() {
   const cards = document.getElementById('member-cards');
   const div = document.createElement('div'); div.className = 'member-card';
   div.onclick = function() { selectMember(this, id); };
-  const relBadgeClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
-  const relBadgeLabel = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated', unknown:'Unknown' };
-  const rbc = relBadgeClass[relationship] || 'rel-unknown';
-  const rbl = relBadgeLabel[relationship] || 'Unknown';
-  div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet" style="margin-right:4px">${role}</span><span class="rel-badge ${rbc}" style="margin-left:0;font-size:10px;padding:3px 8px">${rbl}</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
+  div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
   cards.appendChild(div);
   toggleForm('member-form');
   // Hash the temp password before storing
@@ -1726,17 +1713,15 @@ function openEditMember() {
   else if (sub.includes('treasurer')) inferredRole = 'treasurer';
   else if (sub.includes('secretary')) inferredRole = 'secretary';
   document.getElementById('ef-portal-role').value = inferredRole;
-
-  // Set board role select
-  const titleSelect = document.getElementById('ef-title');
-  if (titleSelect) {
-    const roleFromSub = m.sub ? m.sub.split('·')[0].trim() : 'Member';
-    const roleOptions = ['Member','Treasurer','Secretary','Chair','Co-Founder','Founder'];
-    const matchedRole = roleOptions.find(r => roleFromSub.toLowerCase().includes(r.toLowerCase())) || 'Member';
-    titleSelect.value = matchedRole;
-  }
   if (document.getElementById('ef-relationship')) {
     document.getElementById('ef-relationship').value = m.relationship || 'unknown';
+  }
+  const titleSel = document.getElementById('ef-title');
+  if (titleSel) {
+    const roleText = m.sub ? m.sub.split('·')[0].trim() : 'Member';
+    ['Member','Treasurer','Secretary','Chair','Co-Founder','Founder'].forEach(opt => {
+      if (roleText.toLowerCase().includes(opt.toLowerCase())) titleSel.value = opt;
+    });
   }
 
   const overlay = document.getElementById('edit-member-overlay');
@@ -1755,7 +1740,7 @@ function saveEditMember() {
   const email = document.getElementById('ef-email').value.trim();
   const phone = document.getElementById('ef-phone').value.trim();
   const titleEl = document.getElementById('ef-title');
-  const title = titleEl.tagName === 'SELECT' ? titleEl.value : titleEl.value.trim();
+  const title = titleEl ? titleEl.value : '';
   const portalRole = document.getElementById('ef-portal-role').value;
   const termStart = document.getElementById('ef-term-start').value.trim();
   const termEnd = document.getElementById('ef-term-end').value.trim();
@@ -1859,15 +1844,17 @@ function editDocRow(btn) {
 
   // Replace row content with inline edit fields
   const originalHTML = row.innerHTML;
-  row.innerHTML = `
-    <div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">
-      <input type="text" value="${currentName}" id="doc-edit-name" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">
-      <input type="url" value="${currentUrl}" id="doc-edit-url" placeholder="https://drive.google.com/..." style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">
-    </div>
-    <div style="display:flex;gap:6px;align-items:center;margin-left:8px">
-      <button class="btn btn-primary btn-sm" onclick="saveDocEdit(this, '${row.dataset?.id || ''}')">Save</button>
-      <button class="btn btn-outline btn-sm" onclick="cancelDocEdit(this, \`${originalHTML.replace(/`/g,"'")}\`)">Cancel</button>
-    </div>`;
+  // Store original HTML as data attribute to restore on cancel
+  row.setAttribute('data-original', encodeURIComponent(originalHTML));
+  row.innerHTML =
+    '<div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">' +
+    '<input type="text" value="' + currentName.replace(/"/g,"&quot;") + '" id="doc-edit-name" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">' +
+    '<input type="url" value="' + currentUrl.replace(/"/g,"&quot;") + '" placeholder="https://drive.google.com/..." id="doc-edit-url" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">' +
+    '</div>' +
+    '<div style="display:flex;gap:6px;align-items:center;margin-left:8px">' +
+    '<button class="btn btn-primary btn-sm" onclick="saveDocEdit(this, '' + (row.dataset?.id || '') + '')">Save</button>' +
+    '<button class="btn btn-outline btn-sm" onclick="cancelDocEdit(this)">Cancel</button>' +
+    '</div>';
 }
 
 function saveDocEdit(btn, id) {
@@ -1880,9 +1867,10 @@ function saveDocEdit(btn, id) {
   if (id) pushToSheets('Documents', { id, name: newName, driveUrl: newUrl, action: 'update' });
 }
 
-function cancelDocEdit(btn, originalHTML) {
+function cancelDocEdit(btn) {
   const row = btn.closest('.doc-row');
-  row.innerHTML = originalHTML;
+  const original = row.getAttribute('data-original');
+  if (original) row.innerHTML = decodeURIComponent(original);
 }
 
 // ── DOCUMENT DELETE ──
