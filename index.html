@@ -794,8 +794,49 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
 <script>
 // ── CONFIG ──
-const API_URL = 'https://script.google.com/macros/s/AKfycbxW0-L9Zs8owSEWCixCH8pvHna0GlVcHQw345gJ8046-Lu0wBiCqzX-HSiPKtQwgLrI/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxaFosF1d4hOeyB2qAVvnjdLkW-XRJb0vtLVSLWuy5_jPw6lVADJCpgRM2TecAgNB8q/exec';
 const API_KEY = 'bttf-board-2026';
+const SHEET_ID = '11ScMa-Y4muEh_h-pHbitCeVvC3u3XX-QJkX-5GMOPyI';
+
+// ── Read directly from public Google Sheet as CSV (no CORS issues) ──
+async function readSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url);
+  const csv = await res.text();
+  return parseCSV(csv);
+}
+
+function parseCSV(csv) {
+  const lines = csv.split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = parseCSVRow(lines[0]);
+  return lines.slice(1).map(line => {
+    const values = parseCSVRow(line);
+    const obj = {};
+    headers.forEach((h, i) => { obj[h.trim()] = (values[i] || '').trim(); });
+    return obj;
+  }).filter(row => Object.values(row).some(v => v !== ''));
+}
+
+function parseCSVRow(row) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    const ch = row[i];
+    if (ch === '"') {
+      if (inQuotes && row[i+1] === '"') { current += '"'; i++; }
+      else inQuotes = !inQuotes;
+    } else if (ch === ',' && !inQuotes) {
+      result.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
 
 // ── ROLE PERMISSIONS ──
 const PERMS = {
@@ -855,7 +896,7 @@ async function doLogin() {
 
   // 1. Try Google Sheet first
   try {
-    const members = await fetchJSONP(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const members = await readSheet('Members');
     if (Array.isArray(members)) {
       const match = members.find(m => (m.email || '').toLowerCase() === email);
       if (match) {
@@ -1094,7 +1135,7 @@ const SEED_MEMBERS = [];
 async function checkSheetSync() {
   if (!currentUser || currentUser.role !== 'founder') return;
   try {
-    const members = await fetchJSONP(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const members = await readSheet('Members');
     const banner = document.getElementById('sync-members-banner');
     if (!Array.isArray(members) || members.length === 0) {
       if (banner) banner.style.display = 'flex';
@@ -1470,26 +1511,6 @@ function renderIE(data) {
 
 // ── SHARED ──
 // ── LOAD FROM SHEET ON STARTUP ──
-// ── JSONP helper to bypass CORS ──
-function fetchJSONP(url) {
-  return new Promise((resolve, reject) => {
-    const cb = 'cb_' + Date.now() + '_' + Math.floor(Math.random()*10000);
-    const script = document.createElement('script');
-    window[cb] = (data) => {
-      delete window[cb];
-      document.head.removeChild(script);
-      resolve(data);
-    };
-    script.onerror = () => {
-      delete window[cb];
-      document.head.removeChild(script);
-      reject(new Error('JSONP failed'));
-    };
-    script.src = url + '&callback=' + cb;
-    document.head.appendChild(script);
-  });
-}
-
 async function loadAllData() {
   await Promise.all([loadMeetings(), loadTasks(), loadDocuments(), loadFinance(), loadMembers()]);
   updateDashboardStats();
@@ -1499,7 +1520,7 @@ async function loadAllData() {
 
 async function loadMembers() {
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const data = await readSheet('Members');
     console.log('loadMembers data:', data);
     if (!Array.isArray(data) || data.length === 0) { console.log('No member data returned'); return; }
     const cards = document.getElementById('member-cards');
@@ -1596,7 +1617,7 @@ function updateCompositionPanel(members) {
 
 async function loadMeetings() {
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Meetings&key=${API_KEY}`);
+    const data = await readSheet('Meetings');
     if (!Array.isArray(data) || data.length === 0) return;
     const upcomingList = document.getElementById('upcoming-list');
     const pastList = document.getElementById('past-list');
@@ -1627,7 +1648,7 @@ async function loadMeetings() {
 
 async function loadTasks() {
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Actions&key=${API_KEY}`);
+    const data = await readSheet('Actions');
     if (!Array.isArray(data) || data.length === 0) return;
     const list = document.getElementById('task-list');
     if (!list) return;
@@ -1648,7 +1669,7 @@ async function loadTasks() {
 
 async function loadDocuments() {
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Documents&key=${API_KEY}`);
+    const data = await readSheet('Documents');
     if (!Array.isArray(data) || data.length === 0) return;
     data.forEach(doc => {
       if (!doc.name) return;
@@ -1705,7 +1726,7 @@ async function loadDocuments() {
 
 async function loadFinance() {
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Finance&key=${API_KEY}`);
+    const data = await readSheet('Finance');
     if (!Array.isArray(data) || data.length === 0) return;
     ieData = data.map(r => ({
       id: r.id || '',
@@ -1942,7 +1963,7 @@ async function pushToSheets(sheet, data) {
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
   try {
-    const data = await fetchJSONP(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const data = await readSheet('Members');
     if (Array.isArray(data)) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
     else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
   } catch(e) { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
