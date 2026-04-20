@@ -465,13 +465,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="sec">
                 <div class="sec-label">Agenda <span id="ag-add-btn"><button class="btn-ghost" style="font-size:11px" onclick="addAgItem()">+ Add item</button></span></div>
                 <div id="agenda-list">
-                  <div class="ag-item"><div class="ag-num">1</div><div class="ag-text">Call to order and quorum confirmation</div><div class="ag-time">5 min</div></div>
-                  <div class="ag-item"><div class="ag-num">2</div><div class="ag-text">Approval of prior minutes</div><div class="ag-time">5 min</div></div>
-                  <div class="ag-item"><div class="ag-num">3</div><div class="ag-text">Treasurer's report — Q2 financials and 5% distribution status</div><div class="ag-time">15 min</div></div>
-                  <div class="ag-item"><div class="ag-num">4</div><div class="ag-text">Programs update — Bright Path, Yoga @ the Park, Bright Readers</div><div class="ag-time">15 min</div></div>
-                  <div class="ag-item"><div class="ag-num">5</div><div class="ag-text">Board recruitment — candidate pipeline and independence timeline</div><div class="ag-time">10 min</div></div>
-                  <div class="ag-item"><div class="ag-num">6</div><div class="ag-text">USPTO trademark update — BUSH TEA & THERAPY Office Action</div><div class="ag-time">10 min</div></div>
-                  <div class="ag-item"><div class="ag-num">7</div><div class="ag-text">Action items and next meeting</div><div class="ag-time">5 min</div></div>
+                  <div class="empty-state-msg" style="text-align:center;padding:16px;color:var(--muted);font-size:13px">No agenda items yet. Click + Add item above.</div>
                 </div>
                 <div class="ag-add" id="ag-add-row" onclick="addAgItem()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add agenda item</div>
               </div>
@@ -1080,6 +1074,8 @@ function addAgItem() {
   if (!PERMS[currentUser.role].addAgenda) return;
   agCount++;
   const list = document.getElementById('agenda-list');
+  // Clear empty state
+  list.querySelectorAll('.empty-state-msg').forEach(e => e.remove());
   const div = document.createElement('div'); div.className = 'ag-item';
   div.innerHTML = `<div class="ag-num">${agCount}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px">New item</div><div class="ag-time">10 min</div>`;
   list.appendChild(div);
