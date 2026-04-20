@@ -573,7 +573,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <div class="profile-sec"><div class="profile-sec-title">Contact</div><div class="fields-grid" id="prof-contact"><div class="field-box"><div class="field-lbl">Email</div><div class="field-val link">mail@greaterchangesllc.com</div></div><div class="field-box"><div class="field-lbl">Phone</div><div class="field-val">+1 (340) —</div></div><div class="field-box"><div class="field-lbl">Location</div><div class="field-val">St. Croix, USVI</div></div><div class="field-box"><div class="field-lbl">Credentials</div><div class="field-val">LMHC, LPC, NCC, CCTS</div></div></div></div>
             <div class="profile-sec"><div class="profile-sec-title">Term</div><div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:75%"></div></div><div class="term-lbl" id="prof-term-lbl">2022–2025 · 3-year term · Renewal due</div></div>
             <div class="profile-sec"><div class="profile-sec-title">Committees</div><div class="comm-tags" id="prof-committees"><span class="comm-tag">Finance</span><span class="comm-tag">Governance</span></div></div>
-            <div class="profile-sec"><div class="profile-sec-title">Relationship to org</div><div id="prof-relationship"><span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:4px 12px">Founder</span></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Independence status</div><div id="prof-relationship"><span class="rel-badge rel-founder" style="margin-left:0;font-size:12px;padding:4px 12px">Founder</span></div></div>
             <div class="profile-sec"><div class="profile-sec-title">Notes</div><div class="notes-box" id="prof-notes">Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.</div></div>
             <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-edit-member" onclick="openEditMember()">Edit profile</button></div>
           </div>
@@ -593,21 +593,30 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="ff"><label>Last name</label><input type="text" id="ef-last"></div>
               <div class="ff"><label>Email</label><input type="email" id="ef-email"></div>
               <div class="ff"><label>Phone</label><input type="tel" id="ef-phone"></div>
-              <div class="ff"><label>Board role / title</label><input type="text" id="ef-title"></div>
+              <div class="ff"><label>Board role / title</label>
+                <select id="ef-title">
+                  <option>Member</option>
+                  <option>Treasurer</option>
+                  <option>Secretary</option>
+                  <option>Chair</option>
+                  <option>Co-Founder</option>
+                  <option>Founder</option>
+                </select>
+              </div>
               <div class="ff"><label>Portal permissions</label>
                 <select id="ef-portal-role">
                   <option value="member">General Member</option>
                   <option value="secretary">Secretary</option>
                   <option value="treasurer">Treasurer</option>
-                  <option value="founder">Co-Founder / Founder</option>
+                  <option value="founder">Founder / Co-Founder</option>
                 </select>
               </div>
-              <div class="ff"><label>Relationship to org</label>
+              <div class="ff"><label>Independence status</label>
                 <select id="ef-relationship">
-                  <option value="independent">Independent</option>
-                  <option value="founder">Founder</option>
-                  <option value="family">Family</option>
-                  <option value="affiliated">Affiliated (GC/BTTF)</option>
+                  <option value="independent">Independent — no material relationship</option>
+                  <option value="founder">Founder / Co-Founder</option>
+                  <option value="family">Family of founder</option>
+                  <option value="affiliated">Affiliated — employed by or connected to GC/BTTF</option>
                 </select>
               </div>
               <div class="ff"><label>Term start</label><input type="text" id="ef-term-start" placeholder="e.g. 2022"></div>
@@ -1176,7 +1185,7 @@ function selectMember(card, id) {
   // Relationship badge
   const relEl = document.getElementById('prof-relationship');
   if (relEl) {
-    const relLabels = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated (GC/BTTF)', unknown:'Unclassified' };
+    const relLabels = { independent:'Independent', founder:'Founder', family:'Family of Founder', affiliated:'Affiliated — GC/BTTF', unknown:'Status unknown' };
     const relClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
     const rel = m.relationship || 'unknown';
     relEl.innerHTML = `<span class="rel-badge ${relClass[rel]}" style="margin-left:0;font-size:12px;padding:4px 12px">${relLabels[rel] || rel}</span>`;
@@ -1205,7 +1214,11 @@ function saveMember() {
   const cards = document.getElementById('member-cards');
   const div = document.createElement('div'); div.className = 'member-card';
   div.onclick = function() { selectMember(this, id); };
-  div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
+  const relBadgeClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
+  const relBadgeLabel = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated', unknown:'Unknown' };
+  const rbc = relBadgeClass[relationship] || 'rel-unknown';
+  const rbl = relBadgeLabel[relationship] || 'Unknown';
+  div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet" style="margin-right:4px">${role}</span><span class="rel-badge ${rbc}" style="margin-left:0;font-size:10px;padding:3px 8px">${rbl}</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
   cards.appendChild(div);
   toggleForm('member-form');
   // Hash the temp password before storing
@@ -1713,6 +1726,15 @@ function openEditMember() {
   else if (sub.includes('treasurer')) inferredRole = 'treasurer';
   else if (sub.includes('secretary')) inferredRole = 'secretary';
   document.getElementById('ef-portal-role').value = inferredRole;
+
+  // Set board role select
+  const titleSelect = document.getElementById('ef-title');
+  if (titleSelect) {
+    const roleFromSub = m.sub ? m.sub.split('·')[0].trim() : 'Member';
+    const roleOptions = ['Member','Treasurer','Secretary','Chair','Co-Founder','Founder'];
+    const matchedRole = roleOptions.find(r => roleFromSub.toLowerCase().includes(r.toLowerCase())) || 'Member';
+    titleSelect.value = matchedRole;
+  }
   if (document.getElementById('ef-relationship')) {
     document.getElementById('ef-relationship').value = m.relationship || 'unknown';
   }
@@ -1732,7 +1754,8 @@ function saveEditMember() {
   const last = document.getElementById('ef-last').value.trim();
   const email = document.getElementById('ef-email').value.trim();
   const phone = document.getElementById('ef-phone').value.trim();
-  const title = document.getElementById('ef-title').value.trim();
+  const titleEl = document.getElementById('ef-title');
+  const title = titleEl.tagName === 'SELECT' ? titleEl.value : titleEl.value.trim();
   const portalRole = document.getElementById('ef-portal-role').value;
   const termStart = document.getElementById('ef-term-start').value.trim();
   const termEnd = document.getElementById('ef-term-end').value.trim();
@@ -1770,7 +1793,7 @@ function saveEditMember() {
   // Re-render relationship badge
   const relEl = document.getElementById('prof-relationship');
   if (relEl) {
-    const relLabels = { independent:'Independent', founder:'Founder', family:'Family', affiliated:'Affiliated (GC/BTTF)', unknown:'Unclassified' };
+    const relLabels = { independent:'Independent', founder:'Founder', family:'Family of Founder', affiliated:'Affiliated — GC/BTTF', unknown:'Status unknown' };
     const relClass = { independent:'rel-independent', founder:'rel-founder', family:'rel-family', affiliated:'rel-affiliated', unknown:'rel-unknown' };
     relEl.innerHTML = `<span class="rel-badge ${relClass[relationship]}" style="margin-left:0;font-size:12px;padding:4px 12px">${relLabels[relationship] || relationship}</span>`;
   }
