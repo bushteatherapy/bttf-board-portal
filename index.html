@@ -237,9 +237,16 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .doc-row-actions{display:none;align-items:center}
 .doc-row:hover .doc-row-actions{display:flex}
 .doc-name{font-size:13px;font-weight:500;margin-bottom:1px}
+.doc-link{cursor:pointer;color:var(--violet);transition:color 0.15s}
+.doc-link:hover{color:var(--terra);text-decoration:underline}
+.doc-link[data-url=""]{color:var(--text);cursor:default}
+.doc-link[data-url=""]:hover{text-decoration:none;color:var(--text)}
 .doc-meta{font-size:11px;color:var(--muted)}
 
 /* FINANCE */
+.period-tab{padding:5px 12px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:white;color:var(--muted);cursor:pointer;font-family:inherit;transition:all 0.15s}
+.period-tab:hover{border-color:var(--violet);color:var(--violet)}
+.period-tab.active{background:var(--violet);color:white;border-color:var(--violet)}
 .finance-readonly-banner{background:#e0f2fe;border-radius:8px;padding:10px 14px;font-size:12px;color:#0369a1;margin-bottom:16px;display:none}
 .finance-readonly-banner.show{display:block}
 .ie-table{width:100%;border-collapse:collapse;font-size:13px}
@@ -667,15 +674,67 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="form-actions"><button class="btn btn-primary" onclick="saveDoc()">Save</button><button class="btn btn-outline" onclick="toggleForm('doc-form')">Cancel</button></div>
         </div>
         <div class="two-col">
-          <div class="card"><div class="card-hd"><span class="card-title">Governance</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF Bylaws (2024)</div><div class="doc-meta">Updated Apr 2024 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">Board Meeting Minutes Template</div><div class="doc-meta">Updated Jan 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF–GC Clinical Services Agreement</div><div class="doc-meta">Updated Mar 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div></div></div>
-          <div class="card"><div class="card-hd"><span class="card-title">Compliance & legal</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025 · PDF</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">IRS Determination Letter</div><div class="doc-meta">501(c)(3) · EIN 88-3435722</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div><div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">5% Distribution Tracker (FY2026)</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div></div></div>
+          <div class="card"><div class="card-hd"><span class="card-title">Governance</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">BTTF Bylaws (2024)</div><div class="doc-meta">Updated Apr 2024 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">Board Meeting Minutes Template</div><div class="doc-meta">Updated Jan 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">BTTF–GC Clinical Services Agreement</div><div class="doc-meta">Updated Mar 2025 · Google Drive</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div></div></div>
+          <div class="card"><div class="card-hd"><span class="card-title">Compliance & legal</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025 · PDF</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">IRS Determination Letter</div><div class="doc-meta">501(c)(3) · EIN 88-3435722</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div><div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')" title="Add Drive link via edit">5% Distribution Tracker (FY2026)</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div></div></div></div>
         </div>
       </div>
 
       <!-- FINANCE -->
       <div class="page" id="page-finance">
-        <div class="page-hd"><div class="page-hd-left"><h1>Finance</h1><p>Income, expenses, and distribution tracking.</p></div><button class="btn btn-primary" id="btn-add-entry" onclick="toggleForm('entry-form')">+ Add entry</button></div>
+        <div class="page-hd">
+          <div class="page-hd-left"><h1>Finance</h1><p>Profit & loss, income, expenses, and distribution tracking.</p></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btn-outline" id="btn-import-qb" onclick="toggleForm('qb-import-form')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import QuickBooks P&L
+            </button>
+            <button class="btn btn-primary" id="btn-add-entry" onclick="toggleForm('entry-form')">+ Add entry</button>
+          </div>
+        </div>
         <div class="finance-readonly-banner" id="finance-readonly-banner">You have read-only access to the finance tab. Contact the Treasurer or a Founder to make changes.</div>
+
+        <div class="form-panel" id="qb-import-form">
+          <div class="form-title">Import QuickBooks Profit & Loss</div>
+          <div style="background:var(--violet-mist);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--violet);margin-bottom:14px;line-height:1.6">
+            <strong style="display:block;margin-bottom:4px">How to export from QuickBooks Online</strong>
+            1. Go to Reports → Profit and Loss<br>
+            2. Set the date range to the quarter you want<br>
+            3. Click Export → Export to CSV<br>
+            4. Upload that file here
+          </div>
+          <div class="form-grid">
+            <div class="ff"><label>Quarter</label>
+              <select id="qb-quarter">
+                <option value="Q1 2026">Q1 2026 (Jan–Mar)</option>
+                <option value="Q2 2026" selected>Q2 2026 (Apr–Jun)</option>
+                <option value="Q3 2026">Q3 2026 (Jul–Sep)</option>
+                <option value="Q4 2026">Q4 2026 (Oct–Dec)</option>
+                <option value="Q4 2025">Q4 2025 (Oct–Dec)</option>
+                <option value="Q3 2025">Q3 2025 (Jul–Sep)</option>
+                <option value="Q2 2025">Q2 2025 (Apr–Jun)</option>
+                <option value="Q1 2025">Q1 2025 (Jan–Mar)</option>
+              </select>
+            </div>
+            <div class="ff"><label>CSV file</label>
+              <input type="file" id="qb-csv-file" accept=".csv" style="padding:6px 11px">
+            </div>
+          </div>
+          <div id="qb-preview" style="display:none;margin-bottom:12px">
+            <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:8px;font-weight:500">Preview — <span id="qb-preview-count">0</span> line items found</div>
+            <div style="max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:8px">
+              <table style="width:100%;border-collapse:collapse;font-size:12px" id="qb-preview-table">
+                <thead style="background:#faf9fd;position:sticky;top:0"><tr><th style="padding:7px 10px;text-align:left;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">Account</th><th style="padding:7px 10px;text-align:left;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">Type</th><th style="padding:7px 10px;text-align:right;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border)">Amount</th></tr></thead>
+                <tbody id="qb-preview-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="qb-parse-error" style="display:none;background:#fee2e2;color:#b91c1c;border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:12px"></div>
+          <div class="form-actions">
+            <button class="btn btn-outline btn-sm" onclick="previewQBImport()">Preview</button>
+            <button class="btn btn-primary" id="qb-import-btn" onclick="importQBData()" style="display:none">Import to Finance tab</button>
+            <button class="btn btn-outline" onclick="toggleForm('qb-import-form')">Cancel</button>
+          </div>
+        </div>
 
         <div class="dist-tracker" id="dist-tracker">
           <div class="dist-title">FY2026 — 5% mandatory distribution tracker</div>
@@ -685,6 +744,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div style="font-size:12px;color:var(--muted);margin-top:8px">$1,300 remaining to meet FY2026 requirement by December 31, 2026.</div>
         </div>
 
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="period-tabs">
+            <button class="period-tab active" onclick="switchPeriod(this,'all')" style="padding:5px 12px;border-radius:20px;font-size:12px;border:1px solid var(--border);background:var(--violet);color:white;cursor:pointer;font-family:inherit;font-weight:500">All</button>
+          </div>
+          <div style="font-size:12px;color:var(--muted)" id="period-label">Showing all entries</div>
+        </div>
         <div class="balance-bar">
           <div><div class="balance-label">Current balance</div><div class="balance-amount positive" id="balance-display">$41,200</div></div>
           <div style="text-align:right"><div class="balance-label">Total income YTD</div><div style="font-size:15px;font-weight:500;color:#166534" id="income-display">$12,400</div></div>
@@ -722,9 +787,9 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 
         <div class="card" id="finance-docs-card"><div class="card-hd"><span class="card-title">Financial documents</span><button class="btn-ghost" style="font-size:11px" onclick="toggleForm('doc-form')">+ Add</button></div>
           <div class="card-body" style="padding:6px 18px">
-            <div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025</div></div></div>
-            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">FY2026 Operating Budget</div><div class="doc-meta">Google Sheets · Live</div></div></div>
-            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">5% Distribution Tracker</div><div class="doc-meta">Google Sheets · Live</div></div></div>
+            <div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
+            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">FY2026 Operating Budget</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
+            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('')">5% Distribution Tracker</div><div class="doc-meta">Google Sheets · Live</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div></div>
           </div>
         </div>
       </div>
@@ -1177,8 +1242,188 @@ function saveDoc() {
   const cat = document.getElementById('df-cat').value;
   const url = document.getElementById('df-url').value.trim();
   if (!name) return;
+
+  const id = Date.now().toString();
+  const iconMap = { 'Governance':'doc', 'Compliance & Legal':'pdf', 'Finance':'sheet', 'Programs':'doc', 'Grants':'doc' };
+  const emojiMap = { 'doc':'📄', 'pdf':'📋', 'sheet':'📊' };
+  const iconType = iconMap[cat] || 'doc';
+  const emoji = emojiMap[iconType];
+  const date = new Date().toLocaleDateString('en-US', { month:'short', year:'numeric' });
+
+  // Find the right card to append to, or create a new one
+  const allCards = document.querySelectorAll('#page-documents .card');
+  let targetCard = null;
+  allCards.forEach(card => {
+    const titleEl = card.querySelector('.card-title');
+    if (titleEl && titleEl.textContent.toLowerCase().includes(cat.toLowerCase())) targetCard = card;
+  });
+  if (!targetCard && allCards.length > 0) targetCard = allCards[0];
+
+  if (targetCard) {
+    const body = targetCard.querySelector('.card-body');
+    const div = document.createElement('div');
+    div.className = 'doc-row';
+    div.dataset.id = id;
+    div.dataset.url = url;
+    div.innerHTML = `<div class="doc-icon ${iconType}">${emoji}</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'" data-url="${url}">${name}</div><div class="doc-meta">${date} · ${cat}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
+    body.appendChild(div);
+    // Make name clickable
+    if (url) div.querySelector('.doc-name').setAttribute('data-url', url);
+  }
+
   toggleForm('doc-form');
-  pushToSheets('Documents', { id: Date.now().toString(), name, category: cat, driveUrl: url, addedDate: new Date().toLocaleDateString(), addedBy: currentUser.name });
+  pushToSheets('Documents', { id, name, category: cat, driveUrl: url, addedDate: date, addedBy: currentUser ? currentUser.name : '' });
+}
+
+// ── QUICKBOOKS P&L IMPORT ──
+let qbParsedData = [];
+let periodHistory = {}; // { 'Q2 2026': [...entries] }
+let activePeriod = 'all';
+
+function previewQBImport() {
+  const file = document.getElementById('qb-csv-file').files[0];
+  const errEl = document.getElementById('qb-parse-error');
+  const previewEl = document.getElementById('qb-preview');
+  errEl.style.display = 'none';
+  previewEl.style.display = 'none';
+  qbParsedData = [];
+
+  if (!file) { errEl.textContent = 'Please select a CSV file first.'; errEl.style.display = 'block'; return; }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const text = e.target.result;
+      qbParsedData = parseQBCSV(text);
+      if (qbParsedData.length === 0) {
+        errEl.textContent = 'No recognizable data found in this CSV. Make sure you exported a Profit & Loss report from QuickBooks Online.';
+        errEl.style.display = 'block';
+        return;
+      }
+      document.getElementById('qb-preview-count').textContent = qbParsedData.length;
+      const tbody = document.getElementById('qb-preview-body');
+      tbody.innerHTML = qbParsedData.map(r => {
+        const cls = r.amount > 0 ? 'color:#166534' : 'color:#b91c1c';
+        const prefix = r.amount > 0 ? '+' : '';
+        return `<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border)">${r.desc}</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--muted)">${r.cat}</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);text-align:right;font-weight:500;${cls}">${prefix}$${Math.abs(r.amount).toLocaleString()}</td></tr>`;
+      }).join('');
+      previewEl.style.display = 'block';
+      document.getElementById('qb-import-btn').style.display = 'inline-flex';
+    } catch(err) {
+      errEl.textContent = 'Error parsing CSV: ' + err.message;
+      errEl.style.display = 'block';
+    }
+  };
+  reader.readAsText(file);
+}
+
+function parseQBCSV(text) {
+  const lines = text.split('
+').map(l => l.trim()).filter(l => l.length > 0);
+  const entries = [];
+  // QB P&L CSV format: rows have account name, then amount columns
+  // Income lines are positive, expense lines are negative
+  let inIncomeSection = false;
+  let inExpenseSection = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g,'').trim());
+    const label = cols[0] || '';
+    const rawAmount = cols[cols.length - 1] || cols[1] || '';
+    const amount = parseFloat(rawAmount.replace(/[$,\s()]/g, '')) || 0;
+
+    // Detect sections
+    const labelLower = label.toLowerCase();
+    if (labelLower.includes('income') || labelLower.includes('revenue') || labelLower.includes('donation')) inIncomeSection = true;
+    if (labelLower.includes('expense') || labelLower.includes('cost')) { inIncomeSection = false; inExpenseSection = true; }
+    if (labelLower.includes('net') || labelLower === 'total') continue;
+    if (label === '' || label.startsWith(',,') || !isNaN(parseFloat(label))) continue;
+    if (Math.abs(amount) < 0.01) continue;
+
+    // Skip header rows
+    if (labelLower === 'profit and loss' || labelLower === 'account' || labelLower.startsWith('for ') || labelLower.startsWith('basis')) continue;
+
+    const cat = inIncomeSection ? 'Income' : inExpenseSection ? 'Expense' : 'Other';
+    const signedAmount = inIncomeSection ? Math.abs(amount) : -Math.abs(amount);
+
+    entries.push({
+      id: 'qb_' + Date.now() + '_' + i,
+      date: document.getElementById('qb-quarter').value,
+      desc: label,
+      cat,
+      amount: signedAmount
+    });
+  }
+  return entries;
+}
+
+function importQBData() {
+  const quarter = document.getElementById('qb-quarter').value;
+  if (qbParsedData.length === 0) return;
+
+  // Store this period's data
+  periodHistory[quarter] = qbParsedData;
+
+  // Rebuild ieData — keep all periods except the one being replaced
+  const otherPeriods = Object.entries(periodHistory)
+    .filter(([k]) => k !== quarter)
+    .flatMap(([, v]) => v);
+
+  ieData = [...qbParsedData, ...otherPeriods];
+
+  // Add period tab if not already there
+  addPeriodTab(quarter);
+  switchPeriod(null, quarter);
+  renderIE();
+
+  // Sync to Sheet
+  qbParsedData.forEach(entry => {
+    pushToSheets('Finance', { ...entry, importedFrom: 'QuickBooks', quarter, importedBy: currentUser ? currentUser.name : '' });
+  });
+
+  toggleForm('qb-import-form');
+  document.getElementById('qb-import-btn').style.display = 'none';
+  document.getElementById('qb-preview').style.display = 'none';
+  qbParsedData = [];
+
+  // Show success
+  const badge = document.getElementById('sync-badge');
+  const prev = badge.textContent;
+  badge.textContent = '● ' + quarter + ' imported';
+  badge.className = 'sync-status sync-ok';
+  setTimeout(() => { badge.textContent = prev; }, 3000);
+}
+
+function addPeriodTab(quarter) {
+  const tabs = document.getElementById('period-tabs');
+  // Check if tab already exists
+  const existing = Array.from(tabs.querySelectorAll('.period-tab')).find(t => t.dataset.period === quarter);
+  if (existing) return;
+  const btn = document.createElement('button');
+  btn.className = 'period-tab';
+  btn.dataset.period = quarter;
+  btn.textContent = quarter;
+  btn.onclick = function() { switchPeriod(this, quarter); };
+  tabs.appendChild(btn);
+}
+
+function switchPeriod(btn, period) {
+  activePeriod = period;
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  else {
+    const tab = Array.from(document.querySelectorAll('.period-tab')).find(t => t.dataset.period === period || (period === 'all' && t.textContent === 'All'));
+    if (tab) tab.classList.add('active');
+  }
+  const label = document.getElementById('period-label');
+  if (period === 'all') {
+    label.textContent = 'Showing all entries';
+    renderIE(ieData);
+  } else {
+    const periodData = periodHistory[period] || ieData.filter(e => e.date === period);
+    label.textContent = `Showing ${period} · ${periodData.length} entries`;
+    renderIE(periodData);
+  }
 }
 
 // ── FINANCE ──
@@ -1206,10 +1451,11 @@ function saveEntry() {
   pushToSheets('Finance', { id: Date.now().toString(), type, amount: signed, date, category: cat, description: desc, addedBy: currentUser.name });
 }
 
-function renderIE() {
+function renderIE(data) {
+  const displayData = data || ieData;
   const tbody = document.getElementById('ie-tbody');
   let income = 0, expense = 0;
-  tbody.innerHTML = ieData.map((r,i) => {
+  tbody.innerHTML = displayData.map((r,i) => {
     if (r.amount > 0) income += r.amount; else expense += Math.abs(r.amount);
     const cls = r.amount > 0 ? 'amount-in' : 'amount-out';
     const prefix = r.amount > 0 ? '+' : '';
@@ -1217,10 +1463,12 @@ function renderIE() {
     const delBtn = canEdit ? `<button onclick="deleteEntry(${i})" style="background:transparent;border:none;color:#b91c1c;cursor:pointer;font-size:12px;padding:2px 6px" title="Delete">✕</button>` : '';
     return `<tr><td>${r.date}</td><td>${r.desc}</td><td>${r.cat}</td><td class="${cls}">${prefix}$${Math.abs(r.amount).toLocaleString()}</td><td>${delBtn}</td></tr>`;
   }).join('');
-  document.getElementById('income-display').textContent = '$' + income.toLocaleString();
-  document.getElementById('expense-display').textContent = '$' + expense.toLocaleString();
-  const balance = 41200 + (income - 3200) - (expense - 3200);
-  document.getElementById('balance-display').textContent = '$' + Math.round(balance).toLocaleString();
+  document.getElementById('income-display').textContent = '$' + Math.round(income).toLocaleString();
+  document.getElementById('expense-display').textContent = '$' + Math.round(expense).toLocaleString();
+  const balance = income - expense;
+  const balEl = document.getElementById('balance-display');
+  balEl.textContent = (balance >= 0 ? '+$' : '-$') + Math.abs(Math.round(balance)).toLocaleString();
+  balEl.className = 'balance-amount ' + (balance >= 0 ? 'positive' : 'negative');
 }
 
 // ── SHARED ──
@@ -1339,6 +1587,7 @@ function saveEditMember() {
 }
 
 // ── GOOGLE SHEETS ──
+// Finance tab headers: id · date · desc · cat · amount · importedFrom · quarter · importedBy · addedBy
 async function pushToSheets(sheet, data) {
   try {
     await fetch(API_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ key: API_KEY, sheet, action:'add', data }) });
@@ -1374,6 +1623,51 @@ function editTask(btn) {
 function deleteTask(btn) {
   const row = btn.closest('.task-row');
   if (confirm('Delete this task?')) row.remove();
+}
+
+// ── DOCUMENT OPEN ──
+function openDoc(url) {
+  if (!url || url === '') {
+    alert('No Drive link saved for this document yet. Click the ✏️ edit button to add one.');
+    return;
+  }
+  window.open(url, '_blank');
+}
+
+// ── DOCUMENT EDIT (inline URL update) ──
+function editDocRow(btn) {
+  const row = btn.closest('.doc-row');
+  const nameEl = row.querySelector('.doc-name');
+  const metaEl = row.querySelector('.doc-meta');
+  const currentUrl = nameEl.getAttribute('data-url') || nameEl.getAttribute('onclick')?.match(/'([^']+)'/)?.[1] || '';
+  const currentName = nameEl.textContent;
+
+  // Replace row content with inline edit fields
+  const originalHTML = row.innerHTML;
+  row.innerHTML = `
+    <div style="flex:1;display:flex;flex-direction:column;gap:6px;padding:4px 0">
+      <input type="text" value="${currentName}" id="doc-edit-name" style="padding:6px 10px;border:1px solid var(--violet);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">
+      <input type="url" value="${currentUrl}" id="doc-edit-url" placeholder="https://drive.google.com/..." style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;outline:none;color:var(--text)">
+    </div>
+    <div style="display:flex;gap:6px;align-items:center;margin-left:8px">
+      <button class="btn btn-primary btn-sm" onclick="saveDocEdit(this, '${row.dataset?.id || ''}')">Save</button>
+      <button class="btn btn-outline btn-sm" onclick="cancelDocEdit(this, \`${originalHTML.replace(/`/g,"'")}\`)">Cancel</button>
+    </div>`;
+}
+
+function saveDocEdit(btn, id) {
+  const row = btn.closest('.doc-row');
+  const newName = row.querySelector('#doc-edit-name').value.trim();
+  const newUrl = row.querySelector('#doc-edit-url').value.trim();
+  if (!newName) return;
+  const date = row.querySelector('.doc-meta')?.textContent || new Date().toLocaleDateString();
+  row.innerHTML = `<div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${newUrl.replace(/'/g,"\'")}'" data-url="${newUrl}">${newName}</div><div class="doc-meta">${date}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
+  if (id) pushToSheets('Documents', { id, name: newName, driveUrl: newUrl, action: 'update' });
+}
+
+function cancelDocEdit(btn, originalHTML) {
+  const row = btn.closest('.doc-row');
+  row.innerHTML = originalHTML;
 }
 
 // ── DOCUMENT DELETE ──
