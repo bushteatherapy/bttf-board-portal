@@ -772,36 +772,51 @@ async function doLogin() {
   const email = document.getElementById('login-email').value.trim().toLowerCase();
   const password = document.getElementById('login-password').value;
   const errEl = document.getElementById('login-error');
+  const btn = document.querySelector('.login-btn');
   errEl.style.display = 'none';
   if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; errEl.style.display = 'block'; return; }
 
-  // Check against API first; fall back to local for founders during setup
+  btn.textContent = 'Signing in...';
+  btn.disabled = true;
+
   let user = null;
+  const hash = await simpleHash(password);
+
+  // 1. Try Google Sheet first
   try {
-    const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(email)}&key=${API_KEY}`);
-    const data = await res.json();
-    if (data && data.found) {
-      // Verify password hash
-      const hash = await simpleHash(password);
-      if (data.passwordHash === hash) {
-        user = { email: data.email, name: data.name, initials: data.initials, role: data.role, color: data.color || '#3D1F5C' };
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
+    const members = await res.json();
+    if (Array.isArray(members)) {
+      const match = members.find(m => (m.email || '').toLowerCase() === email);
+      if (match) {
+        if (match.passwordHash === hash || match.passwordHash === '' || !match.passwordHash) {
+          // Allow login if hash matches OR if no password set yet (first time)
+          if (match.passwordHash === hash || password === 'bttf2026') {
+            user = {
+              email: match.email,
+              name: match.name,
+              initials: match.initials || (match.name || '??').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
+              role: match.portalRole || 'member',
+              color: match.color || '#3D1F5C'
+            };
+          }
+        }
       }
     }
   } catch(e) {
-    // API unavailable — fall back to local user store for initial setup
+    console.log('Sheet login failed, trying local:', e);
+  }
+
+  // 2. Fall back to local users (founders during initial setup)
+  if (!user) {
     const localMatch = LOCAL_USERS.find(u => u.email === email);
-    if (localMatch && password === 'bttf2026') {
+    if (localMatch && (password === 'bttf2026' || hash === await simpleHash('bttf2026'))) {
       user = localMatch;
     }
   }
 
-  // Founder fallback with temp password during initial setup
-  if (!user) {
-    const localMatch = LOCAL_USERS.find(u => u.email === email);
-    if (localMatch && password === 'bttf2026') {
-      user = localMatch;
-    }
-  }
+  btn.textContent = 'Sign in';
+  btn.disabled = false;
 
   if (user) {
     currentUser = user;
@@ -1042,7 +1057,10 @@ function saveMember() {
   div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
   cards.appendChild(div);
   toggleForm('member-form');
-  pushToSheets('Members', { id, name, role, portalRole, email, phone, termStart, initials, color, tempPassword: tempPw });
+  // Hash the temp password before storing
+  simpleHash(tempPw || 'bttf2026').then(hash => {
+    pushToSheets('Members', { id, name, role, portalRole, email, phone, termStart, initials, color, passwordHash: hash, active: 'true' });
+  });
 }
 
 // ── TASKS ──
@@ -1226,9 +1244,9 @@ async function pushToSheets(sheet, data) {
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
   try {
-    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const res = await fetch(`${API_URL}?action=getMembers&key=${API_KEY}`);
     const data = await res.json();
-    if (data && !data.error) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
+    if (Array.isArray(data)) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
     else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
   } catch(e) { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
 }
