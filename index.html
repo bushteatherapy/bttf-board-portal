@@ -7,254 +7,280 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --violet: #3D1F5C;
-  --violet-light: #5a3080;
-  --violet-mist: #f3eefa;
-  --hibiscus: #E8456A;
-  --hibiscus-light: #fde8ee;
-  --terra: #C45E1A;
-  --terra-light: #fdf0e8;
-  --saffron: #F0A500;
-  --saffron-light: #fef7e0;
-  --papaya: #FEF5F0;
-  --white: #ffffff;
-  --bg: #f7f4fb;
-  --border: #e8e3f0;
-  --text: #1a1a1a;
-  --muted: #777;
-  --sidebar-w: 224px;
+  --violet:#3D1F5C; --violet-light:#5a3080; --violet-mist:#f3eefa;
+  --hibiscus:#E8456A; --hibiscus-light:#fde8ee;
+  --terra:#C45E1A; --terra-light:#fdf0e8;
+  --saffron:#F0A500; --saffron-light:#fef7e0;
+  --papaya:#FEF5F0; --border:#e8e3f0;
+  --text:#1a1a1a; --muted:#777; --bg:#f7f4fb;
+  --sidebar-w:224px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; font-size: 14px; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
 
-/* ── SIDEBAR ── */
-.sidebar {
-  width: var(--sidebar-w); background: var(--violet);
-  min-height: 100vh; display: flex; flex-direction: column;
-  position: fixed; top: 0; left: 0; z-index: 100;
-}
-.sb-logo { padding: 22px 18px 18px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.sb-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 3px; }
-.sb-icon { width: 36px; height: 36px; background: var(--saffron); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.sb-icon svg { width: 20px; height: 20px; }
-.sb-name { font-family: 'DM Serif Display', serif; font-size: 14px; color: white; line-height: 1.25; }
-.sb-sub { font-size: 10px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; text-transform: uppercase; padding-left: 46px; }
-.sb-section { padding: 14px 0 6px; }
-.sb-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 0 18px; margin-bottom: 3px; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px; padding: 9px 18px;
-  color: rgba(255,255,255,0.6); cursor: pointer; font-size: 13px;
-  border-left: 3px solid transparent; transition: all 0.15s; user-select: none;
-}
-.nav-item:hover { color: white; background: rgba(255,255,255,0.07); }
-.nav-item.active { color: white; background: rgba(255,255,255,0.1); border-left-color: var(--saffron); font-weight: 500; }
-.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.75; }
-.sb-footer { margin-top: auto; padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.1); }
-.user-row { display: flex; align-items: center; gap: 9px; }
-.user-av { width: 30px; height: 30px; border-radius: 50%; background: var(--hibiscus); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: white; flex-shrink: 0; }
-.user-name { font-size: 12px; color: white; font-weight: 500; }
-.user-role { font-size: 10px; color: rgba(255,255,255,0.4); }
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--violet)}
+.login-box{background:white;border-radius:16px;padding:36px 40px;width:100%;max-width:400px}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.login-icon{width:40px;height:40px;background:var(--saffron);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.login-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--violet);line-height:1.2}
+.login-sub{font-size:12px;color:var(--muted);margin-top:1px}
+.login-heading{font-size:15px;font-weight:500;color:var(--violet);margin-bottom:18px}
+.lf{margin-bottom:14px}
+.lf label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:5px;font-weight:500}
+.lf input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;outline:none;color:var(--text);transition:border-color 0.15s}
+.lf input:focus{border-color:var(--violet)}
+.login-btn{width:100%;padding:11px;background:var(--hibiscus);color:white;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:4px;transition:background 0.15s}
+.login-btn:hover{background:#d03a5e}
+.login-error{background:#fee2e2;color:#b91c1c;border-radius:8px;padding:10px 12px;font-size:13px;margin-bottom:14px;display:none}
+.login-forgot{text-align:center;margin-top:14px;font-size:12px;color:var(--muted)}
+.login-forgot a{color:var(--terra);cursor:pointer;text-decoration:none}
+.login-forgot a:hover{text-decoration:underline}
+.reset-sent{background:#dcfce7;color:#166534;border-radius:8px;padding:10px 12px;font-size:13px;margin-top:12px;display:none}
 
-/* ── MAIN ── */
-.main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-.topbar {
-  background: white; border-bottom: 1px solid var(--border); height: 58px;
-  padding: 0 26px; display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 50;
-}
-.topbar-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--violet); }
-.topbar-right { display: flex; align-items: center; gap: 10px; }
-.year-badge { background: var(--hibiscus-light); color: var(--hibiscus); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 20px; }
-.sync-status { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 500; }
-.sync-ok { background: #dcfce7; color: #166534; }
-.sync-warn { background: var(--saffron-light); color: #7a4e00; }
-.sync-err { background: #fee2e2; color: #b91c1c; }
-.content { padding: 26px; flex: 1; }
+/* PORTAL */
+#portal{display:none;min-height:100vh;display:none;flex-direction:row}
+#portal.visible{display:flex}
 
-/* ── PAGES ── */
-.page { display: none; }
-.page.active { display: block; }
-.page-hd { margin-bottom: 22px; display: flex; align-items: flex-start; justify-content: space-between; }
-.page-hd-left h1 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--violet); margin-bottom: 3px; }
-.page-hd-left p { font-size: 13px; color: var(--muted); }
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--violet);min-height:100vh;display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100}
+.sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sb-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:3px}
+.sb-icon{width:36px;height:36px;background:var(--saffron);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-name{font-family:'DM Serif Display',serif;font-size:14px;color:white;line-height:1.25}
+.sb-sub{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;padding-left:46px}
+.sb-section{padding:14px 0 6px}
+.sb-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0 18px;margin-bottom:3px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;color:rgba(255,255,255,0.6);cursor:pointer;font-size:13px;border-left:3px solid transparent;transition:all 0.15s;user-select:none}
+.nav-item:hover{color:white;background:rgba(255,255,255,0.07)}
+.nav-item.active{color:white;background:rgba(255,255,255,0.1);border-left-color:var(--saffron);font-weight:500}
+.nav-item.hidden{display:none}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:0.75}
+.sb-footer{margin-top:auto;padding:14px 18px;border-top:1px solid rgba(255,255,255,0.1)}
+.user-row{display:flex;align-items:center;gap:9px}
+.user-av{width:30px;height:30px;border-radius:50%;background:var(--hibiscus);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;flex-shrink:0}
+.user-name{font-size:12px;color:white;font-weight:500}
+.user-role-lbl{font-size:10px;color:rgba(255,255,255,0.4)}
+.logout-btn{background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:11px;cursor:pointer;font-family:inherit;margin-top:6px;padding:0;text-align:left}
+.logout-btn:hover{color:white}
 
-/* ── COMPONENTS ── */
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; transition: all 0.15s; }
-.btn-primary { background: var(--hibiscus); color: white; }
-.btn-primary:hover { background: #d03a5e; }
-.btn-outline { background: white; border: 1px solid var(--border); color: var(--text); }
-.btn-outline:hover { background: var(--papaya); }
-.btn-ghost { background: transparent; border: none; color: var(--muted); font-size: 12px; cursor: pointer; padding: 4px 8px; border-radius: 6px; font-family: inherit; }
-.btn-ghost:hover { background: var(--violet-mist); color: var(--violet); }
-.btn-sm { padding: 5px 12px; font-size: 12px; }
-.card { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
-.card-hd { padding: 13px 18px 11px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.card-title { font-size: 13px; font-weight: 600; color: var(--violet); }
-.card-body { padding: 12px 18px; }
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.stat-card { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 14px 16px; }
-.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
-.stat-value { font-size: 26px; font-weight: 600; color: var(--violet); line-height: 1; margin-bottom: 3px; }
-.stat-sub { font-size: 11px; color: var(--muted); }
-.stat-card.h .stat-value { color: var(--hibiscus); }
-.stat-card.t .stat-value { color: var(--terra); }
-.stat-card.s .stat-value { color: var(--saffron); }
-.text-link { font-size: 12px; color: var(--terra); cursor: pointer; background: none; border: none; font-family: inherit; }
-.text-link:hover { text-decoration: underline; }
-.pill { font-size: 10px; padding: 3px 8px; border-radius: 20px; font-weight: 500; display: inline-block; }
-.pill-violet { background: var(--violet-mist); color: var(--violet); }
-.pill-hibiscus { background: var(--hibiscus-light); color: #8b1a35; }
-.pill-green { background: #dcfce7; color: #166534; }
-.pill-amber { background: var(--saffron-light); color: #7a4e00; }
-.pill-red { background: #fee2e2; color: #b91c1c; }
-.pill-blue { background: #e0f2fe; color: #0369a1; }
-.pill-gray { background: #f1f5f9; color: #475569; }
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:white;border-bottom:1px solid var(--border);height:58px;padding:0 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--violet)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.year-badge{background:var(--hibiscus-light);color:var(--hibiscus);font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
+.role-badge{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
+.role-founder{background:var(--violet-mist);color:var(--violet)}
+.role-treasurer{background:var(--saffron-light);color:#7a4e00}
+.role-secretary{background:#dbeafe;color:#1e40af}
+.role-member{background:#f1f5f9;color:#475569}
+.sync-status{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500}
+.sync-ok{background:#dcfce7;color:#166534}
+.sync-warn{background:var(--saffron-light);color:#7a4e00}
+.content{padding:26px;flex:1}
 
-/* ── MEETINGS ── */
-.meeting-row { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
-.meeting-row:last-child { border-bottom: none; }
-.meeting-row:hover .meeting-title { color: var(--violet); }
-.date-chip { background: var(--violet-mist); border-radius: 8px; width: 42px; height: 46px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
-.date-chip.past { background: #f0edf5; }
-.dc-mo { font-size: 9px; text-transform: uppercase; color: var(--violet); font-weight: 600; letter-spacing: 0.06em; }
-.dc-mo.past { color: #888; }
-.dc-day { font-size: 19px; font-weight: 700; color: var(--violet); line-height: 1; }
-.dc-day.past { color: #888; }
-.meeting-info { flex: 1; }
-.meeting-title { font-size: 13px; font-weight: 500; margin-bottom: 2px; transition: color 0.15s; }
-.meeting-meta { font-size: 11px; color: var(--muted); }
-.tabs-row { display: flex; gap: 2px; background: #f0edf5; border-radius: 10px; padding: 3px; margin-bottom: 18px; }
-.tab { flex: 1; padding: 7px 0; text-align: center; font-size: 13px; border-radius: 8px; cursor: pointer; color: var(--muted); border: none; background: transparent; font-family: inherit; transition: all 0.15s; }
-.tab.active { background: white; color: var(--violet); font-weight: 500; border: 1px solid var(--border); }
-.view { display: none; }
-.view.active { display: block; }
-.detail-wrap { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
-.detail-hd { background: var(--violet); padding: 16px 20px; display: flex; align-items: flex-start; justify-content: space-between; }
-.detail-hd h3 { font-size: 16px; font-weight: 500; color: white; margin-bottom: 3px; }
-.detail-hd p { font-size: 12px; color: rgba(255,255,255,0.6); }
-.btn-white { background: white; color: var(--violet); border: none; padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; }
-.btn-white:hover { background: #f5f0fc; }
-.detail-body { padding: 18px 20px; }
-.sec { margin-bottom: 20px; }
-.sec-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 9px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; }
-.ag-item { display: flex; align-items: flex-start; gap: 9px; padding: 8px 11px; border-radius: 8px; background: #faf9fd; margin-bottom: 5px; font-size: 13px; }
-.ag-num { width: 20px; height: 20px; border-radius: 50%; background: var(--violet-mist); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--violet); flex-shrink: 0; margin-top: 1px; }
-.ag-text { flex: 1; line-height: 1.4; }
-.ag-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
-.ag-add { display: flex; align-items: center; gap: 7px; padding: 8px 11px; border-radius: 8px; border: 1.5px dashed var(--border); cursor: pointer; font-size: 13px; color: var(--muted); margin-top: 4px; }
-.ag-add:hover { border-color: var(--violet); color: var(--violet); background: var(--violet-mist); }
-.minutes-area { width: 100%; min-height: 90px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-family: inherit; resize: vertical; color: var(--text); line-height: 1.6; }
-.minutes-area:focus { outline: none; border-color: var(--violet); }
-.action-row { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-.action-row:last-child { border-bottom: none; }
-.chk { width: 17px; height: 17px; border-radius: 4px; border: 1.5px solid var(--border); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.15s; }
-.chk.done { background: var(--violet); border-color: var(--violet); }
-.chk.done::after { content: ''; width: 8px; height: 5px; border-left: 2px solid white; border-bottom: 2px solid white; transform: rotate(-45deg) translate(1px,-1px); display: block; }
-.act-text { flex: 1; line-height: 1.4; }
-.act-text.done { text-decoration: line-through; color: var(--muted); }
-.act-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.owner-chip { display: inline-flex; align-items: center; gap: 3px; background: var(--violet-mist); border-radius: 20px; padding: 2px 7px 2px 3px; font-size: 10px; color: var(--violet); font-weight: 500; }
-.owner-dot { width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: white; }
-.att-grid { display: flex; gap: 8px; flex-wrap: wrap; }
-.att-chip { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 20px; border: 1px solid var(--border); font-size: 12px; cursor: pointer; background: white; transition: all 0.15s; }
-.att-chip.present { background: var(--violet-mist); border-color: var(--violet); color: var(--violet); font-weight: 500; }
-.att-dot { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: white; }
-.back-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); cursor: pointer; margin-bottom: 12px; border: none; background: transparent; font-family: inherit; }
-.back-btn:hover { color: var(--violet); }
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+.page-hd{margin-bottom:22px;display:flex;align-items:flex-start;justify-content:space-between}
+.page-hd-left h1{font-family:'DM Serif Display',serif;font-size:26px;color:var(--violet);margin-bottom:3px}
+.page-hd-left p{font-size:13px;color:var(--muted)}
 
-/* ── MEMBERS ── */
-.seats-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 18px; }
-.seat { border-radius: 10px; border: 1.5px dashed var(--border); padding: 12px 10px; text-align: center; background: white; }
-.seat.filled { border-style: solid; border-color: var(--violet); background: var(--violet-mist); }
-.seat.founder { border-color: var(--hibiscus); background: var(--hibiscus-light); }
-.seat-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
-.seat-av { width: 34px; height: 34px; border-radius: 50%; margin: 0 auto 5px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: white; }
-.seat-name { font-size: 11px; font-weight: 500; color: var(--violet); }
-.seat-role { font-size: 10px; color: var(--muted); margin-top: 1px; }
-.seat-empty { width: 34px; height: 34px; border-radius: 50%; margin: 0 auto 5px; background: #f0edf5; display: flex; align-items: center; justify-content: center; }
-.member-card { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: border-color 0.15s; margin-bottom: 12px; }
-.member-card:hover { border-color: var(--violet); }
-.member-card.selected { border: 2px solid var(--violet); }
-.mc-top { padding: 14px 16px 11px; display: flex; gap: 11px; align-items: flex-start; }
-.av-lg { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; color: white; flex-shrink: 0; }
-.mc-meta { display: flex; gap: 14px; padding: 9px 16px; border-top: 1px solid var(--border); }
-.mc-meta-item { font-size: 11px; color: var(--muted); }
-.mc-meta-item span { display: block; font-size: 12px; font-weight: 500; color: var(--text); margin-top: 1px; }
-.profile-panel { background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; }
-.profile-hd { background: var(--violet); padding: 18px 22px; display: flex; align-items: center; gap: 14px; }
-.profile-av { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; color: white; border: 2px solid rgba(255,255,255,0.25); flex-shrink: 0; }
-.profile-name { font-size: 17px; font-weight: 500; color: white; margin-bottom: 2px; }
-.profile-sub { font-size: 12px; color: rgba(255,255,255,0.6); }
-.profile-body { padding: 18px 22px; }
-.profile-sec { margin-bottom: 18px; }
-.profile-sec-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 9px; font-weight: 500; }
-.fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.field-box { background: #faf9fd; border-radius: 8px; padding: 9px 11px; }
-.field-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
-.field-val { font-size: 13px; font-weight: 500; }
-.field-val.link { color: var(--terra); }
-.term-bg { background: #ece8f5; border-radius: 20px; height: 6px; overflow: hidden; margin-bottom: 4px; }
-.term-fill { background: var(--violet); height: 6px; border-radius: 20px; }
-.term-lbl { font-size: 11px; color: var(--muted); }
-.comm-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.comm-tag { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--saffron-light); color: #7a4e00; font-weight: 500; }
-.notes-box { background: #faf9fd; border-radius: 8px; padding: 11px; font-size: 13px; color: var(--muted); line-height: 1.6; border-left: 3px solid var(--violet-mist); }
-.recruit-banner { background: var(--papaya); border-radius: 10px; border: 1px solid #f5ddd0; padding: 12px 14px; display: flex; gap: 11px; margin-bottom: 18px; }
-.rbn-icon { width: 26px; height: 26px; border-radius: 50%; background: var(--saffron-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-.rbn-text { font-size: 13px; color: #7a3a0a; line-height: 1.5; }
-.rbn-text strong { font-weight: 500; display: block; color: var(--terra); margin-bottom: 2px; }
+/* COMPONENTS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:all 0.15s}
+.btn-primary{background:var(--hibiscus);color:white}.btn-primary:hover{background:#d03a5e}
+.btn-outline{background:white;border:1px solid var(--border);color:var(--text)}.btn-outline:hover{background:var(--papaya)}
+.btn-ghost{background:transparent;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:4px 8px;border-radius:6px;font-family:inherit}.btn-ghost:hover{background:var(--violet-mist);color:var(--violet)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-danger{background:#fee2e2;color:#b91c1c;border:none}.btn-danger:hover{background:#fecaca}
+.btn.locked{opacity:0.4;cursor:not-allowed;pointer-events:none}
+.card{background:white;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
+.card-hd{padding:13px 18px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:13px;font-weight:600;color:var(--violet)}
+.card-body{padding:12px 18px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:white;border-radius:12px;border:1px solid var(--border);padding:14px 16px}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.stat-value{font-size:26px;font-weight:600;color:var(--violet);line-height:1;margin-bottom:3px}
+.stat-sub{font-size:11px;color:var(--muted)}
+.stat-card.h .stat-value{color:var(--hibiscus)}
+.stat-card.t .stat-value{color:var(--terra)}
+.stat-card.s .stat-value{color:var(--saffron)}
+.text-link{font-size:12px;color:var(--terra);cursor:pointer;background:none;border:none;font-family:inherit}
+.text-link:hover{text-decoration:underline}
+.pill{font-size:10px;padding:3px 8px;border-radius:20px;font-weight:500;display:inline-block}
+.pill-violet{background:var(--violet-mist);color:var(--violet)}
+.pill-hibiscus{background:var(--hibiscus-light);color:#8b1a35}
+.pill-green{background:#dcfce7;color:#166534}
+.pill-amber{background:var(--saffron-light);color:#7a4e00}
+.pill-red{background:#fee2e2;color:#b91c1c}
+.pill-blue{background:#e0f2fe;color:#0369a1}
+.pill-gray{background:#f1f5f9;color:#475569}
 
-/* ── DOCUMENTS ── */
-.doc-row { display: flex; align-items: center; gap: 11px; padding: 9px 0; border-bottom: 1px solid var(--border); }
-.doc-row:last-child { border-bottom: none; }
-.doc-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.doc-icon.pdf { background: #fee2e2; }
-.doc-icon.sheet { background: #dcfce7; }
-.doc-icon.doc { background: #dbeafe; }
-.doc-name { font-size: 13px; font-weight: 500; margin-bottom: 1px; }
-.doc-meta { font-size: 11px; color: var(--muted); }
+/* RESTRICTED NOTICE */
+.restricted-notice{background:var(--papaya);border-radius:8px;border-left:3px solid var(--terra);padding:10px 14px;font-size:12px;color:#7a3a0a;margin-bottom:12px;display:none}
+.restricted-notice.show{display:block}
 
-/* ── TASKS ── */
-.task-row { display: flex; align-items: center; gap: 9px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
-.task-row:last-child { border-bottom: none; }
+/* MEETINGS */
+.meeting-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.meeting-row:last-child{border-bottom:none}
+.meeting-row:hover .meeting-title{color:var(--violet)}
+.date-chip{background:var(--violet-mist);border-radius:8px;width:42px;height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.date-chip.past{background:#f0edf5}
+.dc-mo{font-size:9px;text-transform:uppercase;color:var(--violet);font-weight:600;letter-spacing:0.06em}
+.dc-mo.past{color:#888}
+.dc-day{font-size:19px;font-weight:700;color:var(--violet);line-height:1}
+.dc-day.past{color:#888}
+.meeting-info{flex:1}
+.meeting-title{font-size:13px;font-weight:500;margin-bottom:2px;transition:color 0.15s}
+.meeting-meta{font-size:11px;color:var(--muted)}
+.tabs-row{display:flex;gap:2px;background:#f0edf5;border-radius:10px;padding:3px;margin-bottom:18px}
+.tab{flex:1;padding:7px 0;text-align:center;font-size:13px;border-radius:8px;cursor:pointer;color:var(--muted);border:none;background:transparent;font-family:inherit;transition:all 0.15s}
+.tab.active{background:white;color:var(--violet);font-weight:500;border:1px solid var(--border)}
+.view{display:none}.view.active{display:block}
+.detail-wrap{background:white;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
+.detail-hd{background:var(--violet);padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between}
+.detail-hd h3{font-size:16px;font-weight:500;color:white;margin-bottom:3px}
+.detail-hd p{font-size:12px;color:rgba(255,255,255,0.6)}
+.btn-white{background:white;color:var(--violet);border:none;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit}
+.btn-white:hover{background:#f5f0fc}
+.detail-body{padding:18px 20px}
+.sec{margin-bottom:20px}
+.sec-label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:9px;font-weight:500;display:flex;align-items:center;justify-content:space-between}
+.ag-item{display:flex;align-items:flex-start;gap:9px;padding:8px 11px;border-radius:8px;background:#faf9fd;margin-bottom:5px;font-size:13px}
+.ag-num{width:20px;height:20px;border-radius:50%;background:var(--violet-mist);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--violet);flex-shrink:0;margin-top:1px}
+.ag-text{flex:1;line-height:1.4}
+.ag-time{font-size:11px;color:var(--muted);white-space:nowrap}
+.ag-add{display:flex;align-items:center;gap:7px;padding:8px 11px;border-radius:8px;border:1.5px dashed var(--border);cursor:pointer;font-size:13px;color:var(--muted);margin-top:4px}
+.ag-add:hover{border-color:var(--violet);color:var(--violet);background:var(--violet-mist)}
+.minutes-area{width:100%;min-height:90px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-family:inherit;resize:vertical;color:var(--text);line-height:1.6}
+.minutes-area:focus{outline:none;border-color:var(--violet)}
+.action-row{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.action-row:last-child{border-bottom:none}
+.chk{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--border);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all 0.15s}
+.chk.done{background:var(--violet);border-color:var(--violet)}
+.chk.done::after{content:'';width:8px;height:5px;border-left:2px solid white;border-bottom:2px solid white;transform:rotate(-45deg) translate(1px,-1px);display:block}
+.act-text{flex:1;line-height:1.4}
+.act-text.done{text-decoration:line-through;color:var(--muted)}
+.act-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.owner-chip{display:inline-flex;align-items:center;gap:3px;background:var(--violet-mist);border-radius:20px;padding:2px 7px 2px 3px;font-size:10px;color:var(--violet);font-weight:500}
+.owner-dot{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:white}
+.att-grid{display:flex;gap:8px;flex-wrap:wrap}
+.att-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;border:1px solid var(--border);font-size:12px;cursor:pointer;background:white;transition:all 0.15s}
+.att-chip.present{background:var(--violet-mist);border-color:var(--violet);color:var(--violet);font-weight:500}
+.att-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:white}
+.back-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:12px;border:none;background:transparent;font-family:inherit}
+.back-btn:hover{color:var(--violet)}
 
-/* ── FORMS ── */
-.form-panel { background: white; border-radius: 12px; border: 1px solid var(--border); padding: 18px 20px; margin-bottom: 16px; display: none; }
-.form-panel.open { display: block; }
-.form-title { font-size: 14px; font-weight: 500; color: var(--violet); margin-bottom: 14px; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.ff { }
-.ff label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-.ff input, .ff select, .ff textarea { width: 100%; padding: 8px 11px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; outline: none; color: var(--text); background: white; transition: border-color 0.15s; }
-.ff input:focus, .ff select:focus, .ff textarea:focus { border-color: var(--violet); }
-.ff.full { grid-column: 1 / -1; }
-.form-actions { display: flex; gap: 8px; }
+/* MEMBERS */
+.seats-bar{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+.seat{border-radius:10px;border:1.5px dashed var(--border);padding:12px 10px;text-align:center;background:white}
+.seat.filled{border-style:solid;border-color:var(--violet);background:var(--violet-mist)}
+.seat.founder{border-color:var(--hibiscus);background:var(--hibiscus-light)}
+.seat-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.seat-av{width:34px;height:34px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white}
+.seat-name{font-size:11px;font-weight:500;color:var(--violet)}
+.seat-role-txt{font-size:10px;color:var(--muted);margin-top:1px}
+.seat-empty{width:34px;height:34px;border-radius:50%;margin:0 auto 5px;background:#f0edf5;display:flex;align-items:center;justify-content:center}
+.member-card{background:white;border-radius:12px;border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:border-color 0.15s;margin-bottom:12px}
+.member-card:hover{border-color:var(--violet)}
+.member-card.selected{border:2px solid var(--violet)}
+.mc-top{padding:14px 16px 11px;display:flex;gap:11px;align-items:flex-start}
+.av-lg{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:white;flex-shrink:0}
+.mc-meta{display:flex;gap:14px;padding:9px 16px;border-top:1px solid var(--border)}
+.mc-meta-item{font-size:11px;color:var(--muted)}
+.mc-meta-item span{display:block;font-size:12px;font-weight:500;color:var(--text);margin-top:1px}
+.profile-panel{background:white;border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
+.profile-hd{background:var(--violet);padding:18px 22px;display:flex;align-items:center;gap:14px}
+.profile-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:white;border:2px solid rgba(255,255,255,0.25);flex-shrink:0}
+.profile-name{font-size:17px;font-weight:500;color:white;margin-bottom:2px}
+.profile-sub{font-size:12px;color:rgba(255,255,255,0.6)}
+.profile-body{padding:18px 22px}
+.profile-sec{margin-bottom:18px}
+.profile-sec-title{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:9px;font-weight:500}
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field-box{background:#faf9fd;border-radius:8px;padding:9px 11px}
+.field-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+.field-val{font-size:13px;font-weight:500}
+.field-val.link{color:var(--terra)}
+.term-bg{background:#ece8f5;border-radius:20px;height:6px;overflow:hidden;margin-bottom:4px}
+.term-fill{background:var(--violet);height:6px;border-radius:20px}
+.term-lbl{font-size:11px;color:var(--muted)}
+.comm-tags{display:flex;flex-wrap:wrap;gap:6px}
+.comm-tag{font-size:11px;padding:4px 10px;border-radius:20px;background:var(--saffron-light);color:#7a4e00;font-weight:500}
+.notes-box{background:#faf9fd;border-radius:8px;padding:11px;font-size:13px;color:var(--muted);line-height:1.6;border-left:3px solid var(--violet-mist)}
+.recruit-banner{background:var(--papaya);border-radius:10px;border:1px solid #f5ddd0;padding:12px 14px;display:flex;gap:11px;margin-bottom:18px}
+.rbn-icon{width:26px;height:26px;border-radius:50%;background:var(--saffron-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.rbn-text{font-size:13px;color:#7a3a0a;line-height:1.5}
+.rbn-text strong{font-weight:500;display:block;color:var(--terra);margin-bottom:2px}
 
-/* ── LOADING OVERLAY ── */
-#loading-overlay {
-  position: fixed; inset: 0; background: var(--violet); display: flex;
-  flex-direction: column; align-items: center; justify-content: center; z-index: 9999;
-  transition: opacity 0.4s;
-}
-#loading-overlay .lo-icon { width: 52px; height: 52px; background: var(--saffron); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-#loading-overlay h2 { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; margin-bottom: 6px; }
-#loading-overlay p { font-size: 13px; color: rgba(255,255,255,0.55); }
-.lo-spinner { width: 28px; height: 28px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; margin-top: 18px; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* TASKS */
+.task-row{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.task-row:last-child{border-bottom:none}
 
-@media (max-width: 700px) {
-  .two-col { grid-template-columns: 1fr; }
-  .form-grid { grid-template-columns: 1fr; }
-  .fields-grid { grid-template-columns: 1fr; }
-  .seats-bar { grid-template-columns: repeat(3, 1fr); }
+/* DOCUMENTS */
+.doc-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)}
+.doc-row:last-child{border-bottom:none}
+.doc-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.doc-icon.pdf{background:#fee2e2}
+.doc-icon.sheet{background:#dcfce7}
+.doc-icon.doc{background:#dbeafe}
+.doc-name{font-size:13px;font-weight:500;margin-bottom:1px}
+.doc-meta{font-size:11px;color:var(--muted)}
+
+/* FINANCE */
+.finance-readonly-banner{background:#e0f2fe;border-radius:8px;padding:10px 14px;font-size:12px;color:#0369a1;margin-bottom:16px;display:none}
+.finance-readonly-banner.show{display:block}
+.ie-table{width:100%;border-collapse:collapse;font-size:13px}
+.ie-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);padding:6px 10px;border-bottom:2px solid var(--border);font-weight:500}
+.ie-table td{padding:9px 10px;border-bottom:1px solid var(--border)}
+.ie-table tr:last-child td{border-bottom:none}
+.ie-table .amount-in{color:#166534;font-weight:500}
+.ie-table .amount-out{color:#b91c1c;font-weight:500}
+.balance-bar{background:white;border-radius:10px;border:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.balance-label{font-size:12px;color:var(--muted)}
+.balance-amount{font-size:22px;font-weight:600;color:var(--violet)}
+.balance-amount.positive{color:#166534}
+.balance-amount.negative{color:#b91c1c}
+.dist-tracker{background:white;border-radius:10px;border:1px solid var(--border);padding:16px 18px;margin-bottom:16px}
+.dist-title{font-size:13px;font-weight:500;color:var(--violet);margin-bottom:12px}
+.dist-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:13px}
+.dist-bar-wrap{flex:1;margin:0 12px}
+.dist-bar-bg{background:#ece8f5;border-radius:20px;height:8px;overflow:hidden}
+.dist-bar-fill{background:var(--violet);height:8px;border-radius:20px;transition:width 0.3s}
+
+/* FORMS */
+.form-panel{background:white;border-radius:12px;border:1px solid var(--border);padding:18px 20px;margin-bottom:16px;display:none}
+.form-panel.open{display:block}
+.form-title{font-size:14px;font-weight:500;color:var(--violet);margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.ff label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:4px;font-weight:500}
+.ff input,.ff select,.ff textarea{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none;color:var(--text);background:white;transition:border-color 0.15s}
+.ff input:focus,.ff select:focus,.ff textarea:focus{border-color:var(--violet)}
+.ff.full{grid-column:1/-1}
+.form-actions{display:flex;gap:8px}
+
+/* LOADING */
+#loading-overlay{position:fixed;inset:0;background:var(--violet);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.4s}
+.lo-icon{width:52px;height:52px;background:var(--saffron);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+#loading-overlay h2{font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:6px}
+#loading-overlay p{font-size:13px;color:rgba(255,255,255,0.55)}
+.lo-spinner{width:28px;height:28px;border:2.5px solid rgba(255,255,255,0.2);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;margin-top:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:700px){
+  .two-col{grid-template-columns:1fr}
+  .form-grid{grid-template-columns:1fr}
+  .fields-grid{grid-template-columns:1fr}
+  .seats-bar{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
-<!-- Loading overlay -->
 <div id="loading-overlay">
   <div class="lo-icon">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 22"/><path d="M9.5 2.5C11.5 7 16.6 7.2 18 2"/><path d="M12 22c0-3.37-1.38-6.41-3.57-8.57"/></svg>
@@ -264,427 +290,565 @@ body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); col
   <div class="lo-spinner"></div>
 </div>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sb-logo">
-    <div class="sb-logo-row">
-      <div class="sb-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 22"/><path d="M9.5 2.5C11.5 7 16.6 7.2 18 2"/><path d="M12 22c0-3.37-1.38-6.41-3.57-8.57"/></svg>
+<!-- LOGIN SCREEN -->
+<div id="login-screen" style="display:none">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 22"/><path d="M9.5 2.5C11.5 7 16.6 7.2 18 2"/><path d="M12 22c0-3.37-1.38-6.41-3.57-8.57"/></svg>
       </div>
-      <div class="sb-name">Bush Tea &<br>Therapy</div>
-    </div>
-    <div class="sb-sub">Board Portal</div>
-  </div>
-
-  <div class="sb-section">
-    <div class="sb-label">Overview</div>
-    <div class="nav-item active" data-page="dashboard" onclick="navigate(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </div>
-  </div>
-
-  <div class="sb-section">
-    <div class="sb-label">Governance</div>
-    <div class="nav-item" data-page="meetings" onclick="navigate(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Meetings
-    </div>
-    <div class="nav-item" data-page="members" onclick="navigate(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Members
-    </div>
-    <div class="nav-item" data-page="tasks" onclick="navigate(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      Tasks
-    </div>
-  </div>
-
-  <div class="sb-section">
-    <div class="sb-label">Resources</div>
-    <div class="nav-item" data-page="documents" onclick="navigate(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Documents
-    </div>
-  </div>
-
-  <div class="sb-footer">
-    <div class="user-row">
-      <div class="user-av">TM</div>
       <div>
-        <div class="user-name">Tamara McMillan</div>
-        <div class="user-role">Clinical Director</div>
+        <div class="login-title">Bush Tea & Therapy</div>
+        <div class="login-sub">Board Portal</div>
       </div>
     </div>
+    <div class="login-heading">Sign in to your account</div>
+    <div class="login-error" id="login-error">Incorrect email or password. Please try again.</div>
+    <div class="lf"><label>Email</label><input type="email" id="login-email" placeholder="you@bushteafoundation.org" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="lf"><label>Password</label><input type="password" id="login-password" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="login-btn" onclick="doLogin()">Sign in</button>
+    <div class="login-forgot"><a onclick="showReset()">Forgot your password?</a></div>
+    <div class="reset-sent" id="reset-sent">If that email is registered, a reset link has been sent. Check your inbox.</div>
   </div>
-</aside>
+</div>
 
-<!-- MAIN -->
-<main class="main">
-  <header class="topbar">
-    <div class="topbar-title" id="topbar-title">Dashboard</div>
-    <div class="topbar-right">
-      <span class="year-badge">FY 2026</span>
-      <span class="sync-status sync-warn" id="sync-badge">● Not connected</span>
+<!-- PORTAL -->
+<div id="portal">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-row">
+        <div class="sb-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 8C8 10 5.9 16.17 3.82 22"/><path d="M9.5 2.5C11.5 7 16.6 7.2 18 2"/><path d="M12 22c0-3.37-1.38-6.41-3.57-8.57"/></svg></div>
+        <div class="sb-name">Bush Tea &<br>Therapy</div>
+      </div>
+      <div class="sb-sub">Board Portal</div>
     </div>
-  </header>
-
-  <div class="content">
-
-    <!-- ═══ DASHBOARD ═══ -->
-    <div class="page active" id="page-dashboard">
-      <div class="page-hd">
-        <div class="page-hd-left">
-          <h1>Good morning, Tamara</h1>
-          <p>Here's what's happening at Bush Tea & Therapy Foundation.</p>
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <div class="nav-item active" data-page="dashboard" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Governance</div>
+      <div class="nav-item" data-page="meetings" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Meetings
+      </div>
+      <div class="nav-item" data-page="members" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Members
+      </div>
+      <div class="nav-item" data-page="tasks" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Tasks
+      </div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Resources</div>
+      <div class="nav-item" data-page="documents" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Documents
+      </div>
+      <div class="nav-item" data-page="finance" id="nav-finance" onclick="navigate(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Finance
+      </div>
+    </div>
+    <div class="sb-footer">
+      <div class="user-row">
+        <div class="user-av" id="sb-av">?</div>
+        <div>
+          <div class="user-name" id="sb-name">Loading...</div>
+          <div class="user-role-lbl" id="sb-role">—</div>
         </div>
       </div>
-      <div class="stats-grid">
-        <div class="stat-card"><div class="stat-label">Board seats</div><div class="stat-value">3</div><div class="stat-sub">of 5 filled</div></div>
-        <div class="stat-card h"><div class="stat-label">Open tasks</div><div class="stat-value" id="dash-tasks">7</div><div class="stat-sub">3 high priority</div></div>
-        <div class="stat-card t"><div class="stat-label">Next meeting</div><div class="stat-value">May 6</div><div class="stat-sub">Q2 Board Review</div></div>
-        <div class="stat-card s"><div class="stat-label">Documents</div><div class="stat-value">6</div><div class="stat-sub">governance & compliance</div></div>
+      <button class="logout-btn" onclick="doLogout()">Sign out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-right">
+        <span class="year-badge">FY 2026</span>
+        <span class="role-badge" id="topbar-role-badge">—</span>
+        <span class="sync-status sync-warn" id="sync-badge">● Connecting...</span>
       </div>
-      <div class="two-col">
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Upcoming meetings</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=meetings]'))">View all</button></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="meeting-row" onclick="navigate(document.querySelector('[data-page=meetings]'))">
-              <div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div>
-              <div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board</div></div>
-              <span class="pill pill-blue">Upcoming</span>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-hd"><div class="page-hd-left"><h1 id="dash-greeting">Good morning</h1><p>Here's what's happening at Bush Tea & Therapy Foundation.</p></div></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Board seats</div><div class="stat-value">3</div><div class="stat-sub">of 5 filled</div></div>
+          <div class="stat-card h"><div class="stat-label">Open tasks</div><div class="stat-value">7</div><div class="stat-sub">3 high priority</div></div>
+          <div class="stat-card t"><div class="stat-label">Next meeting</div><div class="stat-value">May 6</div><div class="stat-sub">Q2 Board Review</div></div>
+          <div class="stat-card s"><div class="stat-label">Documents</div><div class="stat-value">6</div><div class="stat-sub">governance & compliance</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-hd"><span class="card-title">Upcoming meetings</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=meetings]'))">View all</button></div>
+            <div class="card-body" style="padding:6px 18px">
+              <div class="meeting-row"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div><div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board</div></div><span class="pill pill-blue">Upcoming</span></div>
+              <div class="meeting-row"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div><div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div><span class="pill pill-amber">Agenda draft</span></div>
             </div>
-            <div class="meeting-row" onclick="navigate(document.querySelector('[data-page=meetings]'))">
-              <div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div>
-              <div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div>
-              <span class="pill pill-amber">Agenda draft</span>
+          </div>
+          <div class="card">
+            <div class="card-hd"><span class="card-title">Priority tasks</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=tasks]'))">View all</button></div>
+            <div class="card-body" style="padding:6px 18px">
+              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Respond to USPTO Office Action</div><span class="pill pill-red">High</span></div>
+              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Recruit independent board member</div><span class="pill pill-red">High</span></div>
+              <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Complete SAM.gov registration</div><span class="pill pill-red">High</span></div>
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Priority tasks</span><button class="text-link" onclick="navigate(document.querySelector('[data-page=tasks]'))">View all</button></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Respond to USPTO Office Action</div><span class="pill pill-red">High</span></div>
+      </div>
+
+      <!-- MEETINGS -->
+      <div class="page" id="page-meetings">
+        <div class="page-hd">
+          <div class="page-hd-left"><h1>Meetings</h1><p>Agendas, minutes, and action items.</p></div>
+          <button class="btn btn-primary" id="btn-new-meeting" onclick="toggleForm('meeting-form')">+ New meeting</button>
+        </div>
+        <div class="restricted-notice" id="notice-meetings">You can view meetings and check off action items. Only Founders, Secretaries, and Treasurers can add or edit meetings.</div>
+        <div class="form-panel" id="meeting-form">
+          <div class="form-title">Schedule a meeting</div>
+          <div class="form-grid">
+            <div class="ff"><label>Title</label><input type="text" id="mf-title" placeholder="e.g. Q3 Board Review"></div>
+            <div class="ff"><label>Date</label><input type="date" id="mf-date"></div>
+            <div class="ff"><label>Time</label><input type="time" id="mf-time" value="10:00"></div>
+            <div class="ff"><label>Location / link</label><input type="text" id="mf-loc" placeholder="Zoom link or address"></div>
+            <div class="ff"><label>Type</label><select id="mf-type"><option>Full board</option><option>Finance committee</option><option>Governance committee</option><option>Programs committee</option><option>Special session</option></select></div>
+            <div class="ff"><label>Quorum required</label><select id="mf-quorum"><option>Yes</option><option>No</option></select></div>
+            <div class="ff full"><label>Agenda notes</label><textarea id="mf-notes" rows="2" placeholder="Key topics..."></textarea></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveMeeting()">Save meeting</button><button class="btn btn-outline" onclick="toggleForm('meeting-form')">Cancel</button></div>
+        </div>
+        <div class="tabs-row">
+          <button class="tab active" onclick="switchTab(this,'t-upcoming')">Upcoming</button>
+          <button class="tab" onclick="switchTab(this,'t-past')">Past</button>
+          <button class="tab" onclick="switchTab(this,'t-actions')">Action items</button>
+        </div>
+        <div id="meeting-detail" style="display:none">
+          <button class="back-btn" onclick="closeMeetingDetail()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Back to meetings</button>
+          <div class="detail-wrap">
+            <div class="detail-hd">
+              <div><h3 id="det-title">Meeting title</h3><p id="det-meta">Details</p></div>
+              <div style="display:flex;gap:8px"><button class="btn-white">Export PDF</button></div>
+            </div>
+            <div class="detail-body">
+              <div class="sec"><div class="sec-label">Attendance</div>
+                <div class="att-grid">
+                  <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--hibiscus)">TM</div>Tamara</div>
+                  <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--violet)">TK</div>Tarik</div>
+                  <div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--terra)">LZ</div>Liz</div>
+                </div>
+              </div>
+              <div class="sec">
+                <div class="sec-label">Agenda <span id="ag-add-btn"><button class="btn-ghost" style="font-size:11px" onclick="addAgItem()">+ Add item</button></span></div>
+                <div id="agenda-list">
+                  <div class="ag-item"><div class="ag-num">1</div><div class="ag-text">Call to order and quorum confirmation</div><div class="ag-time">5 min</div></div>
+                  <div class="ag-item"><div class="ag-num">2</div><div class="ag-text">Approval of prior minutes</div><div class="ag-time">5 min</div></div>
+                  <div class="ag-item"><div class="ag-num">3</div><div class="ag-text">Treasurer's report — Q2 financials and 5% distribution status</div><div class="ag-time">15 min</div></div>
+                  <div class="ag-item"><div class="ag-num">4</div><div class="ag-text">Programs update — Bright Path, Yoga @ the Park, Bright Readers</div><div class="ag-time">15 min</div></div>
+                  <div class="ag-item"><div class="ag-num">5</div><div class="ag-text">Board recruitment — candidate pipeline and independence timeline</div><div class="ag-time">10 min</div></div>
+                  <div class="ag-item"><div class="ag-num">6</div><div class="ag-text">USPTO trademark update — BUSH TEA & THERAPY Office Action</div><div class="ag-time">10 min</div></div>
+                  <div class="ag-item"><div class="ag-num">7</div><div class="ag-text">Action items and next meeting</div><div class="ag-time">5 min</div></div>
+                </div>
+                <div class="ag-add" id="ag-add-row" onclick="addAgItem()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add agenda item</div>
+              </div>
+              <div class="sec">
+                <div class="sec-label">Minutes</div>
+                <textarea class="minutes-area" id="minutes-txt" placeholder="Type or paste meeting minutes here..."></textarea>
+                <div style="display:flex;justify-content:flex-end;margin-top:8px;gap:8px">
+                  <button class="btn btn-outline btn-sm" id="btn-save-minutes" onclick="saveMinutes()">Save minutes</button>
+                </div>
+              </div>
+              <div class="sec">
+                <div class="sec-label">Action items <span id="act-add-btn"><button class="btn-ghost" style="font-size:11px" onclick="addDetAction()">+ Add item</button></span></div>
+                <div id="det-actions">
+                  <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review board candidate shortlist<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
+                  <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm Q2 financials with bookkeeper<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span></div></div><span class="pill pill-amber">Med</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="view active" id="t-upcoming">
+          <div class="card"><div class="card-hd"><span class="card-title">Scheduled</span></div>
+            <div class="card-body" style="padding:6px 18px" id="upcoming-list">
+              <div class="meeting-row" onclick="openMeetingDetail('Board Q2 review','May 6, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div><div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Quorum required</div></div><span class="pill pill-blue">Upcoming</span></div>
+              <div class="meeting-row" onclick="openMeetingDetail('Finance committee','May 20, 2026 · 2:00 PM · Zoom · Tamara, Liz')"><div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div><div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div><span class="pill pill-amber">Agenda draft</span></div>
+              <div class="meeting-row" onclick="openMeetingDetail('Annual strategy session','June 3, 2026 · 9:00 AM · TBD · Full board')"><div class="date-chip"><div class="dc-mo">Jun</div><div class="dc-day">3</div></div><div class="meeting-info"><div class="meeting-title">Annual strategy session</div><div class="meeting-meta">9:00 AM · TBD · Full board</div></div><span class="pill pill-amber">Planning</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="view" id="t-past">
+          <div class="card"><div class="card-hd"><span class="card-title">Past meetings</span></div>
+            <div class="card-body" style="padding:6px 18px">
+              <div class="meeting-row" onclick="openMeetingDetail('April board meeting','April 15, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip past"><div class="dc-mo past">Apr</div><div class="dc-day past">15</div></div><div class="meeting-info"><div class="meeting-title">April board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div><span class="pill pill-green">Complete</span></div>
+              <div class="meeting-row" onclick="openMeetingDetail('March board meeting','March 11, 2026 · 10:00 AM · Zoom · Full board')"><div class="date-chip past"><div class="dc-mo past">Mar</div><div class="dc-day past">11</div></div><div class="meeting-info"><div class="meeting-title">March board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div><span class="pill pill-green">Complete</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="view" id="t-actions">
+          <div class="card"><div class="card-hd"><span class="card-title">All open action items</span></div>
+            <div class="card-body" style="padding:6px 18px">
+              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Draft 990-PF narrative for FY2025<div class="act-meta">Due May 10 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
+              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review and sign updated bylaws<div class="act-meta">Due May 15 · <span class="owner-chip"><span class="owner-dot" style="background:var(--terra)">LZ</span>Liz</span></div></div><span class="pill pill-amber">Med</span></div>
+              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm RTPark venue — Summer Yoga Series<div class="act-meta">Due Apr 30 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span></div></div><span class="pill pill-red">Overdue</span></div>
+              <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Submit VOCA subrecipient pre-application<div class="act-meta">Due May 31 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEMBERS -->
+      <div class="page" id="page-members">
+        <div class="page-hd">
+          <div class="page-hd-left"><h1>Members</h1><p>Profiles, roles, and term tracking.</p></div>
+          <button class="btn btn-primary" id="btn-add-member" onclick="toggleForm('member-form')">+ Add member</button>
+        </div>
+        <div class="restricted-notice" id="notice-members">You can view member profiles. Only Founders and Co-Founders can add or edit board members.</div>
+        <div class="seats-bar">
+          <div class="seat founder"><div class="seat-lbl">Seat 1</div><div class="seat-av" style="background:var(--hibiscus)">TM</div><div class="seat-name">Tamara M.</div><div class="seat-role-txt">Co-Founder</div></div>
+          <div class="seat filled"><div class="seat-lbl">Seat 2</div><div class="seat-av" style="background:var(--violet)">TK</div><div class="seat-name">Tarik M.</div><div class="seat-role-txt">Co-Founder</div></div>
+          <div class="seat filled"><div class="seat-lbl">Seat 3</div><div class="seat-av" style="background:var(--terra)">LZ</div><div class="seat-name">Liz</div><div class="seat-role-txt">Member</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 4</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
+          <div class="seat"><div class="seat-lbl">Seat 5</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role-txt">Recruiting</div></div>
+        </div>
+        <div class="recruit-banner"><div class="rbn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="rbn-text"><strong>Board independence required</strong>Must seat at least one independent member before VOCA, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility.</div></div>
+        <div class="form-panel" id="member-form">
+          <div class="form-title">New board member</div>
+          <div class="form-grid">
+            <div class="ff"><label>First name</label><input type="text" id="mem-first"></div>
+            <div class="ff"><label>Last name</label><input type="text" id="mem-last"></div>
+            <div class="ff"><label>Email</label><input type="email" id="mem-email"></div>
+            <div class="ff"><label>Phone</label><input type="tel" id="mem-phone"></div>
+            <div class="ff"><label>Role</label><select id="mem-role"><option>Independent Member</option><option>Treasurer</option><option>Secretary</option><option>Co-Founder</option><option>Member</option></select></div>
+            <div class="ff"><label>Portal role</label><select id="mem-portal-role"><option value="member">General Member</option><option value="secretary">Secretary</option><option value="treasurer">Treasurer</option><option value="founder">Co-Founder / Founder</option></select></div>
+            <div class="ff"><label>Term start</label><input type="date" id="mem-term-start"></div>
+            <div class="ff"><label>Term length</label><select id="mem-term-len"><option>1 year</option><option>2 years</option><option selected>3 years</option></select></div>
+            <div class="ff"><label>Committee</label><select id="mem-committee"><option>None</option><option>Finance</option><option>Governance</option><option>Programs</option><option>Fundraising</option></select></div>
+            <div class="ff"><label>Temporary password</label><input type="text" id="mem-temp-pw" placeholder="They'll change this on first login"></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveMember()">Save member</button><button class="btn btn-outline" onclick="toggleForm('member-form')">Cancel</button></div>
+        </div>
+        <div class="two-col" id="member-cards">
+          <div class="member-card selected" onclick="selectMember(this,'tm')"><div class="mc-top"><div class="av-lg" style="background:var(--hibiscus)">TM</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tamara McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Founder · Clinical Director</div><span class="pill pill-hibiscus">Co-Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Finance, Governance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="member-card" onclick="selectMember(this,'tk')"><div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="member-card" onclick="selectMember(this,'lz')"><div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+        </div>
+        <div class="profile-panel" id="profile-panel">
+          <div class="profile-hd"><div class="profile-av" id="prof-av" style="background:var(--hibiscus)">TM</div><div><div class="profile-name" id="prof-name">Tamara McMillan</div><div class="profile-sub" id="prof-sub">Co-Founder · Clinical Director</div></div></div>
+          <div class="profile-body">
+            <div class="profile-sec"><div class="profile-sec-title">Contact</div><div class="fields-grid" id="prof-contact"><div class="field-box"><div class="field-lbl">Email</div><div class="field-val link">mail@greaterchangesllc.com</div></div><div class="field-box"><div class="field-lbl">Phone</div><div class="field-val">+1 (340) —</div></div><div class="field-box"><div class="field-lbl">Location</div><div class="field-val">St. Croix, USVI</div></div><div class="field-box"><div class="field-lbl">Credentials</div><div class="field-val">LMHC, LPC, NCC, CCTS</div></div></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Term</div><div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:75%"></div></div><div class="term-lbl" id="prof-term-lbl">2022–2025 · 3-year term · Renewal due</div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Committees</div><div class="comm-tags" id="prof-committees"><span class="comm-tag">Finance</span><span class="comm-tag">Governance</span></div></div>
+            <div class="profile-sec"><div class="profile-sec-title">Notes</div><div class="notes-box" id="prof-notes">Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.</div></div>
+            <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btn-edit-member">Edit profile</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASKS -->
+      <div class="page" id="page-tasks">
+        <div class="page-hd"><div class="page-hd-left"><h1>Tasks</h1><p>Board-level assignments with priorities and owners.</p></div><button class="btn btn-primary" id="btn-add-task" onclick="toggleForm('task-form')">+ New task</button></div>
+        <div class="form-panel" id="task-form">
+          <div class="form-title">New task</div>
+          <div class="form-grid">
+            <div class="ff full"><label>Task</label><input type="text" id="tf-text" placeholder="Describe the task..."></div>
+            <div class="ff"><label>Owner</label><select id="tf-owner"><option>Tamara</option><option>Tarik</option><option>Liz</option></select></div>
+            <div class="ff"><label>Priority</label><select id="tf-pri"><option>High</option><option>Med</option><option>Low</option></select></div>
+            <div class="ff"><label>Due date</label><input type="date" id="tf-due"></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveTask()">Save task</button><button class="btn btn-outline" onclick="toggleForm('task-form')">Cancel</button></div>
+        </div>
+        <div class="card"><div class="card-hd"><span class="card-title">All tasks</span></div>
+          <div class="card-body" style="padding:6px 18px" id="task-list">
+            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Respond to USPTO Office Action — BUSH TEA & THERAPY (deadline June 30, 2026)</div><span class="pill pill-red">High</span></div>
             <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Recruit independent board member</div><span class="pill pill-red">High</span></div>
             <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Complete SAM.gov registration</div><span class="pill pill-red">High</span></div>
-            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Contact VIDOH re: block grant</div><span class="pill pill-amber">Med</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ MEETINGS ═══ -->
-    <div class="page" id="page-meetings">
-      <div class="page-hd">
-        <div class="page-hd-left"><h1>Meetings</h1><p>Agendas, minutes, and action items.</p></div>
-        <button class="btn btn-primary" onclick="toggleForm('meeting-form')">+ New meeting</button>
-      </div>
-
-      <div class="form-panel" id="meeting-form">
-        <div class="form-title">Schedule a meeting</div>
-        <div class="form-grid">
-          <div class="ff"><label>Title</label><input type="text" id="mf-title" placeholder="e.g. Q3 Board Review"></div>
-          <div class="ff"><label>Date</label><input type="date" id="mf-date"></div>
-          <div class="ff"><label>Time</label><input type="time" id="mf-time" value="10:00"></div>
-          <div class="ff"><label>Location / link</label><input type="text" id="mf-loc" placeholder="Zoom link or address"></div>
-          <div class="ff"><label>Type</label><select id="mf-type"><option>Full board</option><option>Finance committee</option><option>Governance committee</option><option>Programs committee</option><option>Special session</option></select></div>
-          <div class="ff"><label>Quorum required</label><select id="mf-quorum"><option>Yes</option><option>No</option></select></div>
-          <div class="ff full"><label>Agenda notes</label><textarea id="mf-notes" rows="2" placeholder="Key topics..."></textarea></div>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveMeeting()">Save meeting</button>
-          <button class="btn btn-outline" onclick="toggleForm('meeting-form')">Cancel</button>
-        </div>
-      </div>
-
-      <div class="tabs-row">
-        <button class="tab active" onclick="switchTab(this,'t-upcoming')">Upcoming</button>
-        <button class="tab" onclick="switchTab(this,'t-past')">Past</button>
-        <button class="tab" onclick="switchTab(this,'t-actions')">Action items</button>
-      </div>
-
-      <div id="meeting-detail" style="display:none">
-        <button class="back-btn" onclick="closeMeetingDetail()">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-          Back to meetings
-        </button>
-        <div class="detail-wrap">
-          <div class="detail-hd">
-            <div><h3 id="det-title">Meeting title</h3><p id="det-meta">Date · Time · Location</p></div>
-            <div style="display:flex;gap:8px"><button class="btn-white">Export PDF</button><button class="btn-white">Share agenda</button></div>
-          </div>
-          <div class="detail-body">
-            <div class="sec">
-              <div class="sec-label">Attendance</div>
-              <div class="att-grid">
-                <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--hibiscus)">TM</div>Tamara</div>
-                <div class="att-chip present" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--violet)">TK</div>Tarik</div>
-                <div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:var(--terra)">LZ</div>Liz</div>
-              </div>
-            </div>
-            <div class="sec">
-              <div class="sec-label">Agenda <button class="btn-ghost" style="font-size:11px" onclick="addAgItem()">+ Add item</button></div>
-              <div id="agenda-list">
-                <div class="ag-item"><div class="ag-num">1</div><div class="ag-text">Call to order and quorum confirmation</div><div class="ag-time">5 min</div></div>
-                <div class="ag-item"><div class="ag-num">2</div><div class="ag-text">Approval of prior minutes</div><div class="ag-time">5 min</div></div>
-                <div class="ag-item"><div class="ag-num">3</div><div class="ag-text">Treasurer's report — Q2 financials and 5% distribution status</div><div class="ag-time">15 min</div></div>
-                <div class="ag-item"><div class="ag-num">4</div><div class="ag-text">Programs update — Bright Path, Yoga @ the Park, Bright Readers</div><div class="ag-time">15 min</div></div>
-                <div class="ag-item"><div class="ag-num">5</div><div class="ag-text">Board recruitment — candidate pipeline and independence timeline</div><div class="ag-time">10 min</div></div>
-                <div class="ag-item"><div class="ag-num">6</div><div class="ag-text">USPTO trademark update — BUSH TEA & THERAPY Office Action</div><div class="ag-time">10 min</div></div>
-                <div class="ag-item"><div class="ag-num">7</div><div class="ag-text">Action items and next meeting</div><div class="ag-time">5 min</div></div>
-              </div>
-              <div class="ag-add" onclick="addAgItem()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add agenda item</div>
-            </div>
-            <div class="sec">
-              <div class="sec-label">Minutes</div>
-              <textarea class="minutes-area" id="minutes-txt" placeholder="Type or paste meeting minutes here..."></textarea>
-              <div style="display:flex;justify-content:flex-end;margin-top:8px;gap:8px">
-                <button class="btn btn-outline btn-sm" onclick="saveMinutes()">Save minutes</button>
-              </div>
-            </div>
-            <div class="sec">
-              <div class="sec-label">Action items <button class="btn-ghost" style="font-size:11px" onclick="addDetAction()">+ Add item</button></div>
-              <div id="det-actions">
-                <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review board candidate shortlist<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span></div></div><span class="pill pill-red">High</span></div>
-                <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm Q2 financials with bookkeeper<div class="act-meta">Due May 13 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span></div></div><span class="pill pill-amber">Med</span></div>
-              </div>
-            </div>
+            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Contact VIDOH re: behavioral health block grant</div><span class="pill pill-red">High</span></div>
+            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Review BTTF–Greater Changes CSA for FY2026</div><span class="pill pill-amber">Med</span></div>
+            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Prepare MOORE Equity grant draft (opens Aug 1)</div><span class="pill pill-amber">Med</span></div>
+            <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Formalize yoga partnership compensation in writing</div><span class="pill pill-gray">Low</span></div>
+            <div class="task-row"><div class="chk done" onclick="toggleChk(this)"></div><div style="flex:1;text-decoration:line-through;color:var(--muted)">File USVI tax extension via VI BIR</div><span class="pill pill-green">Done</span></div>
           </div>
         </div>
       </div>
 
-      <div class="view active" id="t-upcoming">
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Scheduled</span></div>
-          <div class="card-body" style="padding:6px 18px" id="upcoming-list">
-            <div class="meeting-row" onclick="openMeetingDetail('Board Q2 review','May 6, 2026 · 10:00 AM · Zoom · Full board')">
-              <div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">6</div></div>
-              <div class="meeting-info"><div class="meeting-title">Board Q2 review</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Quorum required</div></div>
-              <span class="pill pill-blue">Upcoming</span>
-            </div>
-            <div class="meeting-row" onclick="openMeetingDetail('Finance committee','May 20, 2026 · 2:00 PM · Zoom · Tamara, Liz')">
-              <div class="date-chip"><div class="dc-mo">May</div><div class="dc-day">20</div></div>
-              <div class="meeting-info"><div class="meeting-title">Finance committee</div><div class="meeting-meta">2:00 PM · Zoom · Tamara, Liz</div></div>
-              <span class="pill pill-amber">Agenda draft</span>
-            </div>
-            <div class="meeting-row" onclick="openMeetingDetail('Annual strategy session','June 3, 2026 · 9:00 AM · TBD · Full board')">
-              <div class="date-chip"><div class="dc-mo">Jun</div><div class="dc-day">3</div></div>
-              <div class="meeting-info"><div class="meeting-title">Annual strategy session</div><div class="meeting-meta">9:00 AM · TBD · Full board</div></div>
-              <span class="pill pill-amber">Planning</span>
-            </div>
+      <!-- DOCUMENTS -->
+      <div class="page" id="page-documents">
+        <div class="page-hd"><div class="page-hd-left"><h1>Documents</h1><p>Governing docs, minutes, and compliance records.</p></div><button class="btn btn-primary" id="btn-add-doc" onclick="toggleForm('doc-form')">+ Add document</button></div>
+        <div class="restricted-notice" id="notice-docs">You can view and download documents. Only Founders, Secretaries, and Treasurers can add documents.</div>
+        <div class="form-panel" id="doc-form">
+          <div class="form-title">Add document</div>
+          <div class="form-grid">
+            <div class="ff"><label>Name</label><input type="text" id="df-name"></div>
+            <div class="ff"><label>Category</label><select id="df-cat"><option>Governance</option><option>Compliance & Legal</option><option>Finance</option><option>Programs</option><option>Grants</option></select></div>
+            <div class="ff full"><label>Google Drive link</label><input type="url" id="df-url" placeholder="https://drive.google.com/..."></div>
           </div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveDoc()">Save</button><button class="btn btn-outline" onclick="toggleForm('doc-form')">Cancel</button></div>
+        </div>
+        <div class="two-col">
+          <div class="card"><div class="card-hd"><span class="card-title">Governance</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF Bylaws (2024)</div><div class="doc-meta">Updated Apr 2024 · Google Drive</div></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">Board Meeting Minutes Template</div><div class="doc-meta">Updated Jan 2025 · Google Drive</div></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF–GC Clinical Services Agreement</div><div class="doc-meta">Updated Mar 2025 · Google Drive</div></div></div></div></div>
+          <div class="card"><div class="card-hd"><span class="card-title">Compliance & legal</span></div><div class="card-body" style="padding:6px 18px"><div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025 · PDF</div></div></div><div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">IRS Determination Letter</div><div class="doc-meta">501(c)(3) · EIN 88-3435722</div></div></div><div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">5% Distribution Tracker (FY2026)</div><div class="doc-meta">Google Sheets · Live</div></div></div></div></div>
         </div>
       </div>
 
-      <div class="view" id="t-past">
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Past meetings</span></div>
+      <!-- FINANCE -->
+      <div class="page" id="page-finance">
+        <div class="page-hd"><div class="page-hd-left"><h1>Finance</h1><p>Income, expenses, and distribution tracking.</p></div><button class="btn btn-primary" id="btn-add-entry" onclick="toggleForm('entry-form')">+ Add entry</button></div>
+        <div class="finance-readonly-banner" id="finance-readonly-banner">You have read-only access to the finance tab. Contact the Treasurer or a Founder to make changes.</div>
+
+        <div class="dist-tracker" id="dist-tracker">
+          <div class="dist-title">FY2026 — 5% mandatory distribution tracker</div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Net assets (est.)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right">$42,000</span></div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Required (5%)</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" style="width:100%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right">$2,100</span></div>
+          <div class="dist-row"><span style="font-size:13px;color:var(--muted);min-width:140px">Distributed YTD</span><div class="dist-bar-wrap"><div class="dist-bar-bg"><div class="dist-bar-fill" id="dist-bar" style="width:38%"></div></div></div><span style="font-size:13px;font-weight:500;min-width:80px;text-align:right" id="dist-amount">$800</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px">$1,300 remaining to meet FY2026 requirement by December 31, 2026.</div>
+        </div>
+
+        <div class="balance-bar">
+          <div><div class="balance-label">Current balance</div><div class="balance-amount positive" id="balance-display">$41,200</div></div>
+          <div style="text-align:right"><div class="balance-label">Total income YTD</div><div style="font-size:15px;font-weight:500;color:#166534" id="income-display">$12,400</div></div>
+          <div style="text-align:right"><div class="balance-label">Total expenses YTD</div><div style="font-size:15px;font-weight:500;color:#b91c1c" id="expense-display">$3,200</div></div>
+        </div>
+
+        <div class="form-panel" id="entry-form">
+          <div class="form-title">New income / expense entry</div>
+          <div class="form-grid">
+            <div class="ff"><label>Type</label><select id="ef-type"><option value="income">Income</option><option value="expense">Expense</option></select></div>
+            <div class="ff"><label>Amount ($)</label><input type="number" id="ef-amount" placeholder="0.00" min="0" step="0.01"></div>
+            <div class="ff"><label>Date</label><input type="date" id="ef-date"></div>
+            <div class="ff"><label>Category</label><select id="ef-cat"><option>Donation</option><option>Grant</option><option>Program income</option><option>Administrative</option><option>Program expense</option><option>Distribution</option><option>Other</option></select></div>
+            <div class="ff full"><label>Description</label><input type="text" id="ef-desc" placeholder="Brief description..."></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveEntry()">Save entry</button><button class="btn btn-outline" onclick="toggleForm('entry-form')">Cancel</button></div>
+        </div>
+
+        <div class="card"><div class="card-hd"><span class="card-title">Transactions</span></div>
+          <div class="card-body" style="padding:0">
+            <table class="ie-table" style="width:100%">
+              <thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr></thead>
+              <tbody id="ie-tbody">
+                <tr><td>Apr 15</td><td>Individual donor — spring campaign</td><td>Donation</td><td class="amount-in">+$500</td></tr>
+                <tr><td>Apr 10</td><td>CFVI Community Impact Fund</td><td>Grant</td><td class="amount-in">+$5,000</td></tr>
+                <tr><td>Apr 5</td><td>Bright Path yoga class supplies</td><td>Program expense</td><td class="amount-out">-$180</td></tr>
+                <tr><td>Mar 28</td><td>Individual donor</td><td>Donation</td><td class="amount-in">+$250</td></tr>
+                <tr><td>Mar 20</td><td>Counseling services distribution — Greater Changes</td><td>Distribution</td><td class="amount-out">-$800</td></tr>
+                <tr><td>Mar 15</td><td>Website hosting — bushteafoundation.org</td><td>Administrative</td><td class="amount-out">-$120</td></tr>
+                <tr><td>Mar 1</td><td>Annual donation — McMillan family</td><td>Donation</td><td class="amount-in">+$2,500</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" id="finance-docs-card"><div class="card-hd"><span class="card-title">Financial documents</span><button class="btn-ghost" style="font-size:11px" onclick="toggleForm('doc-form')">+ Add</button></div>
           <div class="card-body" style="padding:6px 18px">
-            <div class="meeting-row" onclick="openMeetingDetail('April board meeting','April 15, 2026 · 10:00 AM · Zoom · Full board')">
-              <div class="date-chip past"><div class="dc-mo past">Apr</div><div class="dc-day past">15</div></div>
-              <div class="meeting-info"><div class="meeting-title">April board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div>
-              <span class="pill pill-green">Complete</span>
-            </div>
-            <div class="meeting-row" onclick="openMeetingDetail('March board meeting','March 11, 2026 · 10:00 AM · Zoom · Full board')">
-              <div class="date-chip past"><div class="dc-mo past">Mar</div><div class="dc-day past">11</div></div>
-              <div class="meeting-info"><div class="meeting-title">March board meeting</div><div class="meeting-meta">10:00 AM · Zoom · Full board · Minutes filed</div></div>
-              <span class="pill pill-green">Complete</span>
-            </div>
+            <div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025</div></div></div>
+            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">FY2026 Operating Budget</div><div class="doc-meta">Google Sheets · Live</div></div></div>
+            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">5% Distribution Tracker</div><div class="doc-meta">Google Sheets · Live</div></div></div>
           </div>
         </div>
       </div>
 
-      <div class="view" id="t-actions">
-        <div class="card">
-          <div class="card-hd"><span class="card-title">All open action items</span></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Draft 990-PF narrative for FY2025<div class="act-meta">Due May 10 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span> · April board meeting</div></div><span class="pill pill-red">High</span></div>
-            <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Review and sign updated bylaws<div class="act-meta">Due May 15 · <span class="owner-chip"><span class="owner-dot" style="background:var(--terra)">LZ</span>Liz</span> · April board meeting</div></div><span class="pill pill-amber">Med</span></div>
-            <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Confirm RTPark venue — Summer Yoga Series<div class="act-meta">Due Apr 30 · <span class="owner-chip"><span class="owner-dot" style="background:var(--violet)">TK</span>Tarik</span> · April board meeting</div></div><span class="pill pill-red">Overdue</span></div>
-            <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Submit VOCA subrecipient pre-application<div class="act-meta">Due May 31 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span> · March board meeting</div></div><span class="pill pill-red">High</span></div>
-            <div class="action-row"><div class="chk" onclick="toggleChk(this)"></div><div class="act-text">Finalize board candidate outreach list<div class="act-meta">Due May 20 · <span class="owner-chip"><span class="owner-dot" style="background:var(--hibiscus)">TM</span>Tamara</span> · March board meeting</div></div><span class="pill pill-amber">Med</span></div>
-          </div>
-        </div>
-      </div>
     </div>
-
-    <!-- ═══ MEMBERS ═══ -->
-    <div class="page" id="page-members">
-      <div class="page-hd">
-        <div class="page-hd-left"><h1>Members</h1><p>Profiles, roles, and term tracking.</p></div>
-        <button class="btn btn-primary" onclick="toggleForm('member-form')">+ Add member</button>
-      </div>
-
-      <div class="seats-bar">
-        <div class="seat founder"><div class="seat-lbl">Seat 1</div><div class="seat-av" style="background:var(--hibiscus)">TM</div><div class="seat-name">Tamara M.</div><div class="seat-role">Co-Founder</div></div>
-        <div class="seat filled"><div class="seat-lbl">Seat 2</div><div class="seat-av" style="background:var(--violet)">TK</div><div class="seat-name">Tarik M.</div><div class="seat-role">Co-Founder</div></div>
-        <div class="seat filled"><div class="seat-lbl">Seat 3</div><div class="seat-av" style="background:var(--terra)">LZ</div><div class="seat-name">Liz</div><div class="seat-role">Member</div></div>
-        <div class="seat"><div class="seat-lbl">Seat 4</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role">Recruiting</div></div>
-        <div class="seat"><div class="seat-lbl">Seat 5</div><div class="seat-empty"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="seat-name" style="color:#bbb">Open</div><div class="seat-role">Recruiting</div></div>
-      </div>
-
-      <div class="recruit-banner">
-        <div class="rbn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--terra)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-        <div class="rbn-text"><strong>Board independence required</strong>Must seat at least one independent member before VOCA submission, MOORE Equity grant (opens Aug 1), and SAM.gov eligibility. Priority: fill seat 4.</div>
-      </div>
-
-      <div class="form-panel" id="member-form">
-        <div class="form-title">New board member</div>
-        <div class="form-grid">
-          <div class="ff"><label>First name</label><input type="text" id="mem-first" placeholder="First"></div>
-          <div class="ff"><label>Last name</label><input type="text" id="mem-last" placeholder="Last"></div>
-          <div class="ff"><label>Email</label><input type="email" id="mem-email" placeholder="email@example.com"></div>
-          <div class="ff"><label>Phone</label><input type="tel" id="mem-phone" placeholder="+1 (340) 555-0000"></div>
-          <div class="ff"><label>Role</label><select id="mem-role"><option>Independent Member</option><option>Treasurer</option><option>Secretary</option><option>Chair</option><option>Member</option></select></div>
-          <div class="ff"><label>Term start</label><input type="date" id="mem-term-start"></div>
-          <div class="ff"><label>Term length</label><select id="mem-term-len"><option>1 year</option><option>2 years</option><option selected>3 years</option></select></div>
-          <div class="ff"><label>Committee</label><select id="mem-committee"><option>None</option><option>Finance</option><option>Governance</option><option>Programs</option><option>Fundraising</option></select></div>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveMember()">Save member</button>
-          <button class="btn btn-outline" onclick="toggleForm('member-form')">Cancel</button>
-        </div>
-      </div>
-
-      <div class="two-col" id="member-cards">
-        <div class="member-card selected" onclick="selectMember(this,'tm')">
-          <div class="mc-top"><div class="av-lg" style="background:var(--hibiscus)">TM</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tamara McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Founder · Clinical Director</div><span class="pill pill-hibiscus">Co-Founder</span></div></div>
-          <div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Finance, Governance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>
-        </div>
-        <div class="member-card" onclick="selectMember(this,'tk')">
-          <div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span></div></div>
-          <div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>
-        </div>
-        <div class="member-card" onclick="selectMember(this,'lz')">
-          <div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span></div></div>
-          <div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>
-        </div>
-      </div>
-
-      <div class="profile-panel" id="profile-panel">
-        <div class="profile-hd">
-          <div class="profile-av" id="prof-av" style="background:var(--hibiscus)">TM</div>
-          <div><div class="profile-name" id="prof-name">Tamara McMillan</div><div class="profile-sub" id="prof-sub">Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS</div></div>
-        </div>
-        <div class="profile-body">
-          <div class="profile-sec">
-            <div class="profile-sec-title">Contact</div>
-            <div class="fields-grid" id="prof-contact">
-              <div class="field-box"><div class="field-lbl">Email</div><div class="field-val link">mail@greaterchangesllc.com</div></div>
-              <div class="field-box"><div class="field-lbl">Phone</div><div class="field-val">+1 (340) —</div></div>
-              <div class="field-box"><div class="field-lbl">Location</div><div class="field-val">St. Croix, USVI</div></div>
-              <div class="field-box"><div class="field-lbl">Credentials</div><div class="field-val">LMHC, LPC, NCC, CCTS</div></div>
-            </div>
-          </div>
-          <div class="profile-sec">
-            <div class="profile-sec-title">Term</div>
-            <div class="term-bg"><div class="term-fill" id="prof-term-bar" style="width:75%"></div></div>
-            <div class="term-lbl" id="prof-term-lbl">2022–2025 · 3-year term · Renewal due</div>
-          </div>
-          <div class="profile-sec">
-            <div class="profile-sec-title">Committees</div>
-            <div class="comm-tags" id="prof-committees"><span class="comm-tag">Finance</span><span class="comm-tag">Governance</span></div>
-          </div>
-          <div class="profile-sec">
-            <div class="profile-sec-title">Notes</div>
-            <div class="notes-box" id="prof-notes">Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University. Primary contact for all clinical and compliance matters.</div>
-          </div>
-          <div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm">Edit profile</button><button class="btn-ghost">Send email</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ TASKS ═══ -->
-    <div class="page" id="page-tasks">
-      <div class="page-hd">
-        <div class="page-hd-left"><h1>Tasks</h1><p>Board-level assignments with priorities and owners.</p></div>
-        <button class="btn btn-primary" onclick="toggleForm('task-form')">+ New task</button>
-      </div>
-      <div class="form-panel" id="task-form">
-        <div class="form-title">New task</div>
-        <div class="form-grid">
-          <div class="ff full"><label>Task</label><input type="text" id="tf-text" placeholder="Describe the task..."></div>
-          <div class="ff"><label>Owner</label><select id="tf-owner"><option>Tamara</option><option>Tarik</option><option>Liz</option></select></div>
-          <div class="ff"><label>Priority</label><select id="tf-pri"><option>High</option><option>Med</option><option>Low</option></select></div>
-          <div class="ff"><label>Due date</label><input type="date" id="tf-due"></div>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveTask()">Save task</button>
-          <button class="btn btn-outline" onclick="toggleForm('task-form')">Cancel</button>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-hd"><span class="card-title">All tasks</span></div>
-        <div class="card-body" style="padding:6px 18px" id="task-list">
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Respond to USPTO Office Action — BUSH TEA & THERAPY (deadline June 30, 2026)</div><span class="pill pill-red">High</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Recruit independent board member</div><span class="pill pill-red">High</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Complete SAM.gov registration</div><span class="pill pill-red">High</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Contact VIDOH directly re: behavioral health block grant pass-through</div><span class="pill pill-red">High</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Review BTTF–Greater Changes CSA for FY2026</div><span class="pill pill-amber">Med</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Prepare MOORE Equity in Mental Health grant draft (opens Aug 1)</div><span class="pill pill-amber">Med</span></div>
-          <div class="task-row"><div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">Formalize yoga partnership compensation in writing</div><span class="pill pill-gray">Low</span></div>
-          <div class="task-row"><div class="chk done" onclick="toggleChk(this)"></div><div style="flex:1;text-decoration:line-through;color:var(--muted)">File USVI tax extension via VI BIR</div><span class="pill pill-green">Done</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ DOCUMENTS ═══ -->
-    <div class="page" id="page-documents">
-      <div class="page-hd">
-        <div class="page-hd-left"><h1>Documents</h1><p>Governing docs, minutes, and compliance records.</p></div>
-        <button class="btn btn-primary" onclick="toggleForm('doc-form')">+ Add document</button>
-      </div>
-      <div class="form-panel" id="doc-form">
-        <div class="form-title">Add document</div>
-        <div class="form-grid">
-          <div class="ff"><label>Name</label><input type="text" id="df-name" placeholder="Document name"></div>
-          <div class="ff"><label>Category</label><select id="df-cat"><option>Governance</option><option>Compliance & Legal</option><option>Finance</option><option>Programs</option><option>Grants</option></select></div>
-          <div class="ff full"><label>Google Drive link</label><input type="url" id="df-url" placeholder="https://drive.google.com/..."></div>
-        </div>
-        <div class="form-actions">
-          <button class="btn btn-primary" onclick="saveDoc()">Save</button>
-          <button class="btn btn-outline" onclick="toggleForm('doc-form')">Cancel</button>
-        </div>
-      </div>
-      <div class="two-col">
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Governance</span></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF Bylaws (2024)</div><div class="doc-meta">Updated Apr 2024 · Google Drive</div></div></div>
-            <div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">Board Meeting Minutes Template</div><div class="doc-meta">Updated Jan 2025 · Google Drive</div></div></div>
-            <div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">BTTF–GC Clinical Services Agreement</div><div class="doc-meta">Updated Mar 2025 · Google Drive</div></div></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-hd"><span class="card-title">Compliance & legal</span></div>
-          <div class="card-body" style="padding:6px 18px">
-            <div class="doc-row"><div class="doc-icon pdf">📋</div><div style="flex:1"><div class="doc-name">990-PF Filing (FY2024)</div><div class="doc-meta">Filed Feb 2025 · PDF</div></div></div>
-            <div class="doc-row"><div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name">IRS Determination Letter</div><div class="doc-meta">501(c)(3) · EIN 88-3435722</div></div></div>
-            <div class="doc-row"><div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name">5% Distribution Tracker (FY2026)</div><div class="doc-meta">Google Sheets · Live</div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</main>
+  </main>
+</div>
 
 <script>
-// ── CONFIG — replace with your Apps Script URL after deployment ──
+// ── CONFIG ──
 const API_URL = 'https://script.google.com/a/macros/bushteafoundation.org/s/AKfycbw1OIDqdtVjBQJgHUhP-0XaeuBMGHLKeKyt7qBEjKRXhUk43K85IHLV7YbSlplFcdsE/exec';
 const API_KEY = 'bttf-board-2026';
 
-// ── STATE ──
-const memberData = {
-  tm: { av: 'TM', color: '#E8456A', name: 'Tamara McMillan', sub: 'Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS', contact: [{l:'Email',v:'mail@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Credentials',v:'LMHC, LPC, NCC, CCTS'}], termPct: 75, termLbl: '2022–2025 · 3-year term · Renewal due', committees: ['Finance','Governance'], notes: 'Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.' },
-  tk: { av: 'TK', color: '#3D1F5C', name: 'Tarik McMillan', sub: 'Co-Founder · Operations', contact: [{l:'Email',v:'tarik@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Role',v:'Co-Founder'}], termPct: 75, termLbl: '2022–2025 · 3-year term · Renewal due', committees: ['Programs'], notes: 'Co-Founder and Operations lead. Co-hosts Crucian Counselors podcast. Key contact for VIDE BMTI proposal.' },
-  lz: { av: 'LZ', color: '#C45E1A', name: 'Liz', sub: 'Board Member', contact: [{l:'Email',v:'—'},{l:'Phone',v:'—'},{l:'Location',v:'—'},{l:'Status',v:'Active member'}], termPct: 45, termLbl: '2023–2026 · 3-year term · Active', committees: ['Finance'], notes: 'Current non-founder board member. Profile details to be completed. Does not satisfy independence requirement for VOCA/grant purposes.' }
+// ── ROLE PERMISSIONS ──
+const PERMS = {
+  founder:   { addMember:true,  editMeeting:true,  logMinutes:true,  addAgenda:true,  addTask:true, addDoc:true,  finance:true,  financeEdit:true  },
+  treasurer: { addMember:false, editMeeting:true,  logMinutes:false, addAgenda:true,  addTask:true, addDoc:true,  finance:true,  financeEdit:true  },
+  secretary: { addMember:false, editMeeting:true,  logMinutes:true,  addAgenda:true,  addTask:true, addDoc:true,  finance:true,  financeEdit:false },
+  member:    { addMember:false, editMeeting:false, logMinutes:false, addAgenda:false, addTask:true, addDoc:false, finance:true,  financeEdit:false }
 };
 
-let agCount = 7;
-const pageTitles = { dashboard:'Dashboard', meetings:'Meetings', members:'Members', tasks:'Tasks', documents:'Documents' };
+const ROLE_LABELS = { founder:'Co-Founder', treasurer:'Treasurer', secretary:'Secretary', member:'Board Member' };
+const ROLE_BADGE_CLASS = { founder:'role-founder', treasurer:'role-treasurer', secretary:'role-secretary', member:'role-member' };
+
+// ── SESSION ──
+let currentUser = null;
+
+// Simulated user store — in production this comes from Google Sheets
+// Password check uses simple hash comparison via API
+const LOCAL_USERS = [
+  { email:'mail@bushteafoundation.org', name:'Tamara McMillan', initials:'TM', role:'founder', color:'#E8456A' },
+  { email:'tarik@greaterchangesllc.com', name:'Tarik McMillan', initials:'TK', role:'founder', color:'#3D1F5C' },
+  { email:'liz@bushteafoundation.org', name:'Liz', initials:'LZ', role:'member', color:'#C45E1A' }
+];
+
+// ── INIT ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ol = document.getElementById('loading-overlay');
+    ol.style.opacity = '0';
+    setTimeout(() => {
+      ol.style.display = 'none';
+      const saved = sessionStorage.getItem('bttf_user');
+      if (saved) {
+        currentUser = JSON.parse(saved);
+        showPortal();
+      } else {
+        document.getElementById('login-screen').style.display = 'flex';
+      }
+    }, 400);
+  }, 1200);
+});
+
+// ── LOGIN ──
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; errEl.style.display = 'block'; return; }
+
+  // Check against API first; fall back to local for founders during setup
+  let user = null;
+  try {
+    const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(email)}&key=${API_KEY}`);
+    const data = await res.json();
+    if (data && data.found) {
+      // Verify password hash
+      const hash = await simpleHash(password);
+      if (data.passwordHash === hash) {
+        user = { email: data.email, name: data.name, initials: data.initials, role: data.role, color: data.color || '#3D1F5C' };
+      }
+    }
+  } catch(e) {
+    // API unavailable — fall back to local user store for initial setup
+    const localMatch = LOCAL_USERS.find(u => u.email === email);
+    if (localMatch && password === 'bttf2026') {
+      user = localMatch;
+    }
+  }
+
+  // Founder fallback with temp password during initial setup
+  if (!user) {
+    const localMatch = LOCAL_USERS.find(u => u.email === email);
+    if (localMatch && password === 'bttf2026') {
+      user = localMatch;
+    }
+  }
+
+  if (user) {
+    currentUser = user;
+    sessionStorage.setItem('bttf_user', JSON.stringify(user));
+    document.getElementById('login-screen').style.display = 'none';
+    showPortal();
+  } else {
+    errEl.textContent = 'Incorrect email or password. Please try again.';
+    errEl.style.display = 'block';
+  }
+}
+
+async function simpleHash(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function showReset() {
+  const email = document.getElementById('login-email').value.trim();
+  document.getElementById('reset-sent').style.display = 'block';
+  if (email) pushToSheets('PasswordResets', { email, requestedAt: new Date().toISOString() });
+}
+
+function doLogout() {
+  sessionStorage.removeItem('bttf_user');
+  currentUser = null;
+  document.getElementById('portal').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-password').value = '';
+}
+
+// ── SHOW PORTAL ──
+function showPortal() {
+  if (!currentUser) return;
+  const portal = document.getElementById('portal');
+  portal.classList.add('visible');
+
+  // Set sidebar user info
+  document.getElementById('sb-av').textContent = currentUser.initials;
+  document.getElementById('sb-av').style.background = currentUser.color;
+  document.getElementById('sb-name').textContent = currentUser.name;
+  document.getElementById('sb-role').textContent = ROLE_LABELS[currentUser.role] || currentUser.role;
+
+  // Set topbar role badge
+  const rb = document.getElementById('topbar-role-badge');
+  rb.textContent = ROLE_LABELS[currentUser.role] || currentUser.role;
+  rb.className = 'role-badge ' + (ROLE_BADGE_CLASS[currentUser.role] || 'role-member');
+
+  // Set greeting
+  const hr = new Date().getHours();
+  const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('dash-greeting').textContent = greet + ', ' + currentUser.name.split(' ')[0];
+
+  applyPermissions();
+  checkConnection();
+}
+
+// ── PERMISSIONS ──
+function applyPermissions() {
+  if (!currentUser) return;
+  const p = PERMS[currentUser.role] || PERMS.member;
+
+  // Members module
+  setEl('btn-add-member', p.addMember);
+  setEl('notice-members', !p.addMember);
+  setEl('btn-edit-member', p.addMember);
+
+  // Meetings
+  setEl('btn-new-meeting', p.editMeeting);
+  setEl('notice-meetings', !p.editMeeting);
+  setEl('ag-add-btn', p.addAgenda);
+  setEl('ag-add-row', p.addAgenda);
+  setEl('act-add-btn', p.editMeeting);
+  setEl('btn-save-minutes', p.logMinutes);
+  if (!p.logMinutes) document.getElementById('minutes-txt').setAttribute('readonly','true');
+
+  // Tasks
+  setEl('btn-add-task', p.addTask);
+
+  // Documents
+  setEl('btn-add-doc', p.addDoc);
+  setEl('notice-docs', !p.addDoc);
+
+  // Finance tab visibility
+  const navFin = document.getElementById('nav-finance');
+  if (p.finance) { navFin.classList.remove('hidden'); } else { navFin.classList.add('hidden'); }
+
+  // Finance edit vs read only
+  setEl('btn-add-entry', p.financeEdit);
+  setEl('finance-docs-card', true); // always visible if finance accessible
+  const banner = document.getElementById('finance-readonly-banner');
+  if (!p.financeEdit) banner.classList.add('show'); else banner.classList.remove('show');
+  const distTracker = document.getElementById('dist-tracker');
+  if (!p.financeEdit) distTracker.style.display = 'none'; else distTracker.style.display = 'block';
+}
+
+function setEl(id, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.display = show ? '' : 'none';
+}
 
 // ── NAVIGATION ──
+const pageTitles = { dashboard:'Dashboard', meetings:'Meetings', members:'Members', tasks:'Tasks', documents:'Documents', finance:'Finance' };
+
 function navigate(el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -692,7 +856,8 @@ function navigate(el) {
   const page = el.getAttribute('data-page');
   document.getElementById('page-' + page).classList.add('active');
   document.getElementById('topbar-title').textContent = pageTitles[page];
-  document.getElementById('meeting-detail').style.display = 'none';
+  const det = document.getElementById('meeting-detail');
+  if (det) det.style.display = 'none';
   document.querySelectorAll('.form-panel').forEach(f => f.classList.remove('open'));
 }
 
@@ -707,6 +872,8 @@ function switchTab(el, id) {
 }
 
 // ── MEETINGS ──
+let agCount = 7;
+
 function openMeetingDetail(title, meta) {
   document.getElementById('det-title').textContent = title;
   document.getElementById('det-meta').textContent = meta;
@@ -717,30 +884,28 @@ function openMeetingDetail(title, meta) {
 
 function closeMeetingDetail() {
   document.getElementById('meeting-detail').style.display = 'none';
-  document.querySelector('.tab.active').click();
+  document.querySelector('#page-meetings .tab.active').click();
 }
 
 function addAgItem() {
+  if (!PERMS[currentUser.role].addAgenda) return;
   agCount++;
   const list = document.getElementById('agenda-list');
-  const div = document.createElement('div');
-  div.className = 'ag-item';
+  const div = document.createElement('div'); div.className = 'ag-item';
   div.innerHTML = `<div class="ag-num">${agCount}</div><div class="ag-text" contenteditable="true" style="outline:none;min-width:40px">New item</div><div class="ag-time">10 min</div>`;
   list.appendChild(div);
-  const ce = div.querySelector('[contenteditable]');
-  ce.focus();
+  const ce = div.querySelector('[contenteditable]'); ce.focus();
   const r = document.createRange(); r.selectNodeContents(ce);
   window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
 }
 
 function addDetAction() {
+  if (!PERMS[currentUser.role].editMeeting) return;
   const list = document.getElementById('det-actions');
-  const div = document.createElement('div');
-  div.className = 'action-row';
+  const div = document.createElement('div'); div.className = 'action-row';
   div.innerHTML = `<div class="chk" onclick="toggleChk(this)"></div><div class="act-text" contenteditable="true" style="outline:none">New action item</div><span class="pill pill-amber">Med</span>`;
   list.appendChild(div);
-  const ce = div.querySelector('[contenteditable]');
-  ce.focus();
+  const ce = div.querySelector('[contenteditable]'); ce.focus();
   const r = document.createRange(); r.selectNodeContents(ce);
   window.getSelection().removeAllRanges(); window.getSelection().addRange(r);
 }
@@ -752,12 +917,11 @@ function saveMeeting() {
   const loc = document.getElementById('mf-loc').value;
   const type = document.getElementById('mf-type').value;
   if (!title || !date) return;
-  const list = document.getElementById('upcoming-list');
   const d = new Date(date + 'T00:00:00');
   const mo = d.toLocaleString('default',{month:'short'});
   const day = d.getDate();
-  const div = document.createElement('div');
-  div.className = 'meeting-row';
+  const list = document.getElementById('upcoming-list');
+  const div = document.createElement('div'); div.className = 'meeting-row';
   div.onclick = () => openMeetingDetail(title, `${date} · ${time} · ${loc} · ${type}`);
   div.innerHTML = `<div class="date-chip"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${title}</div><div class="meeting-meta">${time} · ${loc} · ${type}</div></div><span class="pill pill-blue">Upcoming</span>`;
   list.appendChild(div);
@@ -768,13 +932,19 @@ function saveMeeting() {
 function saveMinutes() {
   const txt = document.getElementById('minutes-txt').value;
   const title = document.getElementById('det-title').textContent;
-  pushToSheets('Minutes', { id: Date.now().toString(), meetingTitle: title, minutes: txt, savedAt: new Date().toISOString() });
-  const btn = event.target;
+  pushToSheets('Minutes', { id: Date.now().toString(), meetingTitle: title, minutes: txt, savedBy: currentUser.name, savedAt: new Date().toISOString() });
+  const btn = document.getElementById('btn-save-minutes');
   btn.textContent = 'Saved!';
   setTimeout(() => btn.textContent = 'Save minutes', 2000);
 }
 
 // ── MEMBERS ──
+const memberData = {
+  tm:{ av:'TM', color:'#E8456A', name:'Tamara McMillan', sub:'Co-Founder · Clinical Director · LMHC, LPC, NCC, CCTS', contact:[{l:'Email',v:'mail@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Credentials',v:'LMHC, LPC, NCC, CCTS'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Finance','Governance'], notes:'Founder and Clinical Director of Greater Changes LLC. Licensed in USVI, FL, NM, CO. Ph.D. Capella University.' },
+  tk:{ av:'TK', color:'#3D1F5C', name:'Tarik McMillan', sub:'Co-Founder · Operations', contact:[{l:'Email',v:'tarik@greaterchangesllc.com',link:true},{l:'Phone',v:'+1 (340) —'},{l:'Location',v:'St. Croix, USVI'},{l:'Role',v:'Co-Founder'}], termPct:75, termLbl:'2022–2025 · 3-year term · Renewal due', committees:['Programs'], notes:'Co-Founder and Operations lead. Co-hosts Crucian Counselors podcast.' },
+  lz:{ av:'LZ', color:'#C45E1A', name:'Liz', sub:'Board Member', contact:[{l:'Email',v:'—'},{l:'Phone',v:'—'},{l:'Location',v:'—'},{l:'Status',v:'Active member'}], termPct:45, termLbl:'2023–2026 · 3-year term · Active', committees:['Finance'], notes:'Current non-founder board member. Does not satisfy independence requirement for VOCA/grant purposes.' }
+};
+
 function selectMember(card, id) {
   document.querySelectorAll('.member-card').forEach(c => c.classList.remove('selected'));
   card.classList.add('selected');
@@ -796,24 +966,25 @@ function saveMember() {
   const email = document.getElementById('mem-email').value.trim();
   const phone = document.getElementById('mem-phone').value.trim();
   const role = document.getElementById('mem-role').value;
+  const portalRole = document.getElementById('mem-portal-role').value;
   const termStart = document.getElementById('mem-term-start').value;
   const termLen = document.getElementById('mem-term-len').value;
   const committee = document.getElementById('mem-committee').value;
+  const tempPw = document.getElementById('mem-temp-pw').value;
   if (!first || !last) return;
   const name = first + ' ' + last;
   const initials = (first[0] + last[0]).toUpperCase();
   const colors = ['#3D1F5C','#C45E1A','#F0A500','#22c55e','#0369a1'];
   const color = colors[Math.floor(Math.random() * colors.length)];
   const id = 'member_' + Date.now();
-  memberData[id] = { av: initials, color, name, sub: role, contact: [{l:'Email',v:email,link:true},{l:'Phone',v:phone},{l:'Role',v:role},{l:'Committee',v:committee}], termPct: 5, termLbl: termStart + ' · ' + termLen, committees: committee !== 'None' ? [committee] : [], notes: 'Profile added ' + new Date().toLocaleDateString() };
+  memberData[id] = { av:initials, color, name, sub:role, contact:[{l:'Email',v:email,link:true},{l:'Phone',v:phone},{l:'Role',v:role},{l:'Committee',v:committee}], termPct:5, termLbl:termStart + ' · ' + termLen, committees:committee !== 'None' ? [committee] : [], notes:'Added by ' + currentUser.name + ' on ' + new Date().toLocaleDateString() };
   const cards = document.getElementById('member-cards');
-  const div = document.createElement('div');
-  div.className = 'member-card';
+  const div = document.createElement('div'); div.className = 'member-card';
   div.onclick = function() { selectMember(this, id); };
   div.innerHTML = `<div class="mc-top"><div class="av-lg" style="background:${color}">${initials}</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">${name}</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">${role}</div><span class="pill pill-violet">Member</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>${termStart}</span></div><div class="mc-meta-item">Committee<span>${committee}</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div>`;
   cards.appendChild(div);
   toggleForm('member-form');
-  pushToSheets('Members', { id, name, role, email, phone, termStart, termEnd: '' });
+  pushToSheets('Members', { id, name, role, portalRole, email, phone, termStart, initials, color, tempPassword: tempPw });
 }
 
 // ── TASKS ──
@@ -825,12 +996,11 @@ function saveTask() {
   if (!text) return;
   const priClass = pri === 'High' ? 'pill-red' : pri === 'Med' ? 'pill-amber' : 'pill-gray';
   const list = document.getElementById('task-list');
-  const div = document.createElement('div');
-  div.className = 'task-row';
-  div.innerHTML = `<div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">${text}${due ? ' — due ' + due : ''} · ${owner}</div><span class="pill ${priClass}">${pri}</span>`;
+  const div = document.createElement('div'); div.className = 'task-row';
+  div.innerHTML = `<div class="chk" onclick="toggleChk(this)"></div><div style="flex:1">${text}${due ? ' · Due ' + due : ''} · ${owner}</div><span class="pill ${priClass}">${pri}</span>`;
   list.insertBefore(div, list.firstChild);
   toggleForm('task-form');
-  pushToSheets('Actions', { id: Date.now().toString(), meetingId: '', text, owner, dueDate: due, status: 'open' });
+  pushToSheets('Actions', { id: Date.now().toString(), meetingId:'', text, owner, dueDate:due, status:'open', addedBy: currentUser.name });
 }
 
 // ── DOCUMENTS ──
@@ -840,65 +1010,74 @@ function saveDoc() {
   const url = document.getElementById('df-url').value.trim();
   if (!name) return;
   toggleForm('doc-form');
-  pushToSheets('Documents', { id: Date.now().toString(), name, category: cat, driveUrl: url, addedDate: new Date().toLocaleDateString() });
+  pushToSheets('Documents', { id: Date.now().toString(), name, category: cat, driveUrl: url, addedDate: new Date().toLocaleDateString(), addedBy: currentUser.name });
+}
+
+// ── FINANCE ──
+let ieData = [
+  { date:'Apr 15', desc:'Individual donor — spring campaign', cat:'Donation', amount:500 },
+  { date:'Apr 10', desc:'CFVI Community Impact Fund', cat:'Grant', amount:5000 },
+  { date:'Apr 5', desc:'Bright Path yoga class supplies', cat:'Program expense', amount:-180 },
+  { date:'Mar 28', desc:'Individual donor', cat:'Donation', amount:250 },
+  { date:'Mar 20', desc:'Counseling services distribution — Greater Changes', cat:'Distribution', amount:-800 },
+  { date:'Mar 15', desc:'Website hosting', cat:'Administrative', amount:-120 },
+  { date:'Mar 1', desc:'Annual donation — McMillan family', cat:'Donation', amount:2500 }
+];
+
+function saveEntry() {
+  const type = document.getElementById('ef-type').value;
+  const amount = parseFloat(document.getElementById('ef-amount').value);
+  const date = document.getElementById('ef-date').value;
+  const cat = document.getElementById('ef-cat').value;
+  const desc = document.getElementById('ef-desc').value.trim();
+  if (!amount || !date || !desc) return;
+  const signed = type === 'income' ? Math.abs(amount) : -Math.abs(amount);
+  ieData.unshift({ date, desc, cat, amount: signed });
+  renderIE();
+  toggleForm('entry-form');
+  pushToSheets('Finance', { id: Date.now().toString(), type, amount: signed, date, category: cat, description: desc, addedBy: currentUser.name });
+}
+
+function renderIE() {
+  const tbody = document.getElementById('ie-tbody');
+  let income = 0, expense = 0;
+  tbody.innerHTML = ieData.map(r => {
+    if (r.amount > 0) income += r.amount; else expense += Math.abs(r.amount);
+    const cls = r.amount > 0 ? 'amount-in' : 'amount-out';
+    const prefix = r.amount > 0 ? '+' : '';
+    return `<tr><td>${r.date}</td><td>${r.desc}</td><td>${r.cat}</td><td class="${cls}">${prefix}$${Math.abs(r.amount).toLocaleString()}</td></tr>`;
+  }).join('');
+  document.getElementById('income-display').textContent = '$' + income.toLocaleString();
+  document.getElementById('expense-display').textContent = '$' + expense.toLocaleString();
+  const balance = 41200 + (income - 3200) - (expense - 3200);
+  document.getElementById('balance-display').textContent = '$' + Math.round(balance).toLocaleString();
 }
 
 // ── SHARED ──
 function toggleForm(id) { document.getElementById(id).classList.toggle('open'); }
-function toggleChk(el) { el.classList.toggle('done'); const t = el.nextElementSibling; if (t) { t.classList.toggle('done'); t.style.textDecoration = t.classList.contains('done') ? 'line-through' : ''; t.style.color = t.classList.contains('done') ? 'var(--muted)' : ''; } }
 
-// ── GOOGLE SHEETS API ──
-async function pushToSheets(sheet, data) {
-  if (!API_URL || API_URL === 'https://script.google.com/a/macros/bushteafoundation.org/s/AKfycbw1OIDqdtVjBQJgHUhP-0XaeuBMGHLKeKyt7qBEjKRXhUk43K85IHLV7YbSlplFcdsE/exec') return;
-  try {
-    await fetch(API_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: API_KEY, sheet, action: 'add', data })
-    });
-  } catch(e) { console.log('Sheets sync error:', e); }
+function toggleChk(el) {
+  el.classList.toggle('done');
+  const t = el.nextElementSibling;
+  if (t) { t.classList.toggle('done'); t.style.textDecoration = t.classList.contains('done') ? 'line-through' : ''; t.style.color = t.classList.contains('done') ? 'var(--muted)' : ''; }
 }
 
-async function loadFromSheets(sheet) {
-  if (!API_URL || API_URL === 'https://script.google.com/a/macros/bushteafoundation.org/s/AKfycbw1OIDqdtVjBQJgHUhP-0XaeuBMGHLKeKyt7qBEjKRXhUk43K85IHLV7YbSlplFcdsE/exec') return null;
+// ── GOOGLE SHEETS ──
+async function pushToSheets(sheet, data) {
   try {
-    const res = await fetch(`${API_URL}?sheet=${sheet}&key=${API_KEY}`);
-    return await res.json();
-  } catch(e) { return null; }
+    await fetch(API_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ key: API_KEY, sheet, action:'add', data }) });
+  } catch(e) { console.log('Sheets sync:', e); }
 }
 
 async function checkConnection() {
   const badge = document.getElementById('sync-badge');
-  if (!API_URL || API_URL === 'https://script.google.com/a/macros/bushteafoundation.org/s/AKfycbw1OIDqdtVjBQJgHUhP-0XaeuBMGHLKeKyt7qBEjKRXhUk43K85IHLV7YbSlplFcdsE/exec') {
-    badge.textContent = '● Not connected';
-    badge.className = 'sync-status sync-warn';
-    return;
-  }
   try {
-    const data = await loadFromSheets('Members');
-    if (data && !data.error) {
-      badge.textContent = '● Synced';
-      badge.className = 'sync-status sync-ok';
-    } else {
-      badge.textContent = '● Sync error';
-      badge.className = 'sync-status sync-err';
-    }
-  } catch(e) {
-    badge.textContent = '● Sync error';
-    badge.className = 'sync-status sync-err';
-  }
+    const res = await fetch(`${API_URL}?sheet=Members&key=${API_KEY}`);
+    const data = await res.json();
+    if (data && !data.error) { badge.textContent = '● Synced'; badge.className = 'sync-status sync-ok'; }
+    else { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
+  } catch(e) { badge.textContent = '● Sync error'; badge.className = 'sync-status sync-warn'; }
 }
-
-// ── INIT ──
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const ol = document.getElementById('loading-overlay');
-    ol.style.opacity = '0';
-    setTimeout(() => ol.style.display = 'none', 400);
-  }, 1200);
-  checkConnection();
-});
 </script>
 </body>
 </html>
