@@ -401,10 +401,10 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <div class="page active" id="page-dashboard">
         <div class="page-hd"><div class="page-hd-left"><h1 id="dash-greeting">Good morning</h1><p>Here's what's happening at Bush Tea & Therapy Foundation.</p></div></div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Board seats</div><div class="stat-value">3</div><div class="stat-sub">of 5 filled</div></div>
-          <div class="stat-card h"><div class="stat-label">Open tasks</div><div class="stat-value">7</div><div class="stat-sub">3 high priority</div></div>
-          <div class="stat-card t"><div class="stat-label">Next meeting</div><div class="stat-value">May 6</div><div class="stat-sub">Q2 Board Review</div></div>
-          <div class="stat-card s"><div class="stat-label">Documents</div><div class="stat-value">6</div><div class="stat-sub">governance & compliance</div></div>
+          <div class="stat-card"><div class="stat-label">Board seats</div><div class="stat-value" id="stat-seats">0</div><div class="stat-sub">of 5 filled</div></div>
+          <div class="stat-card h"><div class="stat-label">Open tasks</div><div class="stat-value" id="stat-tasks">0</div><div class="stat-sub" id="stat-tasks-sub">none yet</div></div>
+          <div class="stat-card t"><div class="stat-label">Next meeting</div><div class="stat-value" id="stat-next-meeting" style="font-size:18px">—</div><div class="stat-sub" id="stat-next-meeting-sub">none scheduled</div></div>
+          <div class="stat-card s"><div class="stat-label">Documents</div><div class="stat-value" id="stat-docs">0</div><div class="stat-sub">added to portal</div></div>
         </div>
         <div class="two-col">
           <div class="card">
@@ -559,9 +559,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div class="form-actions"><button class="btn btn-primary" onclick="saveMember()">Save member</button><button class="btn btn-outline" onclick="toggleForm('member-form')">Cancel</button></div>
         </div>
         <div class="two-col" id="member-cards">
-          <div class="member-card selected" onclick="selectMember(this,'tm')"><div class="mc-top"><div class="av-lg" style="background:var(--hibiscus)">TM</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tamara McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Founder · Clinical Director</div><span class="pill pill-hibiscus">Co-Founder</span><span class="rel-badge rel-founder">Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Finance, Governance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
-          <div class="member-card" onclick="selectMember(this,'tk')"><div class="mc-top"><div class="av-lg" style="background:var(--violet)">TK</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Tarik McMillan</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Co-Founder · Operations</div><span class="pill pill-hibiscus">Co-Founder</span><span class="rel-badge rel-founder">Founder</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2022–2025</span></div><div class="mc-meta-item">Committees<span>Programs</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
-          <div class="member-card" onclick="selectMember(this,'lz')"><div class="mc-top"><div class="av-lg" style="background:var(--terra)">LZ</div><div><div style="font-size:14px;font-weight:500;margin-bottom:2px">Liz</div><div style="font-size:12px;color:var(--muted);margin-bottom:5px">Board Member</div><span class="pill pill-violet">Member</span><span class="rel-badge rel-unknown">Unclassified</span></div></div><div class="mc-meta"><div class="mc-meta-item">Term<span>2023–2026</span></div><div class="mc-meta-item">Committees<span>Finance</span></div><div class="mc-meta-item">Status<span style="color:#22c55e">Active</span></div></div></div>
+          <div class="empty-state-msg" style="grid-column:1/-1;text-align:center;padding:32px;color:var(--muted);font-size:13px">No board members added yet. Click + Add member to get started.</div>
         </div>
         <div class="profile-panel" id="profile-panel" style="display:none">
           <div class="profile-hd"><div class="profile-av" id="prof-av" style="background:var(--hibiscus)">?</div><div><div class="profile-name" id="prof-name">—</div><div class="profile-sub" id="prof-sub">—</div></div></div>
@@ -634,14 +632,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
         </div>
         <div class="card"><div class="card-hd"><span class="card-title">All tasks</span></div>
           <div class="card-body" style="padding:6px 18px" id="task-list">
-            <div class="task-row" id="task-0"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Respond to USPTO Office Action — BUSH TEA & THERAPY (deadline June 30, 2026)</div><span class="pill pill-red">High</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-1"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Recruit independent board member</div><span class="pill pill-red">High</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-2"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Complete SAM.gov registration</div><span class="pill pill-red">High</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-3"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Contact VIDOH re: behavioral health block grant</div><span class="pill pill-red">High</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-4"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Review BTTF–Greater Changes CSA for FY2026</div><span class="pill pill-amber">Med</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-5"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Prepare MOORE Equity grant draft (opens Aug 1)</div><span class="pill pill-amber">Med</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-6"><div class="chk" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1">Formalize yoga partnership compensation in writing</div><span class="pill pill-gray">Low</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
-            <div class="task-row" id="task-7"><div class="chk done" onclick="toggleChk(this)"></div><div class="task-label" style="flex:1;text-decoration:line-through;color:var(--muted)">File USVI tax extension via VI BIR</div><span class="pill pill-green">Done</span><div class="task-actions"><button class="task-edit-btn btn-ghost" onclick="editTask(this)" title="Edit">✏️</button><button class="task-del-btn btn-ghost" onclick="deleteTask(this)" title="Delete" style="color:#b91c1c">✕</button></div></div>
+            <div class="empty-state-msg" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No tasks yet. Click + New task to add one.</div>
           </div>
         </div>
       </div>
@@ -763,13 +754,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <table class="ie-table" style="width:100%">
               <thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead>
               <tbody id="ie-tbody">
-                <tr><td>Apr 15</td><td>Individual donor — spring campaign</td><td>Donation</td><td class="amount-in">+$500</td></tr>
-                <tr><td>Apr 10</td><td>CFVI Community Impact Fund</td><td>Grant</td><td class="amount-in">+$5,000</td></tr>
-                <tr><td>Apr 5</td><td>Bright Path yoga class supplies</td><td>Program expense</td><td class="amount-out">-$180</td></tr>
-                <tr><td>Mar 28</td><td>Individual donor</td><td>Donation</td><td class="amount-in">+$250</td></tr>
-                <tr><td>Mar 20</td><td>Counseling services distribution — Greater Changes</td><td>Distribution</td><td class="amount-out">-$800</td></tr>
-                <tr><td>Mar 15</td><td>Website hosting — bushteafoundation.org</td><td>Administrative</td><td class="amount-out">-$120</td></tr>
-                <tr><td>Mar 1</td><td>Annual donation — McMillan family</td><td>Donation</td><td class="amount-in">+$2,500</td></tr>
+                <tr id="finance-empty-row"><td colspan="5" style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No transactions yet. Import a QuickBooks P&L or add entries manually.</td></tr>
               </tbody>
             </table>
           </div>
