@@ -1327,9 +1327,7 @@ function saveMeeting() {
   const list = document.getElementById('upcoming-list');
   const div = document.createElement('div'); div.className = 'meeting-row';
   div.onclick = () => openMeetingDetail(title, `${date} · ${time} · ${loc} · ${type}`);
-  div.innerHTML = `<div class="date-chip"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${title}</div><div class="meeting-meta">${time} · ${loc} · ${type}</div></div><span class="pill pill-blue">Upcoming</span><div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
-  div.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
-  div.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
+  div.innerHTML = `<div class="date-chip"><div class="dc-mo">${mo}</div><div class="dc-day">${day}</div></div><div class="meeting-info"><div class="meeting-title">${title}</div><div class="meeting-meta">${time} · ${loc} · ${type}</div></div><span class="pill pill-blue">Upcoming</span><div class="meeting-actions" style="display:flex;gap:4px;align-items:center;margin-left:8px;flex-shrink:0"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit" style="padding:4px 10px;font-size:11px">Edit</button><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c;padding:4px 10px;font-size:11px" title="Delete">Delete</button></div>`;
   list.appendChild(div);
   toggleForm('meeting-form');
   pushToSheets('Meetings', { id: Date.now().toString(), title, date, time, location: loc, status: 'upcoming' });
@@ -1952,9 +1950,8 @@ async function loadMeetings() {
       const div = document.createElement('div');
       div.className = 'meeting-row';
       div.onclick = () => openMeetingDetail(m.title, `${m.date || ''} · ${m.time || ''} · ${m.location || ''}`);
-      div.innerHTML = `<div class="${chipClass}"><div class="${moClass}">${mo}</div><div class="${dayClass}">${day}</div></div><div class="meeting-info"><div class="meeting-title">${m.title}</div><div class="meeting-meta">${m.time || ''} · ${m.location || ''}</div></div>${statusPill}<div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
-      div.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
-      div.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
+      const editBtn = `<div class="meeting-actions" style="display:flex;gap:4px;align-items:center;margin-left:8px;flex-shrink:0"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit" style="padding:4px 10px;font-size:11px">Edit</button><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c;padding:4px 10px;font-size:11px" title="Delete">Delete</button></div>`;
+      div.innerHTML = `<div class="${chipClass}"><div class="${moClass}">${mo}</div><div class="${dayClass}">${day}</div></div><div class="meeting-info"><div class="meeting-title">${m.title}</div><div class="meeting-meta">${m.time || ''} · ${m.location || ''}</div></div>${statusPill}${editBtn}`;
       if (isPast && pastList) pastList.appendChild(div);
       else upcomingList.appendChild(div);
     });
@@ -2350,10 +2347,8 @@ function saveMeetingEdit(btn) {
   row.style.flexWrap = '';
   row.style.gap = '';
   row.style.padding = '';
-  row.innerHTML = `${dateDisplay}<div class="meeting-info"><div class="meeting-title">${newTitle}</div><div class="meeting-meta">${newMeta}</div></div>${statusPill}<div class="doc-row-actions" style="display:none;gap:4px;align-items:center"><button class="btn-ghost btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit">✏️</button><button class="btn-ghost btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c" title="Delete">✕</button></div>`;
+  row.innerHTML = `${dateDisplay}<div class="meeting-info"><div class="meeting-title">${newTitle}</div><div class="meeting-meta">${newMeta}</div></div>${statusPill}<div class="meeting-actions" style="display:flex;gap:4px;align-items:center;margin-left:8px;flex-shrink:0"><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();editMeetingRow(this)" title="Edit" style="padding:4px 10px;font-size:11px">Edit</button><button class="btn btn-outline btn-sm" onclick="event.stopPropagation();deleteMeetingRow(this)" style="color:#b91c1c;padding:4px 10px;font-size:11px" title="Delete">Delete</button></div>`;
   row.onclick = () => openMeetingDetail(newTitle, (dateVal ? dateVal + ' · ' : '') + newMeta);
-  row.onmouseenter = function() { this.querySelector('.doc-row-actions').style.display = 'flex'; };
-  row.onmouseleave = function() { this.querySelector('.doc-row-actions').style.display = 'none'; };
   updateDashboardStats();
   pushToSheets('Meetings', { action:'update', title: newTitle, date: dateVal, time: timeVal, location: locVal, status: isPast ? 'past' : 'upcoming' });
 }
