@@ -9,8 +9,8 @@
 :root {
   /* BTTF Brand — Option B: Hibiscus, Passion Fruit, Lime, Bush Tea, Mint */
   --violet:#3B5E35; --violet-light:#4E7A47; --violet-mist:#ecf3e8;
-  --hibiscus:#8B4A6B; --hibiscus-light:#f5eaf1;
-  --terra:#6B3554; --terra-light:#efe0ea;
+  --hibiscus:#C23B6E; --hibiscus-light:#fce8f0;
+  --terra:#8F2B52; --terra-light:#f8d6e6;
   --saffron:#C9E265; --saffron-light:#f2f8db;
   --papaya:#F3F6E8; --border:#cde0c4;
   --text:#1a1a1a; --muted:#5a5a4a; --bg:#f3f6e8;
@@ -21,8 +21,8 @@ html,body{height:100%}
 body{font-family:'Open Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
 
 /* LOGIN */
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--violet)}
-.login-box{background:white;border-radius:16px;padding:36px 40px;width:100%;max-width:400px}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E8EDD8}
+.login-box{background:white;border-radius:16px;padding:36px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(46,70,23,0.14)}
 .login-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px}
 .login-icon{width:40px;height:40px;background:var(--saffron);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .login-title{font-family:'Cardo',serif;font-size:18px;color:var(--violet);line-height:1.2}
@@ -937,7 +937,7 @@ async function doLogin() {
 
   // 0. Founder admin login — hardcoded for setup and recovery
   if (email === 'mail@bushteafoundation.org' && hash === '8af525324f821cf180805c3dbbcbf9d823f1507d43435d218f4ca6697fe2228c') {
-    user = { email: 'mail@bushteafoundation.org', name: 'Tamara McMillan', initials: 'TM', role: 'founder', color: '#8B4A6B' };
+    user = { email: 'mail@bushteafoundation.org', name: 'Tamara McMillan', initials: 'TM', role: 'founder', color: '#C23B6E' };
   }
 
   // 1. Try Google Sheet first
