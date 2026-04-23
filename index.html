@@ -4,27 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BTTF Board Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --violet:#3D1F5C; --violet-light:#5a3080; --violet-mist:#f3eefa;
-  --hibiscus:#E8456A; --hibiscus-light:#fde8ee;
-  --terra:#C45E1A; --terra-light:#fdf0e8;
-  --saffron:#F0A500; --saffron-light:#fef7e0;
-  --papaya:#FEF5F0; --border:#e8e3f0;
-  --text:#1a1a1a; --muted:#777; --bg:#f7f4fb;
+  /* BTTF Brand — Option B: Hibiscus, Passion Fruit, Lime, Bush Tea, Mint */
+  --violet:#3B5E35; --violet-light:#4E7A47; --violet-mist:#ecf3e8;
+  --hibiscus:#8B4A6B; --hibiscus-light:#f5eaf1;
+  --terra:#6B3554; --terra-light:#efe0ea;
+  --saffron:#C9E265; --saffron-light:#f2f8db;
+  --papaya:#F3F6E8; --border:#cde0c4;
+  --text:#1a1a1a; --muted:#5a5a4a; --bg:#f3f6e8;
   --sidebar-w:224px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+body{font-family:'Open Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
 
 /* LOGIN */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--violet)}
 .login-box{background:white;border-radius:16px;padding:36px 40px;width:100%;max-width:400px}
 .login-logo{display:flex;align-items:center;gap:10px;margin-bottom:24px}
 .login-icon{width:40px;height:40px;background:var(--saffron);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.login-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--violet);line-height:1.2}
+.login-title{font-family:'Cardo',serif;font-size:18px;color:var(--violet);line-height:1.2}
 .login-sub{font-size:12px;color:var(--muted);margin-top:1px}
 .login-heading{font-size:15px;font-weight:500;color:var(--violet);margin-bottom:18px}
 .lf{margin-bottom:14px}
@@ -48,7 +49,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .sb-logo{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.1)}
 .sb-logo-row{display:flex;align-items:center;gap:10px;margin-bottom:3px}
 .sb-icon{width:36px;height:36px;background:var(--saffron);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sb-name{font-family:'DM Serif Display',serif;font-size:14px;color:white;line-height:1.25}
+.sb-name{font-family:'Cardo',serif;font-size:14px;color:white;line-height:1.25}
 .sb-sub{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;padding-left:46px}
 .sb-section{padding:14px 0 6px}
 .sb-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0 18px;margin-bottom:3px}
@@ -68,7 +69,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 /* MAIN */
 .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
 .topbar{background:white;border-bottom:1px solid var(--border);height:58px;padding:0 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.topbar-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--violet)}
+.topbar-title{font-family:'Cardo',serif;font-size:20px;color:var(--violet)}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .year-badge{background:var(--hibiscus-light);color:var(--hibiscus);font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
 .role-badge{font-size:11px;font-weight:500;padding:4px 10px;border-radius:20px}
@@ -85,7 +86,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .page{display:none}
 .page.active{display:block}
 .page-hd{margin-bottom:22px;display:flex;align-items:flex-start;justify-content:space-between}
-.page-hd-left h1{font-family:'DM Serif Display',serif;font-size:26px;color:var(--violet);margin-bottom:3px}
+.page-hd-left h1{font-family:'Cardo',serif;font-size:26px;color:var(--violet);margin-bottom:3px}
 .page-hd-left p{font-size:13px;color:var(--muted)}
 
 /* COMPONENTS */
@@ -285,7 +286,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 /* LOADING */
 #loading-overlay{position:fixed;inset:0;background:var(--violet);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.4s}
 .lo-icon{width:52px;height:52px;background:var(--saffron);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-#loading-overlay h2{font-family:'DM Serif Display',serif;font-size:22px;color:white;margin-bottom:6px}
+#loading-overlay h2{font-family:'Cardo',serif;font-size:22px;color:white;margin-bottom:6px}
 #loading-overlay p{font-size:13px;color:rgba(255,255,255,0.55)}
 .lo-spinner{width:28px;height:28px;border:2.5px solid rgba(255,255,255,0.2);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;margin-top:18px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -623,7 +624,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <div id="edit-member-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:center;justify-content:center;padding:20px">
         <div style="background:white;border-radius:14px;width:100%;max-width:560px;overflow:hidden">
           <div style="background:var(--violet);padding:16px 22px;display:flex;align-items:center;justify-content:space-between">
-            <div style="font-family:'DM Serif Display',serif;font-size:16px;color:white">Edit member profile</div>
+            <div style="font-family:'Cardo',serif;font-size:16px;color:white">Edit member profile</div>
             <button onclick="closeEditMember()" style="background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;line-height:1;padding:0">&times;</button>
           </div>
           <div style="padding:20px 22px">
@@ -936,7 +937,7 @@ async function doLogin() {
 
   // 0. Founder admin login — hardcoded for setup and recovery
   if (email === 'mail@bushteafoundation.org' && hash === '8af525324f821cf180805c3dbbcbf9d823f1507d43435d218f4ca6697fe2228c') {
-    user = { email: 'mail@bushteafoundation.org', name: 'Tamara McMillan', initials: 'TM', role: 'founder', color: '#E8456A' };
+    user = { email: 'mail@bushteafoundation.org', name: 'Tamara McMillan', initials: 'TM', role: 'founder', color: '#8B4A6B' };
   }
 
   // 1. Try Google Sheet first
@@ -959,7 +960,7 @@ async function doLogin() {
             name: match.name,
             initials: match.initials || (match.name || '??').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
             role: match.portalRole || 'member',
-            color: match.color || '#3D1F5C'
+            color: match.color || '#3B5E35'
           };
         }
       }
@@ -1157,7 +1158,7 @@ async function loadAttendanceGrid() {
       return;
     }
     grid.innerHTML = members.map(m => {
-      const color = m.color || '#3D1F5C';
+      const color = m.color || '#3B5E35';
       const initials = m.initials || (m.name||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
       const firstName = (m.name||'Member').split(' ')[0];
       return `<div class="att-chip" onclick="this.classList.toggle('present')"><div class="att-dot" style="background:${color}">${initials}</div>${firstName}</div>`;
@@ -1527,7 +1528,7 @@ function saveMember() {
   if (!first || !last) return;
   const name = first + ' ' + last;
   const initials = (first[0] + last[0]).toUpperCase();
-  const colors = ['#3D1F5C','#C45E1A','#F0A500','#22c55e','#0369a1'];
+  const colors = ['#3B5E35','#C9E265','#C9E265','#22c55e','#0369a1'];
   const color = colors[Math.floor(Math.random() * colors.length)];
   const relationship = document.getElementById('mem-relationship').value;
   const id = 'member_' + Date.now();
@@ -1592,8 +1593,9 @@ function saveDoc() {
     div.dataset.url = url;
     div.innerHTML = `<div class="doc-icon ${iconType}">${emoji}</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'" data-url="${url}">${name}</div><div class="doc-meta">${date} · ${cat}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
     body.appendChild(div);
-    // Make name clickable
+    // Make name clickable and wire click handler
     if (url) div.querySelector('.doc-name').setAttribute('data-url', url);
+    wireDocClicks(body);
   }
 
   toggleForm('doc-form');
@@ -1843,7 +1845,7 @@ async function loadMembers() {
     data.forEach(m => {
       if (!m.name) return;
       const id = m.id || ('m_' + Date.now() + Math.random());
-      const color = m.color || '#3D1F5C';
+      const color = m.color || '#3B5E35';
       const initials = m.initials || m.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
       const role = m.role || 'Member';
       const relationship = m.relationship || 'unknown';
@@ -1894,7 +1896,7 @@ function updateSeatBar(members) {
   seats.forEach((seat, i) => {
     const m = members[i];
     if (m) {
-      const color = m.color || '#3D1F5C';
+      const color = m.color || '#3B5E35';
       const initials = m.initials || m.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
       const isFounder = (m.relationship||'') === 'founder';
       seat.className = 'seat ' + (isFounder ? 'founder' : 'filled');
@@ -2026,6 +2028,7 @@ async function loadDocuments() {
       div.dataset.url = url;
       div.innerHTML = `<div class="doc-icon ${iconType}">${emoji}</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'" data-url="${url}">${doc.name}</div><div class="doc-meta">${date}${cat?' · '+cat:''}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>`;
       body.appendChild(div);
+      wireDocClicks(body);
     });
 
     // Also update finance docs card if Finance category docs exist
@@ -2041,6 +2044,7 @@ async function loadDocuments() {
           div.innerHTML = `<div class="doc-icon sheet">📊</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc('${url.replace(/'/g,"\'")}'">${doc.name}</div><div class="doc-meta">${doc.addedDate || ''}</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px">✕</button></div>`;
           finList.appendChild(div);
         });
+        wireDocClicks(finList);
       }
     }
     updateDashboardStats();
@@ -2566,6 +2570,21 @@ function deleteTask(btn) {
 }
 
 // ── DOCUMENT OPEN ──
+function wireDocClicks(container) {
+  if (!container) return;
+  container.querySelectorAll('.doc-name.doc-link').forEach(el => {
+    // Remove any existing listeners by cloning
+    const clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+    clone.style.cursor = 'pointer';
+    clone.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const url = this.getAttribute('data-url') || this.dataset.url || '';
+      openDoc(url);
+    });
+  });
+}
+
 function openDoc(url) {
   if (!url || url === '' || url === 'undefined' || url === 'null') {
     alert('No Drive link saved for this document yet. Click the edit button to add one.');
@@ -2618,7 +2637,8 @@ function saveDocEditById(btn, id) {
   if (!newName) return;
   const date = row.querySelector('.doc-meta')?.textContent || new Date().toLocaleDateString();
   const safeUrl = newUrl.replace(/'/g, '%27');
-  row.innerHTML = '<div class="doc-icon doc">📄</div><div style="flex:1"><div class="doc-name doc-link" onclick="openDoc(\'' + safeUrl + '\')" data-url="' + newUrl + '">' + newName + '</div><div class="doc-meta">' + date + '</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>';
+  row.innerHTML = '<div class="doc-icon doc"></div><div style="flex:1"><div class="doc-name doc-link" data-url="' + newUrl.replace(/"/g,'&quot;') + '">' + newName + '</div><div class="doc-meta">' + date + '</div></div><div class="doc-row-actions"><button class="btn-ghost doc-edit-btn" onclick="editDocRow(this)" style="font-size:11px" title="Edit">✏️</button><button class="btn-ghost" onclick="deleteDocRow(this)" style="color:#b91c1c;font-size:11px" title="Delete">✕</button></div>';
+  wireDocClicks(row.parentNode);
   if (id) pushToSheets('Documents', { id, name: newName, driveUrl: newUrl, action: 'update' });
 }
 
